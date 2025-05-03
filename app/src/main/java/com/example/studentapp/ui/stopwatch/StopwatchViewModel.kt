@@ -2,15 +2,20 @@ package com.example.studentapp.ui.stopwatch
 
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val handler = Handler(Looper.getMainLooper());
     private val prefs = app.getSharedPreferences("stopwatch_prefs", Context.MODE_PRIVATE)
@@ -30,7 +35,13 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     init {
         runTimer()
 
+        val lastOpened = prefs.getString("last_opened", null)
+        val today = LocalDate.now().toString()
 
+        if (lastOpened != today) {
+            reset()
+            prefs.edit().putString("last_opened", today).apply()
+        }
     }
 
     fun runTimer() {

@@ -30,11 +30,12 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     private var seconds = prefs.getInt("seconds", 0);
     private var running = false;
-    private var wasRunning = false;
 
     init {
         runTimer()
 
+        // Checks if app was already opened today
+        // if not, time is reset
         val lastOpened = prefs.getString("last_opened", null)
         val today = LocalDate.now().toString()
 
@@ -47,23 +48,21 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     fun runTimer() {
         handler.post(object : Runnable {
             override fun run() {
+                // calculate hours, minutes and seconds and update _time accordingly
                 val hours = seconds / 3600
                 val minutes = (seconds % 3600) / 60
                 val secs = seconds % 60
 
-                val time = String.format(
-                    Locale.getDefault(),
-                    "%d:%02d:%02d", hours,
-                    minutes, secs
-                )
-
+                val time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs)
                 _time.value = time
 
+                // if the stopwatch is running we increase seconds and save them
                 if (running) {
                     seconds++
                     saveSeconds()
                 }
 
+                // execute this every second
                 handler.postDelayed(this, 1000)
             }
         })

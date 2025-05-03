@@ -1,14 +1,19 @@
 package com.example.studentapp.ui.stopwatch
 
+import android.app.Application
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.util.Locale
 
-class StopwatchViewModel : ViewModel() {
+class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
+    private val handler = Handler(Looper.getMainLooper());
+    private val prefs = app.getSharedPreferences("stopwatch_prefs", Context.MODE_PRIVATE)
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is Stopwatch Fragment"
@@ -18,14 +23,14 @@ class StopwatchViewModel : ViewModel() {
     val text: LiveData<String> = _text
     val time: LiveData<String> = _time
 
-    private var seconds = 0;
+    private var seconds = prefs.getInt("seconds", 0);
     private var running = false;
     private var wasRunning = false;
 
-    private val handler = Handler(Looper.getMainLooper());
-
     init {
         runTimer()
+
+
     }
 
     fun runTimer() {
@@ -45,6 +50,7 @@ class StopwatchViewModel : ViewModel() {
 
                 if (running) {
                     seconds++
+                    saveSeconds()
                 }
 
                 handler.postDelayed(this, 1000)
@@ -52,28 +58,19 @@ class StopwatchViewModel : ViewModel() {
         })
     }
 
-    /*override fun onPause() {
-        super.onPause();
-        wasRunning = running;
-        running = false;
+    fun saveSeconds() {
+        prefs.edit().putInt("seconds", seconds).apply()
     }
 
-    override fun onResume() {
-        super.onResume();
-        if (wasRunning) {
-            running = true;
-        }
-    }*/
-
-    fun start(view : View) {
+    fun start() {
         running = true;
     }
 
-    fun stop(view : View) {
+    fun stop() {
         running = false;
     }
 
-    fun reset(view : View) {
+    fun reset() {
         running = false;
         seconds = 0;
     }

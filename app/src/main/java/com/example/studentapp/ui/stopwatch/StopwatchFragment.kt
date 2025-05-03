@@ -34,14 +34,9 @@ class StopwatchFragment : Fragment() {
         val stopwatchViewModel =
             ViewModelProvider(this).get(StopwatchViewModel::class.java)
 
-        val stopButton: Button = root.findViewById(binding.stopButton.id)
-        stopButton.setOnClickListener {stopwatchViewModel.onClickStop(root)}
-
-        val startButton: Button = root.findViewById(binding.startButton.id)
-        startButton.setOnClickListener {stopwatchViewModel.onClickStart(root)}
-
-        val resetButton: Button = root.findViewById(binding.resetButton.id)
-        resetButton.setOnClickListener {stopwatchViewModel.onClickReset(root)}
+        binding.stopButton.setOnClickListener {stopwatchViewModel.stop(root)}
+        binding.startButton.setOnClickListener {stopwatchViewModel.start(root)}
+        binding.resetButton.setOnClickListener {stopwatchViewModel.reset(root)}
 
         val textView: TextView = binding.textStopwatch
         val timeView: TextView = binding.timeView

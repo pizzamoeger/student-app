@@ -65,15 +65,15 @@ class StopwatchViewModel : ViewModel() {
         }
     }*/
 
-    fun onClickStart(view : View) {
+    fun start(view : View) {
         running = true;
     }
 
-    fun onClickStop(view : View) {
+    fun stop(view : View) {
         running = false;
     }
 
-    fun onClickReset(view : View) {
+    fun reset(view : View) {
         running = false;
         seconds = 0;
     }

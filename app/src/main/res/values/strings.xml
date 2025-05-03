@@ -3,10 +3,14 @@
 
     <!--STOPWATCH STRINGS-->
     <string name="title_stopwatch">Stopwatch</string>
-    <string name="start">Start</string>
-    <string name="stop">Stop</string>
-    <string name="reset">Reset</string>
+    <string name="start_watch">Start</string>
+    <string name="stop_watch">Stop</string>
+    <string name="reset_watch">Reset</string>
 
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!--CLASSES STRINGS-->
+    <string name="add_class">Add Class</string>
+    <string name="delete_class">Delete</string>
 </resources>

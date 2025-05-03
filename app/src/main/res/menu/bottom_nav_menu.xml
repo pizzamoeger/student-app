@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_classes"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_stopwatch"
+        />
+
+    <item
         android:id="@+id/navigation_stopwatch"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_stopwatch" />

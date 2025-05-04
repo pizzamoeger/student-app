@@ -31,19 +31,19 @@ class ClassesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //val classesViewModel = ViewModelProvider(this).get(ClassesViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(ClassesViewModel::class.java)
 
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textClasses
-        classesViewModel.text.observe(viewLifecycleOwner) {
+        viewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = ClassesAdapter {id -> classesViewModel.deleteClass(id)}
 
         binding.classRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -58,7 +58,7 @@ class ClassesFragment : Fragment() {
         }
         Log.d("TAG", "ClassesFragment loaded")
 
-    }
+    }*/
 
 
     override fun onDestroyView() {

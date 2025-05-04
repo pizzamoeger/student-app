@@ -34,20 +34,20 @@
         android:textSize="56sp" />
 
     <Button
-        android:id="@+id/start_button_stopwatch"
+        android:id="@+id/button_stopwatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="@string/start_watch" />
 
-    <Button
+    <!--<Button
         android:id="@+id/stop_button_stopwatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:text="@string/stop_watch" />
+        android:text="@string/stop_watch" />-->
 
     <Button
         android:id="@+id/reset_button_stopwatch"

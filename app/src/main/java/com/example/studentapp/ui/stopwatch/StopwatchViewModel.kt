@@ -7,10 +7,12 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.studentapp.SharedViewModel
 import com.example.studentapp.ui.classes.ClassesItem
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -21,6 +23,14 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val handler = Handler(Looper.getMainLooper());
     private val prefs = app.getSharedPreferences("stopwatch_prefs", Context.MODE_PRIVATE)
 
+    private var currentClass : ClassesItem? = null
+
+    fun submitItem(newClass: ClassesItem) {
+        // is called each time the list in sharedViewModel changes
+        currentClass = newClass
+        // notifyDataSetChanged()
+    }
+
     private val _text = MutableLiveData<String>().apply {
         value = "This is Stopwatch Fragment"
     }
@@ -29,7 +39,8 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     val text: LiveData<String> = _text
     val time: LiveData<String> = _time
 
-    private var seconds = prefs.getInt("seconds", 0);
+    private var secondsToday = prefs.getInt("seconds_today", 0);
+    private var secondsTotal = prefs.getInt("seconds_total", 0);
     private var running = false;
 
     init {
@@ -50,11 +61,18 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     fun runTimer() {
         handler.post(object : Runnable {
             override fun run() {
-                _time.value = ClassesItem.getTimeStringFromSeconds(seconds)
+                _time.value = ClassesItem.getTimeStringFromSeconds(secondsToday)
 
                 // if the stopwatch is running we increase seconds and save them
                 if (running) {
-                    seconds++
+                    secondsToday++
+                    secondsTotal++
+
+                    if (currentClass != null) {
+                        currentClass!!.secondsToday++
+                        currentClass!!.secondsTotal++
+                    }
+
                     saveSeconds()
                 }
 
@@ -65,19 +83,17 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     }
 
     fun saveSeconds() {
-        prefs.edit().putInt("seconds", seconds).apply()
+        prefs.edit().putInt("seconds_today", secondsToday).apply()
+        prefs.edit().putInt("seconds_total", secondsTotal).apply()
     }
 
-    fun start() {
-        running = true;
-    }
-
-    fun stop() {
-        running = false;
+    fun button() {
+        running = !running;
     }
 
     fun reset() {
         running = false;
-        seconds = 0;
+        secondsTotal = 0;
+        secondsToday = 0;
     }
 }

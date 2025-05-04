@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 
 // bridge between ClassesItem and RecyclerView, which displays each class
-class StopwatchAdapter () : RecyclerView.Adapter<StopwatchAdapter.StopwatchViewHolder> () {
+class StopwatchAdapter (
+    private val onStartClick: (ClassesItem) -> Unit
+) : RecyclerView.Adapter<StopwatchAdapter.StopwatchViewHolder> () {
 
     private var classesList : List<ClassesItem> = emptyList()
 
@@ -31,7 +33,7 @@ class StopwatchAdapter () : RecyclerView.Adapter<StopwatchAdapter.StopwatchViewH
             dailyTime.text = ClassesItem.getTimeStringFromSeconds(item.secondsToday)
             startButton.visibility = View.VISIBLE
             startButton.setOnClickListener {
-                //onDeleteClick(item.id)
+                onStartClick(item)
             }
         }
     }

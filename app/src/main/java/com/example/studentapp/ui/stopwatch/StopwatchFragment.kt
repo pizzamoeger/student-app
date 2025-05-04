@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.SharedViewModel
 import com.example.studentapp.databinding.FragmentStopwatchBinding
 import com.example.studentapp.ui.classes.ClassesAdapter
+import com.example.studentapp.ui.classes.ClassesItem
 import com.example.studentapp.ui.classes.StopwatchAdapter
 import java.util.Locale
 
@@ -27,6 +28,7 @@ class StopwatchFragment : Fragment() {
     private var _binding: FragmentStopwatchBinding? = null
     private lateinit var adapter: StopwatchAdapter
     private val sharedViewModel : SharedViewModel by activityViewModels()
+    //private val stopwatchViewModel : StopwatchViewModel()
 
     private val binding get() = _binding!!
 
@@ -45,8 +47,7 @@ class StopwatchFragment : Fragment() {
         )[StopwatchViewModel::class.java]
 
         // connect the buttons to their functions
-        binding.stopButtonStopwatch.setOnClickListener {stopwatchViewModel.stop()}
-        binding.startButtonStopwatch.setOnClickListener {stopwatchViewModel.start()}
+        binding.buttonStopwatch.setOnClickListener {stopwatchViewModel.button()}
         binding.resetButtonStopwatch.setOnClickListener {stopwatchViewModel.reset()}
 
         // connect the text objects
@@ -63,9 +64,14 @@ class StopwatchFragment : Fragment() {
         return root;
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val stopwatchViewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        )[StopwatchViewModel::class.java]
         // gets adapter
-        adapter = StopwatchAdapter()
+        adapter = StopwatchAdapter {item -> sharedViewModel.switchClass(item)}
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
@@ -73,6 +79,9 @@ class StopwatchFragment : Fragment() {
         // each time classList changes we call adapter.submitList
         sharedViewModel.classList.observe(viewLifecycleOwner) { classList ->
             adapter.submitList(classList)
+        }
+        sharedViewModel.currentClass.observe(viewLifecycleOwner) { item ->
+            stopwatchViewModel.submitItem(item!!)
         }
     }
 

@@ -26,7 +26,9 @@ class SharedViewModel : ViewModel() {
 
     fun switchClass(item: ClassesItem) : Boolean {
         // returns true if the class changed
+        if (_currentClass.value != null) _currentClass.value!!.update_tracking()
         if (_currentClass.value == item) return false
+        item.update_tracking()
         _currentClass.value = item
         return true
     }

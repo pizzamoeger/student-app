@@ -25,6 +25,7 @@
         android:id="@+id/timer_start_button_classes_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_watch"
         android:visibility="gone" />
+    <!--        android:text="@string/start_watch"
+-->
 </LinearLayout>

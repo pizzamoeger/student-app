@@ -25,7 +25,15 @@ data class ClassesItem(
     }
     val text : LiveData<String> = _text
 
+    private val _tracking = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+    val tracking : LiveData<Boolean> = _tracking
+
     fun update_text() {
         _text.value = getTimeStringFromSeconds(secondsToday)
+    }
+    fun update_tracking() {
+        _tracking.value = !(_tracking.value)!!
     }
 }

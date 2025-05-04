@@ -37,7 +37,12 @@ class StopwatchAdapter (
             item.text.observe(lifecycleOwner) {
                 dailyTime.text = it
             }
+
             startButton.visibility = View.VISIBLE
+            item.tracking.observe(lifecycleOwner) {
+                if (it) startButton.text = "Stop"
+                else startButton.text = "Start"
+            }
             startButton.setOnClickListener {
                 onStartClick(item)
             }

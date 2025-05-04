@@ -91,7 +91,6 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     }
 
     fun reset() {
-        running = false;
         secondsToday = 0;
         for (item in SharedData.classList.value!!) item.reset()
         saveSeconds()

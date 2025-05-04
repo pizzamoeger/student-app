@@ -26,9 +26,8 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private var currentClass : ClassesItem? = null
 
     fun submitItem(newClass: ClassesItem) {
-        // is called each time the list in sharedViewModel changes
+        // is called each time the class in sharedViewModel changes
         currentClass = newClass
-        // notifyDataSetChanged()
     }
 
     private val _text = MutableLiveData<String>().apply {
@@ -88,8 +87,12 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         prefs.edit().putInt("seconds_total", secondsTotal).apply()
     }
 
-    fun button() {
-        running = !running;
+    fun button(switched: Boolean = false) {
+        // if switched is true, the class has switched
+        if (switched) running = true
+        else {
+            running = !running
+        }
     }
 
     fun reset() {

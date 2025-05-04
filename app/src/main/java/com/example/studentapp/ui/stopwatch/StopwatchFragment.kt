@@ -46,8 +46,7 @@ class StopwatchFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[StopwatchViewModel::class.java]
 
-        // connect the buttons to their functions
-        binding.buttonStopwatch.setOnClickListener {stopwatchViewModel.button()}
+        // connect the button to its function
         binding.resetButtonStopwatch.setOnClickListener {stopwatchViewModel.reset()}
 
         // connect the text objects
@@ -70,8 +69,10 @@ class StopwatchFragment : Fragment() {
             requireActivity(),
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[StopwatchViewModel::class.java]
+
         // gets adapter
-        adapter = StopwatchAdapter ({item -> sharedViewModel.switchClass(item)}, viewLifecycleOwner)
+        adapter = StopwatchAdapter ({item ->
+            stopwatchViewModel.button(sharedViewModel.switchClass(item))}, viewLifecycleOwner)
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
@@ -80,6 +81,7 @@ class StopwatchFragment : Fragment() {
         sharedViewModel.classList.observe(viewLifecycleOwner) { classList ->
             adapter.submitList(classList)
         }
+
         // each time currentClass changes, we call stopwatchViewModel.submitItem
         sharedViewModel.currentClass.observe(viewLifecycleOwner) { item ->
             stopwatchViewModel.submitItem(item!!)

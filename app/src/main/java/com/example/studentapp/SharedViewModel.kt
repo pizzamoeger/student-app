@@ -24,7 +24,10 @@ class SharedViewModel : ViewModel() {
         _classesList.value = _classesList.value?.filterNot {it.id == id}
     }
 
-    fun switchClass(item: ClassesItem) {
+    fun switchClass(item: ClassesItem) : Boolean {
+        // returns true if the class changed
+        if (_currentClass.value == item) return false
         _currentClass.value = item
+        return true
     }
 }

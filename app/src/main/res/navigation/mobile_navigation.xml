@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_classes"
         android:name="com.example.studentapp.ui.classes.ClassesFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_classes"
         tools:layout="@layout/fragment_classes" />
 
     <fragment

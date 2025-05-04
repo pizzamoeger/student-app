@@ -40,15 +40,18 @@ class ClassesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // gets adapter
         adapter = ClassesAdapter {id -> sharedViewModel.deleteClass(id)}
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
 
+        // each time classList changes we call adapter.submitList
         sharedViewModel.classList.observe(viewLifecycleOwner) { classList ->
             adapter.submitList(classList)
         }
 
+        // when the addButton is pressed, we create a new class
         binding.addButtonClasses.setOnClickListener {
             sharedViewModel.addClass("Class ${System.currentTimeMillis() % 1000}")
         }

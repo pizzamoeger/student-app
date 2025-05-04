@@ -6,16 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.studentapp.SharedViewModel
 import com.example.studentapp.databinding.FragmentClassesBinding
 
 class ClassesFragment : Fragment() {
 
     private var _binding: FragmentClassesBinding? = null
     private lateinit var adapter: ClassesAdapter
-    private val classesViewModel : ClassesViewModel by viewModels()
+    private val classesViewModel : ClassesViewModel by viewModels() // TODO google difference
+    private val sharedViewModel : SharedViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,17 +40,17 @@ class ClassesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = ClassesAdapter {id -> classesViewModel.deleteClass(id)}
+        adapter = ClassesAdapter {id -> sharedViewModel.deleteClass(id)}
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
 
-        classesViewModel.classList.observe(viewLifecycleOwner) { classList ->
+        sharedViewModel.classList.observe(viewLifecycleOwner) { classList ->
             adapter.submitList(classList)
         }
 
         binding.addButtonClasses.setOnClickListener {
-            classesViewModel.addClass("Class ${System.currentTimeMillis() % 1000}")
+            sharedViewModel.addClass("Class ${System.currentTimeMillis() % 1000}")
         }
     }
 

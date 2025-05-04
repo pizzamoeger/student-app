@@ -43,7 +43,7 @@ class ClassesFragment : Fragment() {
         return root
     }
 
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = ClassesAdapter {id -> classesViewModel.deleteClass(id)}
 
         binding.classRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -58,7 +58,7 @@ class ClassesFragment : Fragment() {
         }
         Log.d("TAG", "ClassesFragment loaded")
 
-    }*/
+    }
 
 
     override fun onDestroyView() {

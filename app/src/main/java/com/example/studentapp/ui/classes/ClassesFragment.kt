@@ -6,19 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.studentapp.SharedViewModel
+import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesBinding
 
 class ClassesFragment : Fragment() {
 
     private var _binding: FragmentClassesBinding? = null
     private lateinit var adapter: ClassesAdapter
-    private val classesViewModel : ClassesViewModel by viewModels() // TODO google difference
-    private val sharedViewModel : SharedViewModel by activityViewModels()
+    private val classesViewModel : ClassesViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,19 +38,19 @@ class ClassesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
-        adapter = ClassesAdapter {id -> sharedViewModel.deleteClass(id)}
+        adapter = ClassesAdapter {id -> SharedData.deleteClass(id)}
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
 
         // each time classList changes we call adapter.submitList
-        sharedViewModel.classList.observe(viewLifecycleOwner) { classList ->
+        SharedData.classList.observe(viewLifecycleOwner) { classList ->
             adapter.submitList(classList)
         }
 
         // when the addButton is pressed, we create a new class
         binding.addButtonClasses.setOnClickListener {
-            sharedViewModel.addClass("Class ${System.currentTimeMillis() % 1000}")
+            SharedData.addClass("Class ${System.currentTimeMillis() % 1000}")
         }
     }
 

@@ -5,18 +5,13 @@ import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.studentapp.SharedViewModel
+import com.example.studentapp.SharedData
 import com.example.studentapp.ui.classes.ClassesItem
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
@@ -97,7 +92,8 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     fun reset() {
         running = false;
-        secondsTotal = 0;
         secondsToday = 0;
+        for (item in SharedData.classList.value!!) item.reset()
+        saveSeconds()
     }
 }

@@ -33,7 +33,13 @@ data class ClassesItem(
     fun update_text() {
         _text.value = getTimeStringFromSeconds(secondsToday)
     }
+
     fun update_tracking() {
         _tracking.value = !(_tracking.value)!!
+    }
+
+    fun reset() {
+        secondsToday = 0
+        update_text()
     }
 }

@@ -57,4 +57,9 @@
         android:layout_marginTop="8dp"
         android:text="@string/reset_watch" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_classes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"/>
 </LinearLayout>

@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 
 // bridge between ClassesItem and RecyclerView, which displays each class
-class ClassesAdapter (
-    private val onDeleteClick: (Int) -> Unit
-) : RecyclerView.Adapter<ClassesAdapter.ClassesViewHolder> () {
+class StopwatchAdapter () : RecyclerView.Adapter<StopwatchAdapter.StopwatchViewHolder> () {
 
     private var classesList : List<ClassesItem> = emptyList()
 
@@ -21,30 +19,32 @@ class ClassesAdapter (
         notifyDataSetChanged()
     }
 
-    inner class ClassesViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class StopwatchViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         // each class has a name and a delete button
         // TODO use binding for this: constructor where we set binding
         private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
-        private val deleteButton: Button = itemView.findViewById(R.id.delete_button_classes_item)
+        private val dailyTime: TextView = itemView.findViewById(R.id.daily_time_classes_item)
+        private val startButton: Button = itemView.findViewById(R.id.timer_start_button_classes_item)
 
         fun bind(item: ClassesItem) {
             nameText.text = item.name
-            deleteButton.visibility = View.VISIBLE
-            deleteButton.setOnClickListener {
-                onDeleteClick(item.id)
+            dailyTime.text = ClassesItem.getTimeStringFromSeconds(item.secondsToday)
+            startButton.visibility = View.VISIBLE
+            startButton.setOnClickListener {
+                //onDeleteClick(item.id)
             }
         }
     }
 
     // creates view holder for a classItem
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopwatchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_class, parent, false)
-        return ClassesViewHolder(view)
+        return StopwatchViewHolder(view)
     }
 
     // binds each item in list to a viewHolder
     override fun onBindViewHolder(
-        holder: ClassesViewHolder,
+        holder: StopwatchViewHolder,
         position: Int) {
         holder.bind(classesList[position])
     }

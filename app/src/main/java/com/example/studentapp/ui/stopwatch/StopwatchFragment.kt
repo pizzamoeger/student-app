@@ -12,14 +12,21 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.studentapp.SharedViewModel
 import com.example.studentapp.databinding.FragmentStopwatchBinding
+import com.example.studentapp.ui.classes.ClassesAdapter
+import com.example.studentapp.ui.classes.StopwatchAdapter
 import java.util.Locale
 
 
 class StopwatchFragment : Fragment() {
 
     private var _binding: FragmentStopwatchBinding? = null
+    private lateinit var adapter: StopwatchAdapter
+    private val sharedViewModel : SharedViewModel by activityViewModels()
 
     private val binding get() = _binding!!
 
@@ -54,6 +61,19 @@ class StopwatchFragment : Fragment() {
         }
 
         return root;
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // gets adapter
+        adapter = StopwatchAdapter()
+
+        binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewClasses.adapter = adapter
+
+        // each time classList changes we call adapter.submitList
+        sharedViewModel.classList.observe(viewLifecycleOwner) { classList ->
+            adapter.submitList(classList)
+        }
     }
 
     override fun onDestroyView() {

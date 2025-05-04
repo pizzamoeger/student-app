@@ -8,9 +8,23 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
+    <TextView
+        android:id="@+id/daily_time_classes_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
     <Button
         android:id="@+id/delete_button_classes_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/delete_class" />
+        android:text="@string/delete_class"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/timer_start_button_classes_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_watch"
+        android:visibility="gone" />
 </LinearLayout>

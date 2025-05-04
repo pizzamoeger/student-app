@@ -11,6 +11,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.studentapp.ui.classes.ClassesItem
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Locale
@@ -49,13 +50,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     fun runTimer() {
         handler.post(object : Runnable {
             override fun run() {
-                // calculate hours, minutes and seconds and update _time accordingly
-                val hours = seconds / 3600
-                val minutes = (seconds % 3600) / 60
-                val secs = seconds % 60
-
-                val time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs)
-                _time.value = time
+                _time.value = ClassesItem.getTimeStringFromSeconds(seconds)
 
                 // if the stopwatch is running we increase seconds and save them
                 if (running) {

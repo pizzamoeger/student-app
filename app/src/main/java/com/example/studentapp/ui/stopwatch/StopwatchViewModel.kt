@@ -80,6 +80,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     fun saveSeconds() {
         prefs.edit().putInt("seconds_today", secondsToday).apply()
         prefs.edit().putInt("seconds_total", secondsTotal).apply()
+        SharedData.save()
     }
 
     fun button(switched: Boolean = false) {

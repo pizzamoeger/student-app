@@ -8,6 +8,7 @@ import com.example.studentapp.ui.classes.ClassesItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
+// data class for ClassesItem so that gson can save
 data class SerializableClass(
     val id: Int,
     val name: String,
@@ -15,33 +16,35 @@ data class SerializableClass(
     val secondsTotal: Int
 )
 
-
 class SharedData  {
     companion object {
         private val _classesList = MutableLiveData<List<ClassesItem>>(emptyList())
         lateinit var prefs: SharedPreferences
 
+        // is called once when app is created
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
             load()
         }
 
-        // TODO save classes when exiting apps
         private var nextId = 0;
         private var _currentClass = MutableLiveData<ClassesItem?>()
 
         val classList: LiveData<List<ClassesItem>> get() = _classesList
         val currentClass: LiveData<ClassesItem?> get() = _currentClass
 
+        // add class to classList
         fun addClass(name: String) {
             val newList = _classesList.value.orEmpty() + ClassesItem(nextId++, name, 0, 0)
             _classesList.value = newList
         }
 
+        // delete class by id from classList
         fun deleteClass(id: Int) {
             _classesList.value = _classesList.value?.filterNot { it.id == id }
         }
 
+        // switch currentClass to item
         fun switchClass(item: ClassesItem): Boolean {
             // returns true if the class changed
             if (_currentClass.value != null) _currentClass.value!!.update_tracking()
@@ -51,26 +54,34 @@ class SharedData  {
             return true
         }
 
+        // save to sharedPreferences
         fun save() {
             val gson = Gson()
+
+            // create a serializable list from classeslist
             val serializableList = _classesList.value.orEmpty().map {
                 SerializableClass(it.id, it.name, it.secondsToday, it.secondsTotal)
             }
+
             val json: String = gson.toJson(serializableList)
             prefs.edit().putString("classes_list", json).apply()
         }
 
+        // load from sharedPreferences
         fun load() {
             val gson = Gson()
             val json = prefs.getString("classes_list", null)
 
             if (json != null) {
+                // load list of serializableClass
                 val type = object : TypeToken<List<SerializableClass>>() {}.type
                 val list: List<SerializableClass> = gson.fromJson(json, type)
 
+                // create list of ClassesItem from this
                 val restored = list.map {
                     ClassesItem(it.id, it.name, it.secondsToday, it.secondsTotal)
                 }
+                
                 _classesList.value = restored
                 nextId = (list.maxOfOrNull { it.id } ?: 0) + 1
             }

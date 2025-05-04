@@ -19,7 +19,10 @@ class StopwatchFragment : Fragment() {
 
     private var _binding: FragmentStopwatchBinding? = null
     private lateinit var adapter: StopwatchAdapter
-    //private val stopwatchViewModel : StopwatchViewModel()
+    private val stopwatchViewModel : StopwatchViewModel = ViewModelProvider(
+                requireActivity(),
+                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+            )[StopwatchViewModel::class.java]
 
     private val binding get() = _binding!!
 
@@ -31,11 +34,6 @@ class StopwatchFragment : Fragment() {
     ): View {
         _binding = FragmentStopwatchBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val stopwatchViewModel = ViewModelProvider(
-            requireActivity(),
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        )[StopwatchViewModel::class.java]
 
         // connect the button to its function
         binding.resetButtonStopwatch.setOnClickListener {stopwatchViewModel.reset()}
@@ -56,10 +54,6 @@ class StopwatchFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val stopwatchViewModel = ViewModelProvider(
-            requireActivity(),
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        )[StopwatchViewModel::class.java]
 
         // gets adapter
         adapter = StopwatchAdapter ({item ->

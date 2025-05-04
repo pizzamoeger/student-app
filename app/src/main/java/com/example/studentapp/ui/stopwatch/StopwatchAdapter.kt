@@ -18,8 +18,8 @@ class StopwatchAdapter (
 
     private var classesList : List<ClassesItem> = emptyList()
 
+    // is called each time the list in sharedViewModel changes
     fun submitList(list: List<ClassesItem>) {
-        // is called each time the list in sharedViewModel changes
         classesList = list
         notifyDataSetChanged()
     }
@@ -32,14 +32,18 @@ class StopwatchAdapter (
         private val startButton: Button = itemView.findViewById(R.id.timer_start_button_classes_item)
 
         fun bind(item: ClassesItem) {
+            // bind name
             nameText.text = item.name
 
+            // bind time
             item.text.observe(lifecycleOwner) {
                 dailyTime.text = it
             }
 
+            // bind button
             startButton.visibility = View.VISIBLE
             item.tracking.observe(lifecycleOwner) {
+                // TODO use strings.xml for this
                 if (it) startButton.text = "Stop"
                 else startButton.text = "Start"
             }

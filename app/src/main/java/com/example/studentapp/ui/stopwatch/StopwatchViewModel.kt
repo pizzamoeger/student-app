@@ -20,8 +20,8 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     private var currentClass : ClassesItem? = null
 
+    // is called each time the class in sharedViewModel changes
     fun submitItem(newClass: ClassesItem) {
-        // is called each time the class in sharedViewModel changes
         currentClass = newClass
     }
 
@@ -40,13 +40,13 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     init {
         runTimer()
 
-        // Checks if app was already opened today
-        // if not, time is reset
         // TODO change this so that time is reset at midnight every day
+        // Checks if app was already opened today
         val lastOpened = prefs.getString("last_opened", null)
         val today = LocalDate.now().toString()
 
         if (lastOpened != today) {
+            // if not, time is reset
             reset()
             prefs.edit().putString("last_opened", today).apply()
         }
@@ -55,6 +55,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     fun runTimer() {
         handler.post(object : Runnable {
             override fun run() {
+                // update what time(s) should display
                 _time.value = ClassesItem.getTimeStringFromSeconds(secondsToday)
                 if (currentClass != null) currentClass!!.update_text()
 
@@ -91,6 +92,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         }
     }
 
+    // resets dailySeconds
     fun reset() {
         secondsToday = 0;
         for (item in SharedData.classList.value!!) item.reset()

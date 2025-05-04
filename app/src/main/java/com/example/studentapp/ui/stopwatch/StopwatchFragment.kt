@@ -71,7 +71,7 @@ class StopwatchFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[StopwatchViewModel::class.java]
         // gets adapter
-        adapter = StopwatchAdapter {item -> sharedViewModel.switchClass(item)}
+        adapter = StopwatchAdapter ({item -> sharedViewModel.switchClass(item)}, viewLifecycleOwner)
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
@@ -80,6 +80,7 @@ class StopwatchFragment : Fragment() {
         sharedViewModel.classList.observe(viewLifecycleOwner) { classList ->
             adapter.submitList(classList)
         }
+        // each time currentClass changes, we call stopwatchViewModel.submitItem
         sharedViewModel.currentClass.observe(viewLifecycleOwner) { item ->
             stopwatchViewModel.submitItem(item!!)
         }

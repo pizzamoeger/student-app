@@ -5,12 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 
 // bridge between ClassesItem and RecyclerView, which displays each class
 class StopwatchAdapter (
-    private val onStartClick: (ClassesItem) -> Unit
+    private val onStartClick: (ClassesItem) -> Unit,
+    private val lifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<StopwatchAdapter.StopwatchViewHolder> () {
 
     private var classesList : List<ClassesItem> = emptyList()
@@ -21,7 +24,7 @@ class StopwatchAdapter (
         notifyDataSetChanged()
     }
 
-    inner class StopwatchViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class StopwatchViewHolder(itemView : View, private val lifecycleOwner: LifecycleOwner) : RecyclerView.ViewHolder(itemView) {
         // each class has a name and a delete button
         // TODO use binding for this: constructor where we set binding
         private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
@@ -30,7 +33,10 @@ class StopwatchAdapter (
 
         fun bind(item: ClassesItem) {
             nameText.text = item.name
-            dailyTime.text = ClassesItem.getTimeStringFromSeconds(item.secondsToday)
+
+            item.text.observe(lifecycleOwner) {
+                dailyTime.text = it
+            }
             startButton.visibility = View.VISIBLE
             startButton.setOnClickListener {
                 onStartClick(item)
@@ -41,7 +47,7 @@ class StopwatchAdapter (
     // creates view holder for a classItem
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopwatchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_class, parent, false)
-        return StopwatchViewHolder(view)
+        return StopwatchViewHolder(view, lifecycleOwner)
     }
 
     // binds each item in list to a viewHolder

@@ -62,6 +62,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         handler.post(object : Runnable {
             override fun run() {
                 _time.value = ClassesItem.getTimeStringFromSeconds(secondsToday)
+                if (currentClass != null) currentClass!!.update_text()
 
                 // if the stopwatch is running we increase seconds and save them
                 if (running) {

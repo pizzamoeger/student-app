@@ -1,5 +1,7 @@
 package com.example.studentapp.ui.classes
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import java.util.Locale
 
 data class ClassesItem(
@@ -17,5 +19,13 @@ data class ClassesItem(
             val time = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, secs)
             return time
         }
+    }
+    private val _text = MutableLiveData<String>().apply {
+        value = getTimeStringFromSeconds(secondsToday)
+    }
+    val text : LiveData<String> = _text
+
+    fun update_text() {
+        _text.value = getTimeStringFromSeconds(secondsToday)
     }
 }

@@ -36,6 +36,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
         // Checks if app was already opened today
         // if not, time is reset
+        // TODO change this so that time is reset at midnight every day
         val lastOpened = prefs.getString("last_opened", null)
         val today = LocalDate.now().toString()
 

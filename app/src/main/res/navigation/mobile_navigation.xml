@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_stopwatch" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.studentapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_timetable"
+        android:name="com.example.studentapp.ui.timetable.TimetableFragment"
+        android:label="@string/title_timetable"
+        tools:layout="@layout/fragment_timetable" />
 
     <fragment
         android:id="@+id/navigation_notifications"

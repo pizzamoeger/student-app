@@ -12,18 +12,19 @@ class ClassesAdapter (
     private val onDeleteClick: (Int) -> Unit
 ) : RecyclerView.Adapter<ClassesAdapter.ClassesViewHolder> () {
 
-    private var classesList : List<Class> = emptyList()
+    private var classesList : List<ClassesItem> = emptyList()
 
-    fun submitList(list: List<Class>) {
+    fun submitList(list: List<ClassesItem>) {
         classesList = list
         notifyDataSetChanged()
     }
 
     inner class ClassesViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        private val nameText: TextView = itemView.findViewById(R.id.classNameText)
-        private val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
+        // TODO use binding for this
+        private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
+        private val deleteButton: Button = itemView.findViewById(R.id.delete_button_classes_item)
 
-        fun bind(item: Class) {
+        fun bind(item: ClassesItem) {
             nameText.text = item.name
             deleteButton.setOnClickListener {
                 onDeleteClick(item.id)

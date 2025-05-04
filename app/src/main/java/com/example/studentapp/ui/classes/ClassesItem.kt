@@ -1,6 +1,6 @@
 package com.example.studentapp.ui.classes
 
-data class Class(
+data class ClassesItem(
     val id: Int,
     val name: String
 )

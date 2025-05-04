@@ -3,13 +3,12 @@ package com.example.studentapp.ui.classes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import javax.security.auth.Subject
 
 class ClassesViewModel : ViewModel() {
-    private val _classList = MutableLiveData<List<Class>>(emptyList())
+    private val _classesList = MutableLiveData<List<ClassesItem>>(emptyList())
     private var nextId = 0;
 
-    val classList : LiveData<List<Class>> get() = _classList
+    val classList : LiveData<List<ClassesItem>> get() = _classesList
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is classes Fragment"
@@ -17,11 +16,11 @@ class ClassesViewModel : ViewModel() {
     val text: LiveData<String> = _text
 
     fun addClass(name: String) {
-        val newList = _classList.value.orEmpty() + Class(nextId++, name)
-        _classList.value = newList
+        val newList = _classesList.value.orEmpty() + ClassesItem(nextId++, name)
+        _classesList.value = newList
     }
 
     fun deleteClass(id: Int) {
-        _classList.value = _classList.value?.filterNot {it.id == id}
+        _classesList.value = _classesList.value?.filterNot {it.id == id}
     }
 }

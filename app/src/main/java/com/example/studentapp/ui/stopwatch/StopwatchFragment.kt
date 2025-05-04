@@ -32,24 +32,24 @@ class StopwatchFragment : Fragment() {
         _binding = FragmentStopwatchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val stopwatchViewModel = ViewModelProvider(
+        val viewModel = ViewModelProvider(
             requireActivity(),
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[StopwatchViewModel::class.java]
 
         // connect the buttons to their functions
-        binding.stopButton.setOnClickListener {stopwatchViewModel.stop()}
-        binding.startButton.setOnClickListener {stopwatchViewModel.start()}
-        binding.resetButton.setOnClickListener {stopwatchViewModel.reset()}
+        binding.stopButtonStopwatch.setOnClickListener {viewModel.stop()}
+        binding.startButtonStopwatch.setOnClickListener {viewModel.start()}
+        binding.resetButtonStopwatch.setOnClickListener {viewModel.reset()}
 
         // connect the text objects
         val textView: TextView = binding.textStopwatch
-        val timeView: TextView = binding.timeView
+        val timeView: TextView = binding.timeStopwatch
 
-        stopwatchViewModel.text.observe(viewLifecycleOwner) {
+        viewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
-        stopwatchViewModel.time.observe(viewLifecycleOwner) {
+        viewModel.time.observe(viewLifecycleOwner) {
             timeView.text = it
         }
 

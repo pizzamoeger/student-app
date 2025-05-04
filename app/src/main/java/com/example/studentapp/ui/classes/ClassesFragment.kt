@@ -26,13 +26,11 @@ class ClassesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val viewModel = ViewModelProvider(this).get(ClassesViewModel::class.java)
-
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textClasses
-        viewModel.text.observe(viewLifecycleOwner) {
+        classesViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

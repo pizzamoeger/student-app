@@ -20,7 +20,7 @@ class ClassesAdapter (
     }
 
     inner class ClassesViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        // TODO use binding for this
+        // TODO use binding for this: constructor where we set binding
         private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
         private val deleteButton: Button = itemView.findViewById(R.id.delete_button_classes_item)
 

@@ -16,7 +16,7 @@ class ClassesViewModel : ViewModel() {
     val text: LiveData<String> = _text
 
     fun addClass(name: String) {
-        val newList = _classesList.value.orEmpty() + ClassesItem(nextId++, name)
+        val newList = _classesList.value.orEmpty() + ClassesItem(nextId++, name, 0, 0)
         _classesList.value = newList
     }
 

@@ -4,17 +4,27 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentStopwatchBinding
 import com.example.studentapp.ui.classes.StopwatchAdapter
+import com.google.android.material.appbar.MaterialToolbar
 
 
 class StopwatchFragment : Fragment() {
@@ -83,10 +93,14 @@ class StopwatchFragment : Fragment() {
         SharedData.currentClass.observe(viewLifecycleOwner) { item ->
             stopwatchViewModel.submitItem(item!!)
         }
+
+        // Hide the system ActionBar
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
     }
 }

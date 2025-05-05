@@ -61,6 +61,13 @@ data class ClassesItem(
         return getSeconds(firstOfMonth.toString(), today.toString())
     }
 
+    // get total seconds spent studying
+    fun secondsTotal() : Int {
+        SharedData.updateDate()
+        val today : LocalDate? = SharedData.today.value
+        return getSeconds(LocalDate.MIN.toString(), today.toString())
+    }
+
     // string of secondsToday
     private val _text = MutableLiveData<String>().apply {
         value = getTimeStringFromSeconds(secondsToday())

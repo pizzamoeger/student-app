@@ -39,7 +39,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         // TODO change this so that time is reset at midnight every day
         SharedData.updateDate()
         SharedData.classList.value!!.forEach { entry ->
-            secondsTotalAll += entry.getSeconds(LocalDate.MIN.toString(), SharedData.today.toString())
+            secondsTotalAll += entry.secondsTotal()
             secondsTodayAll += entry.secondsToday()
         }
         /*// Checks if app was already opened today
@@ -83,6 +83,11 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     fun saveSeconds() {
         SharedData.save()
+    }
+
+    fun stop() {
+        running = false
+        if (SharedData.currentClass.value != null) SharedData.currentClass.value!!.updateTracking(false)
     }
 
     fun button(switched: Boolean = false) {

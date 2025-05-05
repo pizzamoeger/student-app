@@ -2,6 +2,7 @@ package com.example.studentapp.ui.stopwatch
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +68,8 @@ class StopwatchFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner,
             onClassesItemClick = {item ->
                 val action = StopwatchFragmentDirections.actionStopwatchToClassesItem(item.id.toString())
-                findNavController().navigate(action)})
+                findNavController().navigate(action)
+                stopwatchViewModel.stop()})
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter

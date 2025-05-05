@@ -13,7 +13,6 @@ import com.example.studentapp.SharedData
 import com.example.studentapp.ui.classes.ClassesItem
 import java.time.LocalDate
 
-@RequiresApi(Build.VERSION_CODES.O)
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val handler = Handler(Looper.getMainLooper());
     private val prefs = app.getSharedPreferences("stopwatch_prefs", Context.MODE_PRIVATE)
@@ -33,40 +32,46 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     val text: LiveData<String> = _text
     val time: LiveData<String> = _time
 
-    private var secondsToday = prefs.getInt("seconds_today", 0);
-    private var secondsTotal = prefs.getInt("seconds_total", 0);
     private var running = false;
+    private var secondsTodayAll = 0
+    private var secondsTotalAll = 0
 
     init {
         runTimer()
-
         // TODO change this so that time is reset at midnight every day
-        // Checks if app was already opened today
+        SharedData.updateDate()
+        SharedData.classList.value!!.forEach { entry ->
+            secondsTotalAll += entry.getSeconds(LocalDate.MIN.toString(), SharedData.today.toString())
+            secondsTodayAll += entry.secondsToday()
+        }
+        /*// Checks if app was already opened today
         val lastOpened = prefs.getString("last_opened", null)
         val today = LocalDate.now().toString()
+
+
 
         if (lastOpened != today) {
             // if not, time is reset
             reset()
             prefs.edit().putString("last_opened", today).apply()
-        }
+        }*/
     }
 
     fun runTimer() {
         handler.post(object : Runnable {
             override fun run() {
                 // update what time(s) should display
-                _time.value = ClassesItem.getTimeStringFromSeconds(secondsToday)
-                if (currentClass != null) currentClass!!.update_text()
+                _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
+                if (currentClass != null) currentClass!!.updateText()
 
                 // if the stopwatch is running we increase seconds and save them
                 if (running) {
-                    secondsToday++
-                    secondsTotal++
+                    secondsTodayAll++
+                    secondsTotalAll++
 
                     if (currentClass != null) {
-                        currentClass!!.secondsToday++
-                        currentClass!!.secondsTotal++
+                        val today = SharedData.today.value.toString()
+                        currentClass!!.studyTime[today] = currentClass!!.studyTime.getOrDefault(today, 0)+1
                     }
 
                     saveSeconds()
@@ -79,8 +84,6 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     }
 
     fun saveSeconds() {
-        prefs.edit().putInt("seconds_today", secondsToday).apply()
-        prefs.edit().putInt("seconds_total", secondsTotal).apply()
         SharedData.save()
     }
 
@@ -94,7 +97,6 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     // resets dailySeconds
     fun reset() {
-        secondsToday = 0;
         for (item in SharedData.classList.value!!) item.reset()
         saveSeconds()
     }

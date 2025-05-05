@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentStopwatchBinding
@@ -61,8 +62,12 @@ class StopwatchFragment : Fragment() {
         }
 
         // gets adapter
-        adapter = StopwatchAdapter ({item ->
-            stopwatchViewModel.button(SharedData.switchClass(item))}, viewLifecycleOwner)
+        adapter = StopwatchAdapter (onStartClick = {item ->
+            stopwatchViewModel.button(SharedData.switchClass(item))},
+            lifecycleOwner = viewLifecycleOwner,
+            onClassesItemClick = {item ->
+                val action = StopwatchFragmentDirections.actionStopwatchToClassesItem(item.id.toString())
+                findNavController().navigate(action)})
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter

@@ -9,13 +9,21 @@
         android:id="@+id/navigation_classes"
         android:name="com.example.studentapp.ui.classes.ClassesFragment"
         android:label="@string/title_classes"
-        tools:layout="@layout/fragment_classes" />
+        tools:layout="@layout/fragment_classes">
+        <action
+            android:id="@+id/action_classes_to_classes_item"
+            app:destination="@id/class_detail_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_stopwatch"
         android:name="com.example.studentapp.ui.stopwatch.StopwatchFragment"
         android:label="@string/title_stopwatch"
-        tools:layout="@layout/fragment_stopwatch" />
+        tools:layout="@layout/fragment_stopwatch">
+        <action
+            android:id="@+id/action_stopwatch_to_classes_item"
+            app:destination="@id/class_detail_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_timetable"
@@ -28,4 +36,13 @@
         android:name="com.example.studentapp.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/class_detail_fragment"
+        android:name="com.example.studentapp.ui.classesItem.ClassesItemFragment"
+        tools:layout="@layout/fragment_classes_item">
+        <argument
+            android:name="classId"
+            app:argType="string" />
+    </fragment>
 </navigation>

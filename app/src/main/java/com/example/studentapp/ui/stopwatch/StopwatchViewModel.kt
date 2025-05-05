@@ -2,15 +2,13 @@ package com.example.studentapp.ui.stopwatch
 
 import android.app.Application
 import android.content.Context
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
-import com.example.studentapp.ui.classes.ClassesItem
+import com.example.studentapp.ui.classesItem.ClassesItem
 import java.time.LocalDate
 
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {

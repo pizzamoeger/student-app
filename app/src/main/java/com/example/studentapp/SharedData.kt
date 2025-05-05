@@ -2,12 +2,10 @@ package com.example.studentapp
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.studentapp.ui.classes.ClassesItem
-import com.example.studentapp.ui.classes.SerializableClassesItem
+import com.example.studentapp.ui.classesItem.ClassesItem
+import com.example.studentapp.ui.classesItem.SerializableClassesItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate

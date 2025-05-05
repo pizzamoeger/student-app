@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
+import com.example.studentapp.ui.classesItem.ClassesItem
 
 // bridge between ClassesItem and RecyclerView, which displays each class
 class ClassesAdapter (

@@ -1,4 +1,4 @@
-package com.example.studentapp.ui.classes
+package com.example.studentapp.ui.classesItem
 
 // data class for ClassesItem so that gson can save
 data class SerializableClassesItem(

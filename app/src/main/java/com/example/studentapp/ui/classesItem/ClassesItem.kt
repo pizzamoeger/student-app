@@ -1,7 +1,5 @@
-package com.example.studentapp.ui.classes
+package com.example.studentapp.ui.classesItem
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData

@@ -29,27 +29,36 @@ class ClassesItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // sets classId
+        _classId = args.classId.toInt()
+
         _binding = FragmentClassesItemBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        _classId = args.classId.toInt()
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // update Date as we are displaying time again
+        SharedData.updateDate()
+
+        // create viewmodel and setId
         val classesItemViewModel =
             ViewModelProvider(this).get(ClassesItemViewModel::class.java)
         classesItemViewModel.setId(_classId)
 
+        // set the label of this fragment
         val thisClass = SharedData.classList.value?.find { it.id == _classId }
         (requireActivity() as AppCompatActivity).supportActionBar?.title = thisClass!!.name
 
+        // bind text
         val textView: TextView = binding.textClassesItem
         classesItemViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
+        // bind all time informations
         val dailyTime: TextView = binding.timeDailyClassesItem
         classesItemViewModel.dailyTime.observe(viewLifecycleOwner) {
             dailyTime.text = it
@@ -69,7 +78,6 @@ class ClassesItemFragment : Fragment() {
         classesItemViewModel.totalTime.observe(viewLifecycleOwner) {
             totalTime.text = it
         }
-        // Use classId to fetch and display class data
     }
 
     override fun onDestroyView() {

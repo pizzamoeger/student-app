@@ -91,6 +91,8 @@ class SharedData  {
             }
         }
 
+        // TODO call this once at midnight
+        // but then if user sets time manually it breaks
         fun updateDate() {
             if (LocalDate.now().toString() != _today.value.toString()) {
                 _today.value = LocalDate.now()

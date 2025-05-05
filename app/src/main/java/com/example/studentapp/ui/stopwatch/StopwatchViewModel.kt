@@ -13,7 +13,6 @@ import java.time.LocalDate
 
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val handler = Handler(Looper.getMainLooper());
-    private val prefs = app.getSharedPreferences("stopwatch_prefs", Context.MODE_PRIVATE)
 
     private var currentClass : ClassesItem? = null
 
@@ -37,22 +36,12 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     init {
         runTimer()
         // TODO change this so that time is reset at midnight every day
+        // update date each time we switch to timer
         SharedData.updateDate()
         SharedData.classList.value!!.forEach { entry ->
             secondsTotalAll += entry.secondsTotal()
             secondsTodayAll += entry.secondsToday()
         }
-        /*// Checks if app was already opened today
-        val lastOpened = prefs.getString("last_opened", null)
-        val today = LocalDate.now().toString()
-
-
-
-        if (lastOpened != today) {
-            // if not, time is reset
-            reset()
-            prefs.edit().putString("last_opened", today).apply()
-        }*/
     }
 
     fun runTimer() {
@@ -85,6 +74,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         SharedData.save()
     }
 
+    // stop tracking
     fun stop() {
         running = false
         if (SharedData.currentClass.value != null) SharedData.currentClass.value!!.updateTracking(false)
@@ -98,7 +88,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         }
     }
 
-    // resets dailySeconds
+    // TODO is this actually still needed? rename maybe
     fun reset() {
         for (item in SharedData.classList.value!!) item.reset()
         saveSeconds()

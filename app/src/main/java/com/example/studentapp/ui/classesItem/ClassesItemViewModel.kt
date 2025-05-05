@@ -11,10 +11,10 @@ class ClassesItemViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
         value = "This is class $_classId"
     }
-    private val _dailyTime = MutableLiveData<String>().apply {ClassesItem.getTimeStringFromSeconds(0)}
-    private val _weeklyTime = MutableLiveData<String>().apply {ClassesItem.getTimeStringFromSeconds(0)}
-    private val _monthlyTime = MutableLiveData<String>().apply {ClassesItem.getTimeStringFromSeconds(0)}
-    private val _totalTime = MutableLiveData<String>().apply {ClassesItem.getTimeStringFromSeconds(0)}
+    private val _dailyTime = MutableLiveData<String>()
+    private val _weeklyTime = MutableLiveData<String>()
+    private val _monthlyTime = MutableLiveData<String>()
+    private val _totalTime = MutableLiveData<String>()
 
     val text: LiveData<String> = _text
     val dailyTime: LiveData<String> = _dailyTime
@@ -22,12 +22,15 @@ class ClassesItemViewModel : ViewModel() {
     val monthlyTime: LiveData<String> = _monthlyTime
     val totalTime: LiveData<String> = _totalTime
 
+    // TODO find a better way to do this
+    // sets id of class and then calls write function
     fun setId(id : Int) {
        _classId = id
         _text.value = "This is class $_classId"
         write()
     }
 
+    // writes information to the variables
     fun write() {
         val thisClass = SharedData.classList.value?.find { it.id == _classId }
 

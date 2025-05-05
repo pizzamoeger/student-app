@@ -9,6 +9,8 @@ data class ClassesItem(
     val name: String,
     var secondsToday: Int,
     var secondsTotal: Int) {
+
+    // static
     companion object {
         fun getTimeStringFromSeconds(secs: Int): String {
             // calculate hours, minutes and seconds and update _time accordingly
@@ -20,24 +22,30 @@ data class ClassesItem(
             return time
         }
     }
+
+    // string of secondsToday
     private val _text = MutableLiveData<String>().apply {
         value = getTimeStringFromSeconds(secondsToday)
     }
     val text : LiveData<String> = _text
 
+    // if this class is currently being tracked
     private val _tracking = MutableLiveData<Boolean>().apply {
         value = false
     }
     val tracking : LiveData<Boolean> = _tracking
 
+    // update string for secondsToday
     fun update_text() {
         _text.value = getTimeStringFromSeconds(secondsToday)
     }
 
+    // update if this class is being tracked
     fun update_tracking() {
         _tracking.value = !(_tracking.value)!!
     }
 
+    // reset secondsToday
     fun reset() {
         secondsToday = 0
         update_text()

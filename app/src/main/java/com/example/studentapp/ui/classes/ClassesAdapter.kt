@@ -15,12 +15,13 @@ class ClassesAdapter (
 
     private var classesList : List<ClassesItem> = emptyList()
 
+    // is called each time the list in sharedViewModel changes
     fun submitList(list: List<ClassesItem>) {
-        // is called each time the list in sharedViewModel changes
         classesList = list
         notifyDataSetChanged()
     }
 
+    // view holder for class item
     inner class ClassesViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         // each class has a name and a delete button
         // TODO use binding for this: constructor where we set binding
@@ -28,7 +29,10 @@ class ClassesAdapter (
         private val deleteButton: Button = itemView.findViewById(R.id.delete_button_classes_item)
 
         fun bind(item: ClassesItem) {
+            // bind name
             nameText.text = item.name
+
+            // bind delete button
             deleteButton.visibility = View.VISIBLE
             deleteButton.setOnClickListener {
                 onDeleteClick(item.id)

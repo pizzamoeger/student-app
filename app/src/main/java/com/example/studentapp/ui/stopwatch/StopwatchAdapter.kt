@@ -24,6 +24,7 @@ class StopwatchAdapter (
         notifyDataSetChanged()
     }
 
+    // view holder for class item
     inner class StopwatchViewHolder(itemView : View, private val lifecycleOwner: LifecycleOwner) : RecyclerView.ViewHolder(itemView) {
         // each class has a name and a delete button
         // TODO use binding for this: constructor where we set binding

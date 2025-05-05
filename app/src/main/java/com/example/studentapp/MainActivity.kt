@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // TODO make that this is executed when switching between things in bottom menu
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return navController.navigateUp() || super.onSupportNavigateUp()

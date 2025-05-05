@@ -10,6 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
+import com.example.studentapp.ui.classes.ClassesFragment
+import com.example.studentapp.ui.stopwatch.StopwatchFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,10 +31,19 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_classes, R.id.navigation_stopwatch, R.id.navigation_timetable, R.id.navigation_notifications
+                R.id.navigation_classes,
+                R.id.navigation_stopwatch,
+                R.id.navigation_timetable,
+                R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

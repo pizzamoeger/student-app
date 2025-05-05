@@ -6,9 +6,11 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
+    app:layout_constraintEnd_toEndOf="parent"
+    app:titleTextColor="@android:color/white">
 
     <!-- LinearLayout inside the Toolbar to hold the clickable texts -->
     <LinearLayout

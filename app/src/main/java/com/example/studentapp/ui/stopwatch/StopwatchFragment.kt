@@ -1,30 +1,21 @@
 package com.example.studentapp.ui.stopwatch
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.studentapp.MainActivity
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentStopwatchBinding
 import com.example.studentapp.ui.classes.StopwatchAdapter
-import com.google.android.material.appbar.MaterialToolbar
 
 
 class StopwatchFragment : Fragment() {
@@ -47,6 +38,9 @@ class StopwatchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Hide the default toolbar from activity
+        (requireActivity() as MainActivity).hideDefaultToolbar()
+
         // initialize viewModel
         stopwatchViewModel = ViewModelProvider(
             requireActivity(),
@@ -94,13 +88,22 @@ class StopwatchFragment : Fragment() {
             stopwatchViewModel.submitItem(item!!)
         }
 
-        // Hide the system ActionBar
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+        // TODO make custom toolbar in each fragment
+        // Set the custom toolbar for this fragment
+
+        // Set the custom toolbar
+        /*val toolbar = view.findViewById<Toolbar>(R.id.toolbar_container)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+
+        toolbar.title = "My Custom Toolbar"*/
+
+        // Optional: enable back button
+        // (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
+        (requireActivity() as MainActivity).showDefaultToolbar()
     }
 }

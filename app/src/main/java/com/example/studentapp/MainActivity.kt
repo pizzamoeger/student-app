@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // toolbar
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         // bottom navigation
         val navView: BottomNavigationView = binding.navView
@@ -48,4 +52,19 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+    fun hideDefaultToolbar() {
+        supportActionBar?.hide()
+    }
+
+    fun showDefaultToolbar() {
+        //setSupportActionBar(findViewById(R.id.toolbar))
+        /*supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            this.title =
+        }*/
+        supportActionBar?.show()
+    }
+
 }

@@ -48,9 +48,14 @@ class SharedData  {
         // switch currentClass to item
         fun switchClass(item: ClassesItem): Boolean {
             // returns true if the class changed
-            if (_currentClass.value != null) _currentClass.value!!.updateTracking()
-            if (_currentClass.value == item) return false
-            item.updateTracking()
+            if (_currentClass.value == item) {
+                item.updateTracking(!item.tracking.value!!)
+                return false
+            }
+            if (_currentClass.value != null) {
+                _currentClass.value!!.updateTracking(false)
+            }
+            item.updateTracking(true)
             _currentClass.value = item
             return true
         }

@@ -81,8 +81,8 @@ data class ClassesItem(
     }
 
     // update if this class is being tracked
-    fun updateTracking() {
-        _tracking.value = !(_tracking.value)!!
+    fun updateTracking(to : Boolean) {
+        _tracking.value = to
     }
 
     // reset secondsToday

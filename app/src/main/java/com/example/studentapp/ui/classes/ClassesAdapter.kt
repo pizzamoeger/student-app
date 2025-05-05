@@ -11,8 +11,9 @@ import com.example.studentapp.ui.classesItem.ClassesItem
 
 // bridge between ClassesItem and RecyclerView, which displays each class
 class ClassesAdapter (
-    private val onDeleteClick: (Int) -> Unit
-) : RecyclerView.Adapter<ClassesAdapter.ClassesViewHolder> () {
+    private val onDeleteClick: (Int) -> Unit,
+    private val onClassesItemClick: (ClassesItem) -> Unit)
+    : RecyclerView.Adapter<ClassesAdapter.ClassesViewHolder> () {
 
     private var classesList : List<ClassesItem> = emptyList()
 
@@ -37,6 +38,11 @@ class ClassesAdapter (
             deleteButton.visibility = View.VISIBLE
             deleteButton.setOnClickListener {
                 onDeleteClick(item.id)
+            }
+
+            // bind item click
+            itemView.setOnClickListener {
+                onClassesItemClick(item)
             }
         }
     }

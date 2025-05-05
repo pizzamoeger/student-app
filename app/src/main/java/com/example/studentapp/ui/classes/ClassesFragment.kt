@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesBinding
+import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
 
 class ClassesFragment : Fragment() {
 
@@ -39,7 +41,10 @@ class ClassesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
-        adapter = ClassesAdapter {id -> SharedData.deleteClass(id)}
+        adapter = ClassesAdapter (onDeleteClick = {id -> SharedData.deleteClass(id)},
+            onClassesItemClick = {item ->
+                val action = ClassesFragmentDirections.actionClassesToClassesItem(item.id.toString())
+                findNavController().navigate(action)})
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter

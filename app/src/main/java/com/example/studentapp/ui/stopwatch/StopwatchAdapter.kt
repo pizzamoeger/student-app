@@ -16,7 +16,8 @@ import com.example.studentapp.ui.classesItem.ClassesItem
 class StopwatchAdapter (
     private val onStartClick: (ClassesItem) -> Unit,
     private val lifecycleOwner: LifecycleOwner,
-    private val onClassesItemClick: (ClassesItem) -> Unit) : RecyclerView.Adapter<StopwatchAdapter.StopwatchViewHolder> () {
+    private val onClassesItemClick: (ClassesItem) -> Unit)
+    : RecyclerView.Adapter<StopwatchAdapter.StopwatchViewHolder> () {
 
     private var classesList : List<ClassesItem> = emptyList()
 

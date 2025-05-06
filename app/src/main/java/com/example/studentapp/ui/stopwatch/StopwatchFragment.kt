@@ -111,6 +111,7 @@ class StopwatchFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        stopwatchViewModel.stop()
         _binding = null
     }
 }

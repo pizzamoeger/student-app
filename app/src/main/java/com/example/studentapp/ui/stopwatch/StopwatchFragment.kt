@@ -1,6 +1,7 @@
 package com.example.studentapp.ui.stopwatch
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentStopwatchBinding
 import com.example.studentapp.ui.classes.StopwatchAdapter
+import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.insights.InsightsFragmentDirections
 
 
@@ -91,20 +93,22 @@ class StopwatchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        // TODO make function for this
         // display top navigation
         val activityBinding = (requireActivity() as MainActivity).binding
         val toolbar = activityBinding.includedToolbar
 
-        // text left links to nothing (is current)
-        toolbar.textLeft.setTextColor(resources.getColor(R.color.black, requireContext().theme))
-        toolbar.textLeft.setOnClickListener {}
+        // left selection links to nothing (is current)
+        context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
+        context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
+        toolbar.selectionLeft.setOnClickListener {}
 
-        // text right links to insights
-        toolbar.textRight.setTextColor(resources.getColor(android.R.color.darker_gray, requireContext().theme))
-        toolbar.textRight.setOnClickListener { _ ->
+        // right selection links to insight
+        context?.let { toolbar.textRight.setTextColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
+        context?.let { toolbar.lineRight.setBackgroundColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
+        toolbar.selectionRight.setOnClickListener {
             val action = StopwatchFragmentDirections.actionStopwatchToInsights()
             findNavController().navigate(action)
-            (requireActivity() as MainActivity).hideDefaultToolbar()
             stopwatchViewModel.stop()
         }
     }

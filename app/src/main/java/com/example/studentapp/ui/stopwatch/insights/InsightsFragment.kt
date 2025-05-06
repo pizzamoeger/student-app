@@ -14,6 +14,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentInsightsBinding
 import com.example.studentapp.ui.classes.StopwatchAdapter
+import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.insights.InsightsFragmentDirections
 import com.example.studentapp.ui.stopwatch.StopwatchViewModel
 
@@ -44,16 +45,18 @@ class InsightsFragment : Fragment() {
         val activityBinding = (requireActivity() as MainActivity).binding
         val toolbar = activityBinding.includedToolbar
 
-        // text right links to stopwatch
-        toolbar.textLeft.setTextColor(resources.getColor(android.R.color.darker_gray, requireContext().theme))
-        toolbar.textLeft.setOnClickListener {
+        // left selection links to stopwatch
+        context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
+        context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
+        toolbar.selectionLeft.setOnClickListener {
             val action = InsightsFragmentDirections.actionInsightsToStopwatch()
             findNavController().navigate(action)
         }
 
-        // text right links to nothing (is current)
-        toolbar.textRight.setTextColor(resources.getColor(R.color.black, requireContext().theme))
-        toolbar.textRight.setOnClickListener {}
+        // right selection links to nothing (is current)
+        context?.let { toolbar.textRight.setTextColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
+        context?.let { toolbar.lineRight.setBackgroundColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
+        toolbar.selectionRight.setOnClickListener {}
     }
 
     override fun onDestroyView() {

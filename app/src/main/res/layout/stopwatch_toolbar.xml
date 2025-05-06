@@ -1,51 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar_stopwatch"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:titleTextColor="@android:color/white"
-    android:visibility="gone">
+    app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- LinearLayout inside the Toolbar to hold the clickable texts -->
+    <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         android:paddingEnd="16dp">
 
-        <!-- First clickable text -->
-        <TextView
-            android:id="@+id/text_left"
+        <!-- Stopwatch section -->
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/title_stopwatch"
-            android:textColor="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/selection_left"
             android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:layout_marginEnd="16dp"/>
+            android:focusable="true">
 
-        <!-- Second clickable text -->
-        <TextView
-            android:id="@+id/text_right"
+            <TextView
+                android:id="@+id/text_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_stopwatch"
+                android:padding="8dp"
+                android:gravity="center" />
+
+            <View
+                android:id="@+id/line_left"
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <!-- Insights section -->
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/title_insights"
-            android:textColor="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/selection_right"
             android:clickable="true"
-            android:gravity="center"
-            android:focusable="true"/>
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/text_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_insights"
+                android:padding="8dp"
+                android:gravity="center" />
+
+            <View
+                android:id="@+id/line_right"
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

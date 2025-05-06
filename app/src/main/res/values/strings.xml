@@ -12,6 +12,8 @@
     <string name="stop_watch">Stop</string>
     <string name="reset_watch">Reset</string>
 
+    <string name="title_insights">Insights</string>
+
     <string name="title_notifications">Notifications</string>
 
     <!--TIMETABLE STRINGS-->

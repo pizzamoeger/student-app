@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentStopwatchBinding
 import com.example.studentapp.ui.classes.StopwatchAdapter
+import com.example.studentapp.ui.stopwatch.insights.InsightsFragmentDirections
 
 
 class StopwatchFragment : Fragment() {
@@ -38,9 +40,6 @@ class StopwatchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Hide the default toolbar from activity
-        (requireActivity() as MainActivity).hideDefaultToolbar()
-
         // initialize viewModel
         stopwatchViewModel = ViewModelProvider(
             requireActivity(),
@@ -87,23 +86,39 @@ class StopwatchFragment : Fragment() {
         SharedData.currentClass.observe(viewLifecycleOwner) { item ->
             stopwatchViewModel.submitItem(item!!)
         }
+    }
 
-        // TODO make custom toolbar in each fragment
-        // Set the custom toolbar for this fragment
+    override fun onResume() {
+        super.onResume()
 
-        // Set the custom toolbar
-        /*val toolbar = view.findViewById<Toolbar>(R.id.toolbar_container)
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        // hide default toolbar and display top level navigation
+        (requireActivity() as MainActivity).hideDefaultToolbar()
 
-        toolbar.title = "My Custom Toolbar"*/
+        val activityBinding = (requireActivity() as MainActivity).binding
+        val toolbar = activityBinding.includedToolbar
 
-        // Optional: enable back button
-        // (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // text left links to nothing (is current)
+        toolbar.textLeft.setTextColor(resources.getColor(R.color.black, requireContext().theme))
+        toolbar.textLeft.setOnClickListener {}
+
+        // text right links to insights
+        toolbar.textRight.setTextColor(resources.getColor(android.R.color.darker_gray, requireContext().theme))
+        toolbar.textRight.setOnClickListener { _ ->
+            val action = StopwatchFragmentDirections.actionStopwatchToInsights()
+            findNavController().navigate(action)
+            (requireActivity() as MainActivity).hideDefaultToolbar()
+            stopwatchViewModel.stop()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // show default toolbar again
+        (requireActivity() as MainActivity).showDefaultToolbar()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        (requireActivity() as MainActivity).showDefaultToolbar()
     }
 }

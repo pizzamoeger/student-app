@@ -11,15 +11,6 @@
     android:padding="16dp"
     tools:context=".ui.stopwatch.StopwatchFragment">
 
-    <include
-        android:id="@+id/toolbar_container"
-        layout="@layout/stopwatch_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <TextView
         android:id="@+id/text_stopwatch"
         android:layout_width="match_parent"

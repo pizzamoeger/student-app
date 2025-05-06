@@ -4,16 +4,18 @@
     android:id="@+id/toolbar_stopwatch"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
+    android:background="@color/white"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:titleTextColor="@android:color/white">
+    app:titleTextColor="@android:color/white"
+    android:visibility="gone">
 
     <!-- LinearLayout inside the Toolbar to hold the clickable texts -->
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -25,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Left"
+            android:text="@string/title_stopwatch"
             android:textColor="@android:color/darker_gray"
             android:padding="8dp"
             android:clickable="true"
@@ -39,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Right"
+            android:text="@string/title_insights"
             android:textColor="@android:color/darker_gray"
             android:padding="8dp"
             android:clickable="true"

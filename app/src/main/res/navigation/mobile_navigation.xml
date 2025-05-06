@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_classes">
         <action
             android:id="@+id/action_classes_to_classes_item"
-            app:destination="@id/class_detail_fragment" />
+            app:destination="@id/navigation_classes_item" />
     </fragment>
 
     <fragment
@@ -22,7 +22,10 @@
         tools:layout="@layout/fragment_stopwatch">
         <action
             android:id="@+id/action_stopwatch_to_classes_item"
-            app:destination="@id/class_detail_fragment" />
+            app:destination="@id/navigation_classes_item" />
+        <action
+            android:id="@+id/action_stopwatch_to_insights"
+            app:destination="@id/navigation_insights" />
     </fragment>
 
     <fragment
@@ -38,7 +41,17 @@
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
-        android:id="@+id/class_detail_fragment"
+        android:id="@+id/navigation_insights"
+        android:name="com.example.studentapp.ui.stopwatch.insights.InsightsFragment"
+        android:label="@string/title_insights"
+        tools:layout="@layout/fragment_insights">
+        <action
+            android:id="@+id/action_insights_to_stopwatch"
+            app:destination="@id/navigation_stopwatch" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_classes_item"
         android:name="com.example.studentapp.ui.classesItem.ClassesItemFragment"
         tools:layout="@layout/fragment_classes_item">
         <argument

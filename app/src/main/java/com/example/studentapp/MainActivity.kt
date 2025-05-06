@@ -2,6 +2,7 @@ package com.example.studentapp
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,7 @@ import com.google.android.material.appbar.MaterialToolbar
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // toolbar
-        setSupportActionBar(findViewById(R.id.toolbar))
 
         // bottom navigation
         val navView: BottomNavigationView = binding.navView
@@ -55,16 +53,12 @@ class MainActivity : AppCompatActivity() {
 
     fun hideDefaultToolbar() {
         supportActionBar?.hide()
+        binding.includedToolbar.toolbarStopwatch.visibility = View.VISIBLE
     }
 
     fun showDefaultToolbar() {
-        //setSupportActionBar(findViewById(R.id.toolbar))
-        /*supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-            this.title =
-        }*/
         supportActionBar?.show()
+        binding.includedToolbar.toolbarStopwatch.visibility = View.GONE
     }
 
 }

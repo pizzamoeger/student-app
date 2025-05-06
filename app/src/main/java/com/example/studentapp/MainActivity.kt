@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
 import com.example.studentapp.ui.classes.ClassesFragment
 import com.example.studentapp.ui.stopwatch.StopwatchFragment
+import com.example.studentapp.ui.stopwatch.insights.InsightsFragment
 import com.google.android.material.appbar.MaterialToolbar
 
 class MainActivity : AppCompatActivity() {
@@ -43,6 +44,17 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // listener that fires everytime fragment is changed
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                // if we are going to stopwatch or insights hide toolbar
+                R.id.navigation_stopwatch, R.id.navigation_insights -> {hideDefaultToolbar() }
+                // else show toolbar
+                else -> {showDefaultToolbar()}
+            }
+        }
+
     }
 
     // TODO make that this is executed when switching between things in bottom menu
@@ -60,5 +72,4 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.show()
         binding.includedToolbar.toolbarStopwatch.visibility = View.GONE
     }
-
 }

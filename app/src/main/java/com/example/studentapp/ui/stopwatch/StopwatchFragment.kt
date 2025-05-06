@@ -91,9 +91,7 @@ class StopwatchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // hide default toolbar and display top level navigation
-        (requireActivity() as MainActivity).hideDefaultToolbar()
-
+        // display top navigation
         val activityBinding = (requireActivity() as MainActivity).binding
         val toolbar = activityBinding.includedToolbar
 
@@ -109,12 +107,6 @@ class StopwatchFragment : Fragment() {
             (requireActivity() as MainActivity).hideDefaultToolbar()
             stopwatchViewModel.stop()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        // show default toolbar again
-        (requireActivity() as MainActivity).showDefaultToolbar()
     }
 
     override fun onDestroyView() {

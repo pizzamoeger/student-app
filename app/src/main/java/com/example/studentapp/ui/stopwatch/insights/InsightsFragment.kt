@@ -30,7 +30,6 @@ class InsightsFragment : Fragment() {
     ): View {
         _binding = FragmentInsightsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         return root;
     }
 
@@ -40,9 +39,8 @@ class InsightsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        // hide default toolbar and display top level navigation
-        (requireActivity() as MainActivity).hideDefaultToolbar()
 
+        // display top navigation
         val activityBinding = (requireActivity() as MainActivity).binding
         val toolbar = activityBinding.includedToolbar
 
@@ -57,13 +55,6 @@ class InsightsFragment : Fragment() {
         toolbar.textRight.setTextColor(resources.getColor(R.color.black, requireContext().theme))
         toolbar.textRight.setOnClickListener {}
     }
-
-    override fun onPause() {
-        super.onPause()
-        // show default toolbar again
-        (requireActivity() as MainActivity).showDefaultToolbar()
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

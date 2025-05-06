@@ -1,6 +1,7 @@
 package com.example.studentapp.ui.stopwatch.insights
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,11 @@ import com.example.studentapp.ui.classes.StopwatchAdapter
 import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.insights.InsightsFragmentDirections
 import com.example.studentapp.ui.stopwatch.StopwatchViewModel
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 
 class InsightsFragment : Fragment() {
 
@@ -35,7 +41,37 @@ class InsightsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // TODO
+        daily(view)
+
+    }
+
+    fun daily(view : View) {
+        val pieChart = binding.dailyChart
+        if (SharedData.currentClass.value != null) {
+
+            val entries = SharedData.classList.value?.map { classItem ->
+                PieEntry(classItem.secondsToday().toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+            }
+
+            val dataSet = PieDataSet(entries, "Subjects")
+            dataSet.colors = SharedData.classList.value?.map { classItem ->
+                classItem.color// Use actual values instead of 1f if you have them
+            }
+            val data = PieData(dataSet)
+
+            pieChart.data = data
+            pieChart.description.isEnabled = false
+            pieChart.legend.isEnabled = false
+            pieChart.animateY(1000)
+            pieChart.invalidate() // refresh
+
+            dataSet.valueTextSize = 14f
+            dataSet.valueTextColor = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnPrimary)
+            pieChart.setUsePercentValues(true)
+            pieChart.centerText = "Daily"
+            pieChart.setCenterTextSize(25f)
+            pieChart.setEntryLabelTextSize(12f)
+        } else pieChart.visibility = View.GONE
     }
 
     override fun onResume() {

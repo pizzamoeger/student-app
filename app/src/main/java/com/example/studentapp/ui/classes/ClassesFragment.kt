@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesBinding
 import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
+import kotlin.random.Random
 
 class ClassesFragment : Fragment() {
 
@@ -34,6 +35,17 @@ class ClassesFragment : Fragment() {
         return root
     }
 
+    // TODO temp
+    fun randomColor(): Int {
+        val random = Random.Default
+        return android.graphics.Color.argb(
+            255,
+            random.nextInt(256),
+            random.nextInt(256),
+            random.nextInt(256)
+        )
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
         adapter = ClassesAdapter (onDeleteClick = {id -> SharedData.deleteClass(id)},
@@ -51,7 +63,7 @@ class ClassesFragment : Fragment() {
 
         // when the addButton is pressed, we create a new class
         binding.addButtonClasses.setOnClickListener {
-            SharedData.addClass("Class ${System.currentTimeMillis() % 1000}")
+            SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
         }
     }
 

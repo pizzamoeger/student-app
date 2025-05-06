@@ -2,6 +2,7 @@ package com.example.studentapp
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.ui.classesItem.ClassesItem
@@ -31,8 +32,8 @@ class SharedData  {
         val today: LiveData<LocalDate> get() = _today
 
         // add class to classList
-        fun addClass(name: String) {
-            val newList = _classesList.value.orEmpty() + ClassesItem(nextId++, name, mutableMapOf())
+        fun addClass(name: String, color : Int) {
+            val newList = _classesList.value.orEmpty() + ClassesItem(nextId++, name, mutableMapOf(), color)
             _classesList.value = newList
             save()
         }
@@ -64,7 +65,7 @@ class SharedData  {
 
             // create a serializable list from classeslist
             val serializableList = _classesList.value.orEmpty().map {
-                SerializableClassesItem(it.id, it.name, it.studyTime)
+                SerializableClassesItem(it.id, it.name, it.studyTime, it.color)
             }
 
             val json: String = gson.toJson(serializableList)
@@ -83,7 +84,7 @@ class SharedData  {
 
                 // create list of ClassesItem from this
                 val restored = list.map {
-                    ClassesItem(it.id, it.name, it.studyTime)
+                    ClassesItem(it.id, it.name, it.studyTime, it.color)
                 }
                 
                 _classesList.value = restored

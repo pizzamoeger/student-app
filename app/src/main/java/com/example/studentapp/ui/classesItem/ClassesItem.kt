@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.classesItem
 
+import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
@@ -11,7 +12,9 @@ import java.util.Locale
 data class ClassesItem(
     val id: Int,
     val name: String,
-    val studyTime: MutableMap<String, Int>) {
+    val studyTime: MutableMap<String, Int>,
+    val color : Int
+) {
 
     // static
     companion object {

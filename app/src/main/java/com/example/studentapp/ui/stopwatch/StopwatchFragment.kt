@@ -52,12 +52,8 @@ class StopwatchFragment : Fragment() {
         binding.resetButtonStopwatch.setOnClickListener {stopwatchViewModel.reset()}
 
         // connect the text objects
-        val textView: TextView = binding.textStopwatch
         val timeView: TextView = binding.timeStopwatch
 
-        stopwatchViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         stopwatchViewModel.time.observe(viewLifecycleOwner) {
             timeView.text = it
         }
@@ -99,13 +95,13 @@ class StopwatchFragment : Fragment() {
         val toolbar = activityBinding.includedToolbar
 
         // left selection links to nothing (is current)
-        context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
-        context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
+        context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
+        context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
         toolbar.selectionLeft.setOnClickListener {}
 
         // right selection links to insight
-        context?.let { toolbar.textRight.setTextColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
-        context?.let { toolbar.lineRight.setBackgroundColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
+        context?.let { toolbar.textRight.setTextColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
+        context?.let { toolbar.lineRight.setBackgroundColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
         toolbar.selectionRight.setOnClickListener {
             val action = StopwatchFragmentDirections.actionStopwatchToInsights()
             findNavController().navigate(action)

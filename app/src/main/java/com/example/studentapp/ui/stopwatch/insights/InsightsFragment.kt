@@ -46,16 +46,16 @@ class InsightsFragment : Fragment() {
         val toolbar = activityBinding.includedToolbar
 
         // left selection links to stopwatch
-        context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
-        context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
+        context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
+        context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
         toolbar.selectionLeft.setOnClickListener {
             val action = InsightsFragmentDirections.actionInsightsToStopwatch()
             findNavController().navigate(action)
         }
 
         // right selection links to nothing (is current)
-        context?.let { toolbar.textRight.setTextColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
-        context?.let { toolbar.lineRight.setBackgroundColor(it.getThemeColor(android.R.attr.textColorTertiary)) }
+        context?.let { toolbar.textRight.setTextColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
+        context?.let { toolbar.lineRight.setBackgroundColor(it.getThemeColor(android.R.attr.textColorSecondary)) }
         toolbar.selectionRight.setOnClickListener {}
     }
 

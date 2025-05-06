@@ -21,12 +21,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         currentClass = newClass
     }
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is Stopwatch Fragment"
-    }
     private val _time = MutableLiveData<String>()
-
-    val text: LiveData<String> = _text
     val time: LiveData<String> = _time
 
     private var running = false;

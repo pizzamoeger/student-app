@@ -10,48 +10,66 @@
     tools:context=".ui.classesItem.ClassesItemFragment">
 
     <TextView
-        android:id="@+id/text_classes_item"
-        android:layout_width="match_parent"
+        android:id="@+id/time_daily_classes_item"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/time_daily_classes_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:textSize="56sp" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="56sp"  />
 
     <TextView
         android:id="@+id/time_weekly_classes_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_gravity="center_horizontal"
         android:textSize="56sp" />
 
     <TextView
         android:id="@+id/time_monthly_classes_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_gravity="center_horizontal"
         android:textSize="56sp" />
 
     <TextView
         android:id="@+id/time_total_classes_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_gravity="center_horizontal"
         android:textSize="56sp" />
 </LinearLayout>

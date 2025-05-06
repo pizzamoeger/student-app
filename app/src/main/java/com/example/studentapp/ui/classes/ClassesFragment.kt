@@ -31,11 +31,6 @@ class ClassesFragment : Fragment() {
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // connect text object
-        val textView: TextView = binding.textClasses
-        classesViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
     }
 

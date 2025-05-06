@@ -52,12 +52,6 @@ class ClassesItemFragment : Fragment() {
         val thisClass = SharedData.classList.value?.find { it.id == _classId }
         (requireActivity() as AppCompatActivity).supportActionBar?.title = thisClass!!.name
 
-        // bind text
-        val textView: TextView = binding.textClassesItem
-        classesItemViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
         // bind all time informations
         val dailyTime: TextView = binding.timeDailyClassesItem
         classesItemViewModel.dailyTime.observe(viewLifecycleOwner) {

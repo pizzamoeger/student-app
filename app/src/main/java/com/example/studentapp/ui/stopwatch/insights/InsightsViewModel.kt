@@ -17,8 +17,14 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 
 class InsightsViewModel(app : Application) : AndroidViewModel(app) {
-    private val _entries = MutableLiveData<List<PieEntry>>()
-    val entries: LiveData<List<PieEntry>> = _entries
+    private val _entriesDay = MutableLiveData<List<PieEntry>>()
+    val entriesDay: LiveData<List<PieEntry>> = _entriesDay
+
+    private val _entriesWeek = MutableLiveData<List<PieEntry>>()
+    val entriesWeek: LiveData<List<PieEntry>> = _entriesWeek
+
+    private val _entriesMonth = MutableLiveData<List<PieEntry>>()
+    val entriesMonth: LiveData<List<PieEntry>> = _entriesMonth
 
     private val handler = Handler(Looper.getMainLooper());
 
@@ -30,8 +36,17 @@ class InsightsViewModel(app : Application) : AndroidViewModel(app) {
         handler.post(object : Runnable {
             override fun run() {
                 // update what time(s) should display
-                _entries.value = SharedData.classList.value?.map { classItem ->
+                _entriesDay.value = SharedData.classList.value?.map { classItem ->
                     PieEntry(classItem.getSeconds(TimeInterval.DAY).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+                }
+
+                _entriesWeek.value = SharedData.classList.value?.map { classItem ->
+                    PieEntry(classItem.getSeconds(TimeInterval.WEEK).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+                }
+
+                // update what time(s) should display
+                _entriesMonth.value = SharedData.classList.value?.map { classItem ->
+                    PieEntry(classItem.getSeconds(TimeInterval.MONTH).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
                 }
 
                 // execute this every second

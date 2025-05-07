@@ -48,12 +48,28 @@ class InsightsFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[InsightsViewModel::class.java]
 
-        val pieChart = binding.dailyChart
-        write(view, pieChart, TimeInterval.DAY)
+        val pieChartDay = binding.dailyChart
+        write(view, pieChartDay, TimeInterval.DAY)
 
-        insightsViewModel.entries.observe(viewLifecycleOwner) {
-            pieChart.data = getData()
-            pieChart.invalidate()
+        insightsViewModel.entriesDay.observe(viewLifecycleOwner) {
+            pieChartDay.data = getData(TimeInterval.DAY)
+            if(pieChartDay.data != null) pieChartDay.invalidate()
+        }
+
+        val pieChartWeek = binding.weeklyChart
+        write(view, pieChartWeek, TimeInterval.WEEK)
+
+        insightsViewModel.entriesWeek.observe(viewLifecycleOwner) {
+            pieChartWeek.data = getData(TimeInterval.WEEK)
+            if (pieChartWeek.data != null) pieChartWeek.invalidate()
+        }
+
+        val pieChartMonth = binding.monthlyChart
+        write(view, pieChartMonth, TimeInterval.MONTH)
+
+        insightsViewModel.entriesMonth.observe(viewLifecycleOwner) {
+            pieChartMonth.data = getData(TimeInterval.MONTH)
+            if(pieChartMonth.data != null) pieChartMonth.invalidate()
         }
     }
 
@@ -80,22 +96,26 @@ class InsightsFragment : Fragment() {
     }
 
     fun write(view : View, pieChart: PieChart, type: TimeInterval) {
-        pieChart.data = getData(type)
-        if (pieChart.data == null) {
-            pieChart.visibility = View.GONE
-            return
-        }
         pieChart.description.isEnabled = false
         pieChart.legend.isEnabled = false
         pieChart.animateY(1000)
         pieChart.invalidate() // refresh
 
         //pieChart.setUsePercentValues(true)
-        if (type == TimeInterval.TOTAL) pieChart.centerText = "Total"
-        else if (type == TimeInterval.MONTH) pieChart.centerText = "This Month" // todo month name
-        else if (type == TimeInterval.WEEK) pieChart.centerText = "This Week" // todo KW
-        else if (type == TimeInterval.MONTH) pieChart.centerText = "Today"
-        else pieChart.centerText = "Custom Interval"
+        Log.d("rr", type.toString())
+        when {type == TimeInterval.TOTAL -> pieChart.centerText = "Total"
+        }
+        when {type == TimeInterval.MONTH -> pieChart.centerText = "This Month" // todo month name
+        }
+        when {
+            type == TimeInterval.WEEK -> pieChart.centerText = "This Week" // todo KW
+        }
+        when {
+            type == TimeInterval.DAY -> pieChart.centerText = "Today"
+        }
+        when {
+            type == TimeInterval.DEFAULT -> pieChart.centerText = "Custom Interval"
+        }
 
         val primaryColor = requireContext().getThemeColor(android.R.attr.textColorPrimary)
         pieChart.setCenterTextColor(primaryColor)

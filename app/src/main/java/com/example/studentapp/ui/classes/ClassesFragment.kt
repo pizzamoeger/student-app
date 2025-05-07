@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesBinding
@@ -55,6 +56,14 @@ class ClassesFragment : Fragment() {
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
+
+        // Create a DividerItemDecoration to add horizontal lines between items
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.recyclerViewClasses.context,
+            DividerItemDecoration.VERTICAL
+        )
+
+        binding.recyclerViewClasses.addItemDecoration(dividerItemDecoration)
 
         // each time classList changes we call adapter.submitList
         SharedData.classList.observe(viewLifecycleOwner) { classList ->

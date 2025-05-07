@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
@@ -28,7 +29,7 @@ class ClassesAdapter (
         // each class has a name and a delete button
         // TODO use binding for this: constructor where we set binding
         private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
-        private val deleteButton: Button = itemView.findViewById(R.id.delete_button_classes_item)
+        private val deleteButton: ImageButton = itemView.findViewById(R.id.delete_button_classes_item)
 
         fun bind(item: ClassesItem) {
             // bind name

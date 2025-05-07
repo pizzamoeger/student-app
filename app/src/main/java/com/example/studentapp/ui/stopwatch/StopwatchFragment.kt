@@ -105,6 +105,7 @@ class StopwatchFragment : Fragment() {
         toolbar.selectionRight.setOnClickListener {
             val action = StopwatchFragmentDirections.actionStopwatchToInsights()
             findNavController().navigate(action)
+            // TODO remove for live updates
             stopwatchViewModel.stop()
         }
     }

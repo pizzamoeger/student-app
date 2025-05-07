@@ -41,32 +41,44 @@ class InsightsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        daily(view)
+        val insightsViewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        )[InsightsViewModel::class.java]
 
+        val pieChart = binding.dailyChart
+        daily(view, pieChart)
+
+        insightsViewModel.entries.observe(viewLifecycleOwner) {
+            pieChart.data = getDailyData()
+            pieChart.invalidate()
+        }
     }
 
-    fun daily(view : View) {
-        val pieChart = binding.dailyChart
+    fun getDailyData() : PieData {
+        val entries = SharedData.classList.value?.map { classItem ->
+            PieEntry(classItem.secondsToday().toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+        }
+
+        val dataSet = PieDataSet(entries, "Subjects")
+        dataSet.colors = SharedData.classList.value?.map { classItem ->
+            classItem.color// Use actual values instead of 1f if you have them
+        }
+        dataSet.valueTextSize = 14f
+        dataSet.valueTextColor = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnPrimary)
+
+        return PieData(dataSet)
+    }
+
+    fun daily(view : View, pieChart: PieChart) {
         if (SharedData.currentClass.value != null) {
 
-            val entries = SharedData.classList.value?.map { classItem ->
-                PieEntry(classItem.secondsToday().toFloat(), classItem.name) // Use actual values instead of 1f if you have them
-            }
-
-            val dataSet = PieDataSet(entries, "Subjects")
-            dataSet.colors = SharedData.classList.value?.map { classItem ->
-                classItem.color// Use actual values instead of 1f if you have them
-            }
-            val data = PieData(dataSet)
-
-            pieChart.data = data
+            pieChart.data = getDailyData()
             pieChart.description.isEnabled = false
             pieChart.legend.isEnabled = false
             pieChart.animateY(1000)
             pieChart.invalidate() // refresh
 
-            dataSet.valueTextSize = 14f
-            dataSet.valueTextColor = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnPrimary)
             pieChart.setUsePercentValues(true)
             pieChart.centerText = "Daily"
             pieChart.setCenterTextSize(25f)

@@ -79,7 +79,6 @@ class StopwatchAdapter (
     // creates view holder for a classItem
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopwatchViewHolder {
         val binding = ItemClassBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        //TODO val binding = ItemClassBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StopwatchViewHolder(binding, lifecycleOwner)
     }
 

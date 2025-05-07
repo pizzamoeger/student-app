@@ -55,43 +55,52 @@ class InsightsFragment : Fragment() {
         }
     }
 
-    fun getDailyData() : PieData {
-        val entries = SharedData.classList.value?.map { classItem ->
+    fun getDailyData() : PieData? {
+        val entries = SharedData.classList.value?.filter { classItem ->
+            classItem.secondsToday() != 0
+        }?.map { classItem ->
             PieEntry(classItem.secondsToday().toFloat(), classItem.name) // Use actual values instead of 1f if you have them
         }
 
         val dataSet = PieDataSet(entries, "Subjects")
-        dataSet.colors = SharedData.classList.value?.map { classItem ->
-            classItem.color// Use actual values instead of 1f if you have them
+        dataSet.colors = SharedData.classList.value?.filter { classItem ->
+            classItem.secondsToday() != 0
+        }?.map { classItem ->
+            classItem.color
         }
         dataSet.valueTextSize = 14f
         dataSet.valueTextColor = requireContext().getThemeColor(android.R.attr.textColorSecondary)
 
+        if (entries != null) {
+            if (entries.isEmpty()) return null
+        }
         return PieData(dataSet)
     }
 
     fun daily(view : View, pieChart: PieChart) {
-        if (SharedData.currentClass.value != null) {
-            pieChart.data = getDailyData()
-            pieChart.description.isEnabled = false
-            pieChart.legend.isEnabled = false
-            pieChart.animateY(1000)
-            pieChart.invalidate() // refresh
+        pieChart.data = getDailyData()
+        if (pieChart.data == null) {
+            pieChart.visibility = View.GONE
+            return
+        }
+        pieChart.description.isEnabled = false
+        pieChart.legend.isEnabled = false
+        pieChart.animateY(1000)
+        pieChart.invalidate() // refresh
 
-            pieChart.setUsePercentValues(true)
-            pieChart.centerText = "Daily"
-            val primaryColor = requireContext().getThemeColor(android.R.attr.textColorPrimary)
-            pieChart.setCenterTextColor(primaryColor)
+        //pieChart.setUsePercentValues(true)
+        pieChart.centerText = "Daily"
+        val primaryColor = requireContext().getThemeColor(android.R.attr.textColorPrimary)
+        pieChart.setCenterTextColor(primaryColor)
 
-            val secondaryColor = requireContext().getThemeColor(android.R.attr.textColorSecondary)
-            pieChart.setEntryLabelColor(secondaryColor)
+        val secondaryColor = requireContext().getThemeColor(android.R.attr.textColorSecondary)
+        pieChart.setEntryLabelColor(secondaryColor)
 
-            val backgroundColor = requireContext().getThemeColor(android.R.attr.windowBackground)
-            pieChart.setHoleColor(backgroundColor)
-            pieChart.setTransparentCircleColor(backgroundColor)
-            pieChart.setCenterTextSize(25f)
-            pieChart.setEntryLabelTextSize(12f)
-        } else pieChart.visibility = View.GONE
+        val backgroundColor = requireContext().getThemeColor(android.R.attr.windowBackground)
+        pieChart.setHoleColor(backgroundColor)
+        pieChart.setTransparentCircleColor(backgroundColor)
+        pieChart.setCenterTextSize(25f)
+        pieChart.setEntryLabelTextSize(12f)
     }
 
     override fun onResume() {

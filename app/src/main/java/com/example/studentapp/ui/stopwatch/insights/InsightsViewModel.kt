@@ -15,14 +15,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 
-/*
-val entries = SharedData.classList.value?.map { classItem ->
-                PieEntry(classItem.secondsToday().toFloat(), classItem.name) // Use actual values instead of 1f if you have them
-            }
-
-
-* */
-
 class InsightsViewModel(app : Application) : AndroidViewModel(app) {
     private val _entries = MutableLiveData<List<PieEntry>>()
     val entries: LiveData<List<PieEntry>> = _entries

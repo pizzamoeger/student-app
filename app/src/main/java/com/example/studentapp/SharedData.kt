@@ -11,6 +11,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
 
+enum class TimeInterval {
+    DAY, WEEK, MONTH, TOTAL, DEFAULT
+}
+
 class SharedData  {
     companion object {
         private val _classesList = MutableLiveData<List<ClassesItem>>(emptyList())

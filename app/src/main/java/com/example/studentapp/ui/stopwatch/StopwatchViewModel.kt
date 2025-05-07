@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
+import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.classesItem.ClassesItem
 import java.time.LocalDate
 
@@ -84,8 +85,8 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         secondsTotalAll = 0
         secondsTodayAll = 0
         SharedData.classList.value!!.forEach { entry ->
-            secondsTotalAll += entry.secondsTotal()
-            secondsTodayAll += entry.secondsToday()
+            secondsTotalAll += entry.getSeconds(TimeInterval.TOTAL)
+            secondsTodayAll += entry.getSeconds(TimeInterval.DAY)
         }
         _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.studentapp.SharedData
+import com.example.studentapp.TimeInterval
 
 class ClassesItemViewModel : ViewModel() {
     private var _classId : Int = 0
@@ -34,9 +35,9 @@ class ClassesItemViewModel : ViewModel() {
     fun write() {
         val thisClass = SharedData.classList.value?.find { it.id == _classId }
 
-        _dailyTime.value = "Day ${ClassesItem.getTimeStringFromSeconds(thisClass!!.secondsToday())}"
-        _weeklyTime.value = "Week ${ClassesItem.getTimeStringFromSeconds(thisClass.secondsThisWeek())}"
-        _monthlyTime.value = "Month ${ClassesItem.getTimeStringFromSeconds(thisClass.secondsThisMonth())}"
-        _totalTime.value = "Total ${ClassesItem.getTimeStringFromSeconds(thisClass.secondsTotal())}"
+        _dailyTime.value = "Day ${ClassesItem.getTimeStringFromSeconds(thisClass!!.getSeconds(TimeInterval.DAY))}"
+        _weeklyTime.value = "Week ${ClassesItem.getTimeStringFromSeconds(thisClass.getSeconds(TimeInterval.WEEK))}"
+        _monthlyTime.value = "Month ${ClassesItem.getTimeStringFromSeconds(thisClass.getSeconds(TimeInterval.MONTH))}"
+        _totalTime.value = "Total ${ClassesItem.getTimeStringFromSeconds(thisClass.getSeconds(TimeInterval.TOTAL))}"
     }
 }

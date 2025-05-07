@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.MainActivity
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
+import com.example.studentapp.TimeInterval
 import com.example.studentapp.databinding.FragmentInsightsBinding
 import com.example.studentapp.ui.classes.StopwatchAdapter
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.insights.InsightsFragmentDirections
 import com.example.studentapp.ui.stopwatch.StopwatchViewModel
@@ -47,24 +49,24 @@ class InsightsFragment : Fragment() {
         )[InsightsViewModel::class.java]
 
         val pieChart = binding.dailyChart
-        daily(view, pieChart)
+        write(view, pieChart, TimeInterval.DAY)
 
         insightsViewModel.entries.observe(viewLifecycleOwner) {
-            pieChart.data = getDailyData()
+            pieChart.data = getData()
             pieChart.invalidate()
         }
     }
 
-    fun getDailyData() : PieData? {
+    fun getData(type : TimeInterval = TimeInterval.TOTAL, from : String = "", to : String = "") : PieData? {
         val entries = SharedData.classList.value?.filter { classItem ->
-            classItem.secondsToday() != 0
+            classItem.getSeconds(type, from, to) != 0
         }?.map { classItem ->
-            PieEntry(classItem.secondsToday().toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+            PieEntry(classItem.getSeconds(type, from, to).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
         }
 
         val dataSet = PieDataSet(entries, "Subjects")
         dataSet.colors = SharedData.classList.value?.filter { classItem ->
-            classItem.secondsToday() != 0
+            classItem.getSeconds(type, from, to) != 0
         }?.map { classItem ->
             classItem.color
         }
@@ -77,8 +79,8 @@ class InsightsFragment : Fragment() {
         return PieData(dataSet)
     }
 
-    fun daily(view : View, pieChart: PieChart) {
-        pieChart.data = getDailyData()
+    fun write(view : View, pieChart: PieChart, type: TimeInterval) {
+        pieChart.data = getData(type)
         if (pieChart.data == null) {
             pieChart.visibility = View.GONE
             return
@@ -89,7 +91,12 @@ class InsightsFragment : Fragment() {
         pieChart.invalidate() // refresh
 
         //pieChart.setUsePercentValues(true)
-        pieChart.centerText = "Daily"
+        if (type == TimeInterval.TOTAL) pieChart.centerText = "Total"
+        else if (type == TimeInterval.MONTH) pieChart.centerText = "This Month" // todo month name
+        else if (type == TimeInterval.WEEK) pieChart.centerText = "This Week" // todo KW
+        else if (type == TimeInterval.MONTH) pieChart.centerText = "Today"
+        else pieChart.centerText = "Custom Interval"
+
         val primaryColor = requireContext().getThemeColor(android.R.attr.textColorPrimary)
         pieChart.setCenterTextColor(primaryColor)
 

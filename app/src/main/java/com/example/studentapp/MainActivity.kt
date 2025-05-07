@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // make app follow devices default theme
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 
     // TODO make that this is executed when switching between things in bottom menu

@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.studentapp.SharedData
+import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import com.github.mikephil.charting.data.PieData
@@ -30,7 +31,7 @@ class InsightsViewModel(app : Application) : AndroidViewModel(app) {
             override fun run() {
                 // update what time(s) should display
                 _entries.value = SharedData.classList.value?.map { classItem ->
-                    PieEntry(classItem.secondsToday().toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+                    PieEntry(classItem.getSeconds(TimeInterval.DAY).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
                 }
 
                 // execute this every second

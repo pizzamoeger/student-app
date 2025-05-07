@@ -1,9 +1,10 @@
 package com.example.studentapp.ui.classesItem
 
-import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
+import com.example.studentapp.TimeInterval
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
@@ -30,7 +31,7 @@ data class ClassesItem(
     }
 
     // get seconds spent in timeframe
-    fun getSeconds(from : String, to : String) : Int {
+    private fun secondsInInterval(from : String, to : String) : Int {
         var seconds = 0;
         studyTime.forEach { entry ->
             if (entry.key in from..to) {
@@ -40,35 +41,47 @@ data class ClassesItem(
         return seconds
     }
 
+    fun getSeconds(type : TimeInterval = TimeInterval.DEFAULT, from: String = "", to: String = "") : Int{
+        if (type == TimeInterval.DAY) return secondsToday()
+        if (type == TimeInterval.WEEK) return secondsThisWeek()
+        if (type == TimeInterval.MONTH) return secondsThisMonth()
+        if (type == TimeInterval.TOTAL) return secondsTotal()
+        if (from == "" || to == "") {
+            Log.e("GET SECONDS", "called ClassesItem.getSeconds with DEFAULT but no from or to")
+            return 0
+        }
+        return secondsInInterval(from, to)
+    }
+
     // get seconds spent studying today
-    fun secondsToday() : Int {
+    private fun secondsToday() : Int {
         SharedData.updateDate()
         val today = SharedData.today.value
-        return getSeconds(today.toString(), today.toString())
+        return secondsInInterval(today.toString(), today.toString())
     }
 
     // get seconds spent studying this week
-    fun secondsThisWeek() : Int {
+    private fun secondsThisWeek() : Int {
         SharedData.updateDate()
         val today : LocalDate? = SharedData.today.value
         // TODO be able to choose when week starts
         val monday = today!!.with(TemporalAdjusters.previous(DayOfWeek.MONDAY))
-        return getSeconds(monday.toString(), today.toString())
+        return secondsInInterval(monday.toString(), today.toString())
     }
 
     // get seconds spent studying this month
-    fun secondsThisMonth() : Int {
+    private fun secondsThisMonth() : Int {
         SharedData.updateDate()
         val today : LocalDate? = SharedData.today.value
         val firstOfMonth = LocalDate.of(today!!.year, today.month, 1)
-        return getSeconds(firstOfMonth.toString(), today.toString())
+        return secondsInInterval(firstOfMonth.toString(), today.toString())
     }
 
     // get total seconds spent studying
-    fun secondsTotal() : Int {
+    private fun secondsTotal() : Int {
         SharedData.updateDate()
         val today : LocalDate? = SharedData.today.value
-        return getSeconds(LocalDate.MIN.toString(), today.toString())
+        return secondsInInterval(LocalDate.MIN.toString(), today.toString())
     }
 
     // string of secondsToday

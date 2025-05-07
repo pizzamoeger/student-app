@@ -49,9 +49,6 @@ class StopwatchFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[StopwatchViewModel::class.java]
 
-        // connect the button to its function
-        binding.resetButtonStopwatch.setOnClickListener {stopwatchViewModel.reset()}
-
         // connect the text objects
         val timeView: TextView = binding.timeStopwatch
 

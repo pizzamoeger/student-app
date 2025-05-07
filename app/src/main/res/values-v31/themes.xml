@@ -27,6 +27,5 @@
 
     <style name="Theme.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@color/gray_1</item>
-        <item name="android:background">@color/blue</item>
     </style>
 </resources>

@@ -27,14 +27,6 @@
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="56sp" />
 
-    <Button
-        android:id="@+id/reset_button_stopwatch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:text="@string/reset_watch" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_classes"
         android:layout_width="match_parent"

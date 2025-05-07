@@ -114,6 +114,8 @@ class StopwatchFragment : Fragment() {
             // TODO remove for live updates
             stopwatchViewModel.stop()
         }
+
+        stopwatchViewModel.load()
     }
 
     override fun onDestroyView() {

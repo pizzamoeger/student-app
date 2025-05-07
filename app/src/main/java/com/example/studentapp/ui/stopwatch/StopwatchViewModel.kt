@@ -33,10 +33,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         // TODO change this so that time is reset at midnight every day
         // update date each time we switch to timer
         SharedData.updateDate()
-        SharedData.classList.value!!.forEach { entry ->
-            secondsTotalAll += entry.secondsTotal()
-            secondsTodayAll += entry.secondsToday()
-        }
+        load()
     }
 
     fun runTimer() {
@@ -81,6 +78,16 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         else {
             running = !running
         }
+    }
+
+    fun load() {
+        secondsTotalAll = 0
+        secondsTodayAll = 0
+        SharedData.classList.value!!.forEach { entry ->
+            secondsTotalAll += entry.secondsTotal()
+            secondsTodayAll += entry.secondsToday()
+        }
+        _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
     }
 
     // TODO is this actually still needed? rename maybe

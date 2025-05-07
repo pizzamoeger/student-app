@@ -1,11 +1,14 @@
 package com.example.studentapp.ui.classes
 
+import android.graphics.PorterDuff
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
@@ -29,15 +32,15 @@ class StopwatchAdapter (
 
     // view holder for class item
     inner class StopwatchViewHolder(
-        itemView : View,
+        private val binding: ItemClassBinding, // Use binding for view access
         private val lifecycleOwner: LifecycleOwner,
         //TODO private val binding: ItemClassBinding
-    ) : RecyclerView.ViewHolder(itemView) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         // each class has a name and a delete button
         // TODO use binding for this: constructor where we set binding
         private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
         private val dailyTime: TextView = itemView.findViewById(R.id.daily_time_classes_item)
-        private val startButton: Button = itemView.findViewById(R.id.timer_start_button_classes_item)
+        private val startButton: ImageButton = itemView.findViewById(R.id.timer_start_button_classes_item)
 
         fun bind(item: ClassesItem) {
             // bind name
@@ -49,11 +52,18 @@ class StopwatchAdapter (
             }
 
             // bind button
+            val drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.circle_background)
+            drawable?.setColorFilter(item.color, PorterDuff.Mode.SRC_IN)
+            startButton.background = drawable
             startButton.visibility = View.VISIBLE
             item.tracking.observe(lifecycleOwner) {
                 // TODO use strings.xml for this
-                if (it) startButton.text = "Stop"
-                else startButton.text = "Start"
+                if (it) {
+                    startButton.setImageResource(R.drawable.pause)
+                }
+                else {
+                    startButton.setImageResource(R.drawable.start)
+                }
             }
             startButton.setOnClickListener {
                 onStartClick(item)
@@ -68,9 +78,9 @@ class StopwatchAdapter (
 
     // creates view holder for a classItem
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopwatchViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_class, parent, false)
+        val binding = ItemClassBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         //TODO val binding = ItemClassBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StopwatchViewHolder(view, lifecycleOwner)
+        return StopwatchViewHolder(binding, lifecycleOwner)
     }
 
     // binds each item in list to a viewHolder

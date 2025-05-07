@@ -11,6 +11,7 @@
     <color name="gray_2">#E9ECEF</color>
     <color name="gray_1">#F8F9FA</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
 
     <color name="red">#FF0000</color>
     <color name="orange">#FF8700</color>

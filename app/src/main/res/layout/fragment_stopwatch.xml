@@ -24,6 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textAppearance="@android:style/TextAppearance.Large"
         android:layout_gravity="center_horizontal"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="56sp" />
 
     <Button

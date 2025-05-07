@@ -6,8 +6,8 @@
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryVariant">@color/lightblue</item>
         <item name="colorOnPrimary">@color/gray_1</item>
-        <item name="android:textColor">@color/gray_3</item>
-        <item name="android:textColorPrimary">@color/gray_1</item>
+        <item name="android:textColor">@color/gray_7</item>
+        <item name="android:textColorPrimary">@color/gray_8</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/limegreen</item>
@@ -17,9 +17,8 @@
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/gray_9</item>
-        <item name="android:windowBackground">@color/gray_9</item>
-
-        <item name="colorSurface">?attr/colorPrimary</item>
+        <item name="android:windowBackground">@color/gray_1</item>
+        <item name="colorSurface">@color/green</item>
         <item name="colorOnSurface">?attr/colorPrimaryVariant</item>
 
         <item name="actionBarTheme">@style/Theme.ActionBar</item>
@@ -28,5 +27,6 @@
 
     <style name="Theme.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@color/gray_1</item>
+        <item name="android:background">@color/blue</item>
     </style>
 </resources>

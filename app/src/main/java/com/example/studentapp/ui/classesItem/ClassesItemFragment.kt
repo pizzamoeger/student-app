@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.classesItem
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesItemBinding
 import com.example.studentapp.databinding.FragmentTimetableBinding
+import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.StopwatchViewModel
 
 class ClassesItemFragment : Fragment() {
@@ -72,10 +75,19 @@ class ClassesItemFragment : Fragment() {
         classesItemViewModel.totalTime.observe(viewLifecycleOwner) {
             totalTime.text = it
         }
+
+        val activity = requireActivity() as AppCompatActivity
+        activity.supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(thisClass.color)
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        val activity = requireActivity() as AppCompatActivity
+        activity.supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(requireContext().getThemeColor(androidx.appcompat.R.attr.colorPrimary))
+        )
     }
 }

@@ -27,7 +27,7 @@ class HourAdapter (
     }
 
     fun setHour(convertView : View, time : LocalTime) {
-        val timeTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.month_year_text_view_week)
+        val timeTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.hour_cell)
         timeTextView.text = CalendarUtils.formattedShortTime(time)
     }
 

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:id="@+id/hour_cell"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:textColor="?android:attr/textColorPrimary"
         android:text="10:00" />
 

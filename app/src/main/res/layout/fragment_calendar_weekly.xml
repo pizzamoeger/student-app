@@ -16,7 +16,6 @@
         android:layout_marginTop="20dp"
         android:gravity="center_vertical">
 
-        <!--todo connect with onlick-->
         <ImageButton
             android:id="@+id/week_button_left"
             android:layout_width="0dp"

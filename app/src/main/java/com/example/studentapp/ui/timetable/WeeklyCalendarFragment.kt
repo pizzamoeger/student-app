@@ -1,11 +1,14 @@
 package com.example.studentapp.ui.timetable
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
+import com.example.studentapp.databinding.FragmentTimetableBinding
 import com.example.studentapp.ui.timetable.CalendarUtils.Companion.selectedDate
 import java.time.LocalTime
 
@@ -21,10 +24,31 @@ class WeeklyCalendarFragment : Fragment() {
     private lateinit var monthDayText: TextView
     private lateinit var hourListView : ListView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        _binding = FragmentCalendarWeeklyBinding.inflate(inflater, container, false)
         //setContentView(R.layout.activity_daily_calendar)
+        val root: View = binding.root
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initWidgets()
+
+        binding.weekButtonLeft.setOnClickListener {
+            previousWeekAction()
+            setWeekView()
+        }
+
+        binding.weekButtonRight.setOnClickListener {
+            nextWeekAction()
+            setWeekView()
+        }
     }
 
     private fun initWidgets() {
@@ -59,12 +83,12 @@ class WeeklyCalendarFragment : Fragment() {
         return list
     }
 
-    fun previousDayAction(view: View?) {
+    fun previousWeekAction() {
         selectedDate = selectedDate!!.minusWeeks(1)
         setWeekView()
     }
 
-    fun nextDayAction(view: View?) {
+    fun nextWeekAction() {
         selectedDate = selectedDate!!.plusWeeks(1)
         setWeekView()
     }

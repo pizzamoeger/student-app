@@ -30,9 +30,9 @@
 
     <fragment
         android:id="@+id/navigation_timetable"
-        android:name="com.example.studentapp.ui.timetable.TimetableFragment"
+        android:name="com.example.studentapp.ui.timetable.WeeklyCalendarFragment"
         android:label="@string/title_timetable"
-        tools:layout="@layout/fragment_calendar_monthly" />
+        tools:layout="@layout/fragment_calendar_weekly" />
 
     <fragment
         android:id="@+id/navigation_notifications"

@@ -41,6 +41,7 @@ data class ClassesItem(
         return seconds
     }
 
+    // returns seconds in timespan depending on type
     fun getSeconds(type : TimeInterval = TimeInterval.DEFAULT, from: String = "", to: String = "") : Int{
         if (type == TimeInterval.DAY) return secondsToday()
         if (type == TimeInterval.WEEK) return secondsThisWeek()
@@ -104,6 +105,7 @@ data class ClassesItem(
     // update if this class is being tracked
     fun updateTracking(to : Boolean) {
         _tracking.value = to
+        // TODO bug: total time is more than time of classes added
     }
 
     // reset secondsToday

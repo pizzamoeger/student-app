@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.studentapp.R
@@ -56,36 +57,30 @@ class ClassesItemFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.title = thisClass!!.name
 
         // bind all time informations
-        val dailyTime: TextView = binding.timeDailyClassesItem
-        classesItemViewModel.dailyTime.observe(viewLifecycleOwner) {
-            dailyTime.text = it
-        }
+        bindTimeInformation(binding.timeDailyClassesItem, classesItemViewModel.dailyTime)
+        bindTimeInformation(binding.timeWeeklyClassesItem, classesItemViewModel.weeklyTime)
+        bindTimeInformation(binding.timeMonthlyClassesItem, classesItemViewModel.monthlyTime)
+        bindTimeInformation(binding.timeTotalClassesItem, classesItemViewModel.totalTime)
 
-        val monthlyTime: TextView = binding.timeMonthlyClassesItem
-        classesItemViewModel.monthlyTime.observe(viewLifecycleOwner) {
-            monthlyTime.text = it
-        }
-
-        val weeklyTime: TextView = binding.timeWeeklyClassesItem
-        classesItemViewModel.weeklyTime.observe(viewLifecycleOwner) {
-            weeklyTime.text = it
-        }
-
-        val totalTime: TextView = binding.timeTotalClassesItem
-        classesItemViewModel.totalTime.observe(viewLifecycleOwner) {
-            totalTime.text = it
-        }
-
+        // sets backgroundcolor of toolbar to color of this class
         val activity = requireActivity() as AppCompatActivity
         activity.supportActionBar?.setBackgroundDrawable(
             ColorDrawable(thisClass.color)
         )
     }
 
+    // binding textView to stringTime
+    fun bindTimeInformation(textView : TextView, stringTime : LiveData<String>) {
+        stringTime.observe(viewLifecycleOwner) {
+            textView.text = it
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         val activity = requireActivity() as AppCompatActivity
+        // resets color of toolbar
         activity.supportActionBar?.setBackgroundDrawable(
             ColorDrawable(requireContext().getThemeColor(androidx.appcompat.R.attr.colorPrimary))
         )

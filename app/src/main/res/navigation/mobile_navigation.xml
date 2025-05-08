@@ -32,7 +32,7 @@
         android:id="@+id/navigation_timetable"
         android:name="com.example.studentapp.ui.timetable.TimetableFragment"
         android:label="@string/title_timetable"
-        tools:layout="@layout/fragment_timetable" />
+        tools:layout="@layout/fragment_calendar_monthly" />
 
     <fragment
         android:id="@+id/navigation_notifications"

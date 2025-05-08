@@ -15,7 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesItemBinding
-import com.example.studentapp.databinding.FragmentTimetableBinding
+import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
 import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.StopwatchViewModel
 

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.studentapp.MainActivity
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentTimetableBinding
 import java.time.LocalDate
@@ -36,7 +37,6 @@ class TimetableFragment : Fragment() {
         _binding = FragmentTimetableBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
         /*timetableViewModel.text.observe(viewLifecycleOwner) {
             monthYearText.text = it
         }*/
@@ -48,19 +48,23 @@ class TimetableFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.monthButtonLeft.setOnClickListener {
+        val viewBinding = binding.monthlyCalendarView
+
+        viewBinding.monthButtonLeft.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1)
             setMonthView()
         }
 
-        binding.monthButtonRight.setOnClickListener {
+        viewBinding.monthButtonRight.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1)
             setMonthView()
         }
     }
 
     private fun setMonthView() {
-        binding.monthYearTextView.text = monthYearFromDate(selectedDate)
+        val viewBinding = binding.monthlyCalendarView
+
+        viewBinding.monthYearTextView.text = monthYearFromDate(selectedDate)
         val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate)
 
         val calendarAdapter = CalendarAdapter(daysOfMonthText=daysInMonthText,
@@ -75,10 +79,9 @@ class TimetableFragment : Fragment() {
                 }
         })
         val layoutManager = GridLayoutManager(context, 7)
-        binding.calendarDayRecyclerView.layoutManager = layoutManager
-        binding.calendarDayRecyclerView.adapter = calendarAdapter
+        viewBinding.calendarDayRecyclerView.layoutManager = layoutManager
+        viewBinding.calendarDayRecyclerView.adapter = calendarAdapter
     }
-
 
     private fun monthYearFromDate(date: LocalDate) : String {
         val formatter = DateTimeFormatter.ofPattern("MMMM yyyy")

@@ -9,15 +9,11 @@ import com.example.studentapp.TimeInterval
 class ClassesItemViewModel : ViewModel() {
     private var _classId : Int = 0
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is class $_classId"
-    }
     private val _dailyTime = MutableLiveData<String>()
     private val _weeklyTime = MutableLiveData<String>()
     private val _monthlyTime = MutableLiveData<String>()
     private val _totalTime = MutableLiveData<String>()
 
-    val text: LiveData<String> = _text
     val dailyTime: LiveData<String> = _dailyTime
     val weeklyTime: LiveData<String> = _weeklyTime
     val monthlyTime: LiveData<String> = _monthlyTime
@@ -27,7 +23,6 @@ class ClassesItemViewModel : ViewModel() {
     // sets id of class and then calls write function
     fun setId(id : Int) {
        _classId = id
-        _text.value = "This is class $_classId"
         write()
     }
 

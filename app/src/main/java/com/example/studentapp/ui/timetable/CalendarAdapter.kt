@@ -9,9 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.databinding.CalendarDayCellBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
+import com.example.studentapp.ui.getThemeColor
 
 class CalendarAdapter (
-    private val daysOfMonth: List<String>,
+    private val daysOfMonthText: List<String>,
+    private val daysOfMonthSelected: List<Boolean>,
+    private val context:  android.content.Context,
     private val onItemListener: (Int, String) -> Unit
 ): RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
 
@@ -38,11 +41,13 @@ class CalendarAdapter (
     }
 
     override fun getItemCount(): Int {
-        return daysOfMonth.size
+        return daysOfMonthText.size
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        holder.dayOfMonth.text = daysOfMonth[position]
+        holder.dayOfMonth.text = daysOfMonthText[position]
+        if (daysOfMonthSelected[position]) holder.dayOfMonth.setTextColor(context.getThemeColor(android.R.attr.textColorPrimary))
+        else holder.dayOfMonth.setTextColor(context.getThemeColor(com.example.studentapp.R.attr.textColorPrimaryMuted))
     }
 
 

@@ -64,35 +64,35 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="MO"
+            android:text="MON"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="DI"
+            android:text="TUE"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="MI"
+            android:text="WED"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="DO"
+            android:text="THUR"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="FR"
+            android:text="FRI"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView

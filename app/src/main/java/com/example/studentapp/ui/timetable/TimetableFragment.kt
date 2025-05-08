@@ -61,15 +61,18 @@ class TimetableFragment : Fragment() {
 
     private fun setMonthView() {
         binding.monthYearTextView.text = monthYearFromDate(selectedDate)
-        val daysInMonth = daysInMonth(selectedDate)
+        val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate)
 
-        val calendarAdapter = CalendarAdapter(daysInMonth, {
-            position, dayText ->
-            if (!dayText.equals("")) {
-                val message =
-                    ("Selected Date $dayText").toString() + " " + monthYearFromDate(selectedDate)
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-            }
+        val calendarAdapter = CalendarAdapter(daysOfMonthText=daysInMonthText,
+            daysOfMonthSelected=daysInMonthSelected,
+            context=requireContext(),
+            onItemListener = {
+                position, dayText ->
+                if (!dayText.equals("")) {
+                    val message =
+                        ("Selected Date $dayText").toString() + " " + monthYearFromDate(selectedDate)
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                }
         })
         val layoutManager = GridLayoutManager(context, 7)
         binding.calendarDayRecyclerView.layoutManager = layoutManager
@@ -82,22 +85,33 @@ class TimetableFragment : Fragment() {
         return date.format(formatter)
     }
 
-    private fun daysInMonth(date: LocalDate) : List<String> {
+    private fun daysInMonth(date: LocalDate) : Pair<List<String>, List<Boolean>> {
         val yearMonth = YearMonth.from(date)
         val daysInMonthCount = yearMonth.lengthOfMonth()
         val firstDayOfMonth = selectedDate.withDayOfMonth(1)
         val dayOfWeek = firstDayOfMonth.dayOfWeek.value
 
-        val daysInMonthArray = MutableList<String>(42, { _-> 0.toString() })
+        val daysInPreviousMonth = YearMonth.from(date.minusMonths(1)).lengthOfMonth()
+
+        // TODO make it not always 42: if it starts on monday, we can remove the first 7 days
+        val daysInMonthArrayText = MutableList<String>(42, { _-> 0.toString() })
+        val daysInMonthArrayBoolean = MutableList<Boolean>(42, { _-> false })
 
         for (i in 1..42) {
             if (i <= dayOfWeek || i > daysInMonthCount + dayOfWeek) {
-                daysInMonthArray[i-1] = ""
+                daysInMonthArrayBoolean[i-1] = false
+                if (i <= dayOfWeek) {
+                    daysInMonthArrayText[i-1] = (daysInPreviousMonth-dayOfWeek+i).toString()
+                }
+                else {
+                    daysInMonthArrayText[i-1] = (i-(daysInMonthCount + dayOfWeek)).toString()
+                }
             } else {
-                daysInMonthArray[i-1] = (i - dayOfWeek).toString()
+                daysInMonthArrayText[i-1] = (i - dayOfWeek).toString()
+                daysInMonthArrayBoolean[i-1] = true
             }
         }
-        return daysInMonthArray
+        return Pair(daysInMonthArrayText, daysInMonthArrayBoolean)
     }
 
     override fun onDestroyView() {

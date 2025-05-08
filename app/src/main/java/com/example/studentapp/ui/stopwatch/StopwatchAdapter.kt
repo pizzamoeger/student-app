@@ -33,7 +33,7 @@ class StopwatchAdapter (
 
     // view holder for class item
     inner class StopwatchViewHolder(
-        private val binding: ItemClassBinding, // Use binding for view access
+        private val binding: ItemClassBinding,
         private val lifecycleOwner: LifecycleOwner,
     ) : RecyclerView.ViewHolder(binding.root) {
 

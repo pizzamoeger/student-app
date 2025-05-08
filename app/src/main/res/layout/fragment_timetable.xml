@@ -18,6 +18,7 @@
 
         <!--todo connect with onlick-->
         <Button
+            android:id="@+id/month_button_left"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,7 +34,6 @@
             android:text="May 2025"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="20sp"
@@ -43,6 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         
         <Button
+            android:id="@+id/month_button_right"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

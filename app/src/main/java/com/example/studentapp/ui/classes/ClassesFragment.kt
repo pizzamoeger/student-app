@@ -37,6 +37,7 @@ class ClassesFragment : Fragment() {
     }
 
     // TODO temp
+    // get random color
     fun randomColor(): Int {
         val random = Random.Default
         return android.graphics.Color.argb(
@@ -57,7 +58,7 @@ class ClassesFragment : Fragment() {
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
 
-        // Create a DividerItemDecoration to add horizontal lines between items
+        // visually divide classes with a vertical line
         val dividerItemDecoration = DividerItemDecoration(
             binding.recyclerViewClasses.context,
             DividerItemDecoration.VERTICAL

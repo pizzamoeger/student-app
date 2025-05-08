@@ -5,26 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.MainActivity
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.databinding.FragmentInsightsBinding
-import com.example.studentapp.ui.classes.StopwatchAdapter
-import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
-import com.example.studentapp.ui.stopwatch.insights.InsightsFragmentDirections
-import com.example.studentapp.ui.stopwatch.StopwatchViewModel
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
 
 class InsightsFragment : Fragment() {
 
@@ -48,44 +42,53 @@ class InsightsFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[InsightsViewModel::class.java]
 
-        val pieChartDay = binding.dailyChart
-        write(view, pieChartDay, TimeInterval.DAY)
+        // daily chart
+        bindPieChart(
+            item=insightsViewModel.entriesDay,
+            type = TimeInterval.DAY,
+            pieChart = binding.dailyChart)
 
-        insightsViewModel.entriesDay.observe(viewLifecycleOwner) {
-            pieChartDay.data = getData(TimeInterval.DAY)
-            if(pieChartDay.data != null) pieChartDay.invalidate()
-        }
+        // weekly chart
+        bindPieChart(
+            item=insightsViewModel.entriesWeek,
+            type = TimeInterval.WEEK,
+            pieChart = binding.weeklyChart)
 
-        val pieChartWeek = binding.weeklyChart
-        write(view, pieChartWeek, TimeInterval.WEEK)
+        // monthly chart
+        bindPieChart(
+            item=insightsViewModel.entriesMonth,
+            type = TimeInterval.MONTH,
+            pieChart = binding.monthlyChart)
+    }
 
-        insightsViewModel.entriesWeek.observe(viewLifecycleOwner) {
-            pieChartWeek.data = getData(TimeInterval.WEEK)
-            if (pieChartWeek.data != null) pieChartWeek.invalidate()
-        }
-
-        val pieChartMonth = binding.monthlyChart
-        write(view, pieChartMonth, TimeInterval.MONTH)
-
-        insightsViewModel.entriesMonth.observe(viewLifecycleOwner) {
-            pieChartMonth.data = getData(TimeInterval.MONTH)
-            if(pieChartMonth.data != null) pieChartMonth.invalidate()
+    // bind pie chart item to its stuff
+    private fun bindPieChart(item : LiveData<List<PieEntry>>, type: TimeInterval, pieChart: PieChart) {
+        createPieChart(view=requireView(), pieChart=pieChart, type=type)
+        item.observe(viewLifecycleOwner) {
+            pieChart.data = getDataPieChart(type)
+            if (pieChart.data != null) pieChart.invalidate()
         }
     }
 
-    fun getData(type : TimeInterval = TimeInterval.TOTAL, from : String = "", to : String = "") : PieData? {
+    // returns the data for the pie chart or null if there are no entries
+    private fun getDataPieChart(type : TimeInterval = TimeInterval.TOTAL, from : String = "", to : String = "") : PieData? {
+
+        // get the entries
         val entries = SharedData.classList.value?.filter { classItem ->
-            classItem.getSeconds(type, from, to) != 0
+            classItem.getSeconds(type, from, to) != 0 // skip entry if it has not been studied
         }?.map { classItem ->
             PieEntry(classItem.getSeconds(type, from, to).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
         }
 
         val dataSet = PieDataSet(entries, "Subjects")
+
+        // get the colors for the data entries
         dataSet.colors = SharedData.classList.value?.filter { classItem ->
-            classItem.getSeconds(type, from, to) != 0
+            classItem.getSeconds(type, from, to) != 0 // skip class if in has not been studied
         }?.map { classItem ->
             classItem.color
         }
+
         dataSet.valueTextSize = 14f
         dataSet.valueTextColor = requireContext().getThemeColor(android.R.attr.textColorSecondary)
 
@@ -95,39 +98,33 @@ class InsightsFragment : Fragment() {
         return PieData(dataSet)
     }
 
-    fun write(view : View, pieChart: PieChart, type: TimeInterval) {
+    // creates PieChart from data
+    private fun createPieChart(view : View, pieChart: PieChart, type: TimeInterval) {
         pieChart.description.isEnabled = false
         pieChart.legend.isEnabled = false
         pieChart.animateY(1000)
-        pieChart.invalidate() // refresh
+        pieChart.invalidate()
 
-        //pieChart.setUsePercentValues(true)
-        Log.d("rr", type.toString())
-        when {type == TimeInterval.TOTAL -> pieChart.centerText = "Total"
-        }
-        when {type == TimeInterval.MONTH -> pieChart.centerText = "This Month" // todo month name
-        }
-        when {
-            type == TimeInterval.WEEK -> pieChart.centerText = "This Week" // todo KW
-        }
-        when {
-            type == TimeInterval.DAY -> pieChart.centerText = "Today"
-        }
-        when {
-            type == TimeInterval.DEFAULT -> pieChart.centerText = "Custom Interval"
-        }
+        // center text
+        when {type == TimeInterval.TOTAL -> pieChart.centerText = "Total" }
+        when {type == TimeInterval.MONTH -> pieChart.centerText = "This Month"} // todo month name
+        when {type == TimeInterval.WEEK -> pieChart.centerText = "This Week"} // todo KW
+        when {type == TimeInterval.DAY -> pieChart.centerText = "Today"}
+        when {type == TimeInterval.DEFAULT -> pieChart.centerText = "Custom Interval"}
 
         val primaryColor = requireContext().getThemeColor(android.R.attr.textColorPrimary)
         pieChart.setCenterTextColor(primaryColor)
+        pieChart.setCenterTextSize(25f)
 
+        // entry labels
         val secondaryColor = requireContext().getThemeColor(android.R.attr.textColorSecondary)
         pieChart.setEntryLabelColor(secondaryColor)
+        pieChart.setEntryLabelTextSize(12f)
 
+        // hole
         val backgroundColor = requireContext().getThemeColor(android.R.attr.windowBackground)
         pieChart.setHoleColor(backgroundColor)
         pieChart.setTransparentCircleColor(backgroundColor)
-        pieChart.setCenterTextSize(25f)
-        pieChart.setEntryLabelTextSize(12f)
     }
 
     override fun onResume() {

@@ -36,17 +36,20 @@ class InsightsViewModel(app : Application) : AndroidViewModel(app) {
         handler.post(object : Runnable {
             override fun run() {
                 // update what time(s) should display
+
+                // day
                 _entriesDay.value = SharedData.classList.value?.map { classItem ->
-                    PieEntry(classItem.getSeconds(TimeInterval.DAY).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+                    PieEntry(classItem.getSeconds(TimeInterval.DAY).toFloat(), classItem.name)
                 }
 
+                // month
                 _entriesWeek.value = SharedData.classList.value?.map { classItem ->
-                    PieEntry(classItem.getSeconds(TimeInterval.WEEK).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+                    PieEntry(classItem.getSeconds(TimeInterval.WEEK).toFloat(), classItem.name)
                 }
 
-                // update what time(s) should display
+                // week
                 _entriesMonth.value = SharedData.classList.value?.map { classItem ->
-                    PieEntry(classItem.getSeconds(TimeInterval.MONTH).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+                    PieEntry(classItem.getSeconds(TimeInterval.MONTH).toFloat(), classItem.name)
                 }
 
                 // execute this every second

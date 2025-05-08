@@ -1,6 +1,7 @@
 package com.example.studentapp.ui.classes
 
 import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,13 +35,12 @@ class StopwatchAdapter (
     inner class StopwatchViewHolder(
         private val binding: ItemClassBinding, // Use binding for view access
         private val lifecycleOwner: LifecycleOwner,
-        //TODO private val binding: ItemClassBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
         // each class has a name and a delete button
-        // TODO use binding for this: constructor where we set binding
-        private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
-        private val dailyTime: TextView = itemView.findViewById(R.id.daily_time_classes_item)
-        private val startButton: ImageButton = itemView.findViewById(R.id.timer_start_button_classes_item)
+        private val nameText: TextView = binding.nameTextClassesItem
+        private val dailyTime: TextView = binding.dailyTimeClassesItem
+        private val startButton: ImageButton = binding.timerStartButtonClassesItem
 
         fun bind(item: ClassesItem) {
             // bind name
@@ -53,15 +53,17 @@ class StopwatchAdapter (
 
             // bind button
             val drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.circle_background)
-            drawable?.setColorFilter(item.color, PorterDuff.Mode.SRC_IN)
+            val colorFilter = PorterDuffColorFilter(item.color, PorterDuff.Mode.SRC_IN)
+            if (drawable != null) {
+                drawable.colorFilter = colorFilter
+            }
             startButton.background = drawable
             startButton.visibility = View.VISIBLE
+
             item.tracking.observe(lifecycleOwner) {
-                // TODO use strings.xml for this
-                if (it) {
+                if (it) { // tracking is true
                     startButton.setImageResource(R.drawable.pause)
-                }
-                else {
+                } else { // tracking is false
                     startButton.setImageResource(R.drawable.start)
                 }
             }

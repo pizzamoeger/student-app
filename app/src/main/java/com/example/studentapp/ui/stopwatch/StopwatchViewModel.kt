@@ -73,6 +73,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         if (SharedData.currentClass.value != null) SharedData.currentClass.value!!.updateTracking(false)
     }
 
+    // button functionality
     fun button(switched: Boolean = false) {
         // if switched is true, the class has switched
         if (switched) running = true
@@ -81,6 +82,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         }
     }
 
+    // loads secondsTotalAll and secondsTodayAll
     fun load() {
         secondsTotalAll = 0
         secondsTodayAll = 0

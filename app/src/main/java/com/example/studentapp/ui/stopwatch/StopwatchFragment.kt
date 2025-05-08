@@ -73,7 +73,7 @@ class StopwatchFragment : Fragment() {
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
 
-        // Create a DividerItemDecoration to add horizontal lines between items
+        // visually divide classes item with a vertical line
         val dividerItemDecoration = DividerItemDecoration(
             binding.recyclerViewClasses.context,
             DividerItemDecoration.VERTICAL
@@ -111,10 +111,11 @@ class StopwatchFragment : Fragment() {
         toolbar.selectionRight.setOnClickListener {
             val action = StopwatchFragmentDirections.actionStopwatchToInsights()
             findNavController().navigate(action)
-            // TODO remove for live updates
+            // remove for live updates
             stopwatchViewModel.stop()
         }
 
+        // load seconds
         stopwatchViewModel.load()
     }
 

@@ -22,16 +22,16 @@ class TimetableFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
+        val timetableViewModel =
             ViewModelProvider(this).get(TimetableViewModel::class.java)
 
         _binding = FragmentTimetableBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textTimetable
+        /*val textView: TextView = binding.textTimetable
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
-        }
+        }*/
         return root
     }
 

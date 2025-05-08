@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
     lineView.setBackgroundColor(color)
 }*/
 
+// returns the color of the App Theme with ID attrResIt
 fun Context.getThemeColor(attrResId : Int) : Int {
     val typedValue = TypedValue()
     theme.resolveAttribute(attrResId, typedValue, true)

@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="60dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/hour_cell"
+        android:textSize="15sp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:text="10:00" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="10"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:background="?attr/textColorPrimaryMuted">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="?attr/colorPrimary"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/event_mon"
+            android:textSize="12sp"
+            android:lines="2"
+            android:textColor="?android:attr/textColorPrimary"
+            android:text="10:00" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="?attr/colorPrimary"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/event_tue"
+            android:textSize="12sp"
+            android:lines="2"
+            android:textColor="?android:attr/textColorPrimary"
+            android:text="10:00" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="?attr/colorPrimary"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/event_wed"
+            android:textSize="12sp"
+            android:lines="2"
+            android:textColor="?android:attr/textColorPrimary"
+            android:text="10:00" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="?attr/colorPrimary"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/event_thur"
+            android:textSize="12sp"
+            android:lines="2"
+            android:textColor="?android:attr/textColorPrimary"
+            android:text="10:00" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="?attr/colorPrimary"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/event_fri"
+            android:textSize="12sp"
+            android:lines="2"
+            android:textColor="?android:attr/textColorPrimary"
+            android:text="10:00" />
+    </LinearLayout>
+</LinearLayout>

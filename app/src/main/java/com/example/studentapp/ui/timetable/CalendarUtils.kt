@@ -6,16 +6,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 class CalendarUtils {
     companion object {
-        lateinit var selectedDate : LocalDate
+        var selectedDate : LocalDate? = SharedData.today.value
 
         fun setMonthView(binding : FragmentCalendarMonthlyBinding, context : Context) {
-            binding.monthYearTextView.text = monthYearFromDate(selectedDate)
-            val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate)
+            binding.monthYearTextView.text = monthYearFromDate(selectedDate!!)
+            val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate!!)
 
             val calendarAdapter = CalendarAdapter(daysOfMonthText=daysInMonthText,
                 daysOfMonthSelected=daysInMonthSelected,
@@ -24,7 +25,7 @@ class CalendarUtils {
                         position, dayText ->
                     if (!dayText.equals("")) {
                         val message =
-                            ("Selected Date $dayText").toString() + " " + monthYearFromDate(selectedDate)
+                            ("Selected Date $dayText").toString() + " " + monthYearFromDate(selectedDate!!)
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                     }
                 })
@@ -33,15 +34,20 @@ class CalendarUtils {
             binding.calendarDayRecyclerView.adapter = calendarAdapter
         }
 
-        private fun monthYearFromDate(date: LocalDate) : String {
+        fun monthYearFromDate(date: LocalDate) : String {
             val formatter = DateTimeFormatter.ofPattern("MMMM yyyy")
             return date.format(formatter)
+        }
+
+        fun formattedShortTime(time : LocalTime) : String {
+            val formatter = DateTimeFormatter.ofPattern("HH:mm")
+            return time.format(formatter)
         }
 
         private fun daysInMonth(date: LocalDate) : Pair<List<String>, List<Boolean>> {
             val yearMonth = YearMonth.from(date)
             val daysInMonthCount = yearMonth.lengthOfMonth()
-            val firstDayOfMonth = selectedDate.withDayOfMonth(1)
+            val firstDayOfMonth = selectedDate!!.withDayOfMonth(1)
             val dayOfWeek = firstDayOfMonth.dayOfWeek.value
 
             val daysInPreviousMonth = YearMonth.from(date.minusMonths(1)).lengthOfMonth()
@@ -66,8 +72,5 @@ class CalendarUtils {
             }
             return Pair(daysInMonthArrayText, daysInMonthArrayBoolean)
         }
-    }
-    init {
-        selectedDate = SharedData.today.value!!
     }
 }

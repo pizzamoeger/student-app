@@ -50,12 +50,12 @@ class TimetableFragment : Fragment() {
         val viewBinding = binding.monthlyCalendarView
 
         viewBinding.monthButtonLeft.setOnClickListener {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1)
+            CalendarUtils.selectedDate = CalendarUtils.selectedDate!!.minusMonths(1)
             CalendarUtils.setMonthView(binding = binding.monthlyCalendarView, context=requireContext())
         }
 
         viewBinding.monthButtonRight.setOnClickListener {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1)
+            CalendarUtils.selectedDate = CalendarUtils.selectedDate!!.plusMonths(1)
             CalendarUtils.setMonthView(binding = binding.monthlyCalendarView, context=requireContext())
         }
     }

@@ -1,6 +1,8 @@
 package com.example.studentapp.ui.timetable
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.MainActivity
 import com.example.studentapp.SharedData
+import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
 import com.example.studentapp.databinding.FragmentTimetableBinding
+import com.example.studentapp.ui.timetable.CalendarUtils.Companion.daysInMonth
+import com.example.studentapp.ui.timetable.CalendarUtils.Companion.monthYearFromDate
+import com.example.studentapp.ui.timetable.CalendarUtils.Companion.selectedDate
+import com.github.mikephil.charting.utils.Utils
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -39,9 +46,30 @@ class TimetableFragment : Fragment() {
         /*timetableViewModel.text.observe(viewLifecycleOwner) {
             monthYearText.text = it
         }*/
-        CalendarUtils.setMonthView(binding = binding.monthlyCalendarView, context=requireContext())
+        setMonthView()
 
         return root
+    }
+
+    fun setMonthView() {
+        binding.monthlyCalendarView.monthYearTextView.text = monthYearFromDate(selectedDate!!)
+        val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate!!)
+
+        Log.d("rr", "here")
+        val calendarAdapter = CalendarAdapter(daysOfMonthText=daysInMonthText,
+            daysOfMonthSelected=daysInMonthSelected,
+            context=requireContext(),
+            onItemListener = {
+                    position, dayText ->
+                if (dayText != "") {
+                    val message =
+                        ("Selected Date $dayText").toString() + " " + monthYearFromDate(selectedDate!!)
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                }
+            })
+        val layoutManager = GridLayoutManager(context, 7)
+        binding.monthlyCalendarView.calendarDayRecyclerView.layoutManager = layoutManager
+        binding.monthlyCalendarView.calendarDayRecyclerView.adapter = calendarAdapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,12 +79,12 @@ class TimetableFragment : Fragment() {
 
         viewBinding.monthButtonLeft.setOnClickListener {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate!!.minusMonths(1)
-            CalendarUtils.setMonthView(binding = binding.monthlyCalendarView, context=requireContext())
+            setMonthView()
         }
 
         viewBinding.monthButtonRight.setOnClickListener {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate!!.plusMonths(1)
-            CalendarUtils.setMonthView(binding = binding.monthlyCalendarView, context=requireContext())
+            setMonthView()
         }
     }
 

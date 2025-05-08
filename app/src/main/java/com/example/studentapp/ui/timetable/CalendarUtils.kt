@@ -1,6 +1,7 @@
 package com.example.studentapp.ui.timetable
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.SharedData
@@ -14,26 +15,6 @@ class CalendarUtils {
     companion object {
         var selectedDate : LocalDate? = SharedData.today.value
 
-        fun setMonthView(binding : FragmentCalendarMonthlyBinding, context : Context) {
-            binding.monthYearTextView.text = monthYearFromDate(selectedDate!!)
-            val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate!!)
-
-            val calendarAdapter = CalendarAdapter(daysOfMonthText=daysInMonthText,
-                daysOfMonthSelected=daysInMonthSelected,
-                context=context,
-                onItemListener = {
-                        position, dayText ->
-                    if (!dayText.equals("")) {
-                        val message =
-                            ("Selected Date $dayText").toString() + " " + monthYearFromDate(selectedDate!!)
-                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                    }
-                })
-            val layoutManager = GridLayoutManager(context, 7)
-            binding.calendarDayRecyclerView.layoutManager = layoutManager
-            binding.calendarDayRecyclerView.adapter = calendarAdapter
-        }
-
         fun monthYearFromDate(date: LocalDate) : String {
             val formatter = DateTimeFormatter.ofPattern("MMMM yyyy")
             return date.format(formatter)
@@ -44,7 +25,7 @@ class CalendarUtils {
             return time.format(formatter)
         }
 
-        private fun daysInMonth(date: LocalDate) : Pair<List<String>, List<Boolean>> {
+        fun daysInMonth(date: LocalDate) : Pair<List<String>, List<Boolean>> {
             val yearMonth = YearMonth.from(date)
             val daysInMonthCount = yearMonth.lengthOfMonth()
             val firstDayOfMonth = selectedDate!!.withDayOfMonth(1)

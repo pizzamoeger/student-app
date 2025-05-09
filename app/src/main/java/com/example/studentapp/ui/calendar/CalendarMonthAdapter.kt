@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.CalendarDayCellBinding
+import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.getThemeColor
 import java.time.LocalDate
 
-class CalendarAdapter (
-    private val daysOfMonthText: List<LocalDate>,
-    private val daysOfMonthSelected: List<Boolean>,
+class CalendarMonthAdapter (
+    private val daysList: List<LocalDate>,
     private val context:  android.content.Context,
-    private val onItemListener: (LocalDate) -> Unit
-): RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
+    private val onItemClick: (LocalDate) -> Unit
+): RecyclerView.Adapter<CalendarMonthAdapter.CalendarViewHolder>() {
 
     inner class CalendarViewHolder (
         val binding: CalendarDayCellBinding
@@ -24,38 +24,48 @@ class CalendarAdapter (
         val parentView = binding.cellDayParent
 
         init {
+            // makes this clickable
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(view: View) {
-            onItemListener(daysOfMonthText[adapterPosition])
+            onItemClick(daysList[adapterPosition])
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = CalendarDayCellBinding.inflate(inflater, parent, false)
+
+        // there are 6 rows, each should fill the same space
         val layoutParams = binding.root.layoutParams
         layoutParams.height = ((parent.height/6.0).toInt())
+
         return CalendarViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return daysOfMonthText.size
+        return daysList.size
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        val day = daysOfMonthText[position]
-        holder.dayOfMonth.text = day.dayOfMonth.toString()
+        val day = daysList[position]
 
-        if (day==SharedData.today.value) {
+        // set text (number of day in month)
+        val dayStr = day.dayOfMonth.toString()
+        holder.dayOfMonth.text = dayStr
+
+        // if it is selected we want to highlight it
+        if (day== selectedDate) {
             holder.parentView.setBackgroundColor(context.getThemeColor(R.attr.windowBackgroundMuted))
         }
 
-        // TODO can do this without daysOfMonthSelected
-        if (daysOfMonthSelected[position]) holder.dayOfMonth.setTextColor(context.getThemeColor(android.R.attr.textColorPrimary))
-        else holder.dayOfMonth.setTextColor(context.getThemeColor(R.attr.textColorPrimaryMuted))
+        // text color different when day not in month of selected day
+        if (daysList[position].month == selectedDate.month) {
+            holder.dayOfMonth.setTextColor(context.getThemeColor(android.R.attr.textColorPrimary))
+        }
+        else {
+            holder.dayOfMonth.setTextColor(context.getThemeColor(R.attr.textColorPrimaryMuted))
+        }
     }
-
-
 }

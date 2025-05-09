@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
 import com.example.studentapp.ui.getThemeColor
-import com.example.studentapp.ui.calendar.CalendarUtils.Companion.daysInMonth
+import com.example.studentapp.ui.calendar.CalendarUtils.Companion.daysForCalendarView
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.monthYearFromDate
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 
@@ -21,9 +21,6 @@ import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 class MonthlyCalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarMonthlyBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -33,28 +30,56 @@ class MonthlyCalendarFragment : Fragment() {
     ): View {
         _binding = FragmentCalendarMonthlyBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        setMonthView()
-
         return root
     }
 
-    fun setMonthView() {
-        binding.monthYearTextView.text = monthYearFromDate(selectedDate!!)
-        val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate!!)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val calendarAdapter = CalendarAdapter(daysOfMonthText=daysInMonthText,
-            daysOfMonthSelected=daysInMonthSelected,
-            context=requireContext(),
-            onItemListener = {
-                    day ->
-                val message =
-                    ("Selected Date ${day.toString()}")
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-            })
-        val layoutManager = GridLayoutManager(context, 7)
-        binding.calendarDayRecyclerView.layoutManager = layoutManager
-        binding.calendarDayRecyclerView.adapter = calendarAdapter
+        // bind button for previous month
+        binding.monthButtonLeft.setOnClickListener {
+            previousMonthAction()
+        }
+
+        // bind button for next month
+        binding.monthButtonRight.setOnClickListener {
+            nextMonthAction()
+        }
+
+        // TEMP
+        // bind button for creating a new event
+        binding.newEventButton.setOnClickListener {
+            newEvent()
+        }
+
+        // visual divider between the day cells
+        divider()
+    }
+
+    // TODO you could use a custom divider
+    private fun divider() {
+        // color of grid
+        val drawable = ColorDrawable(
+            binding.calendarDayRecyclerView.context.getThemeColor(
+                androidx.appcompat.R.attr.colorPrimary))
+
+        // vertical lines
+        val verticalLines = DividerItemDecoration(
+            binding.calendarDayRecyclerView.context,
+            DividerItemDecoration.VERTICAL
+        )
+
+        verticalLines.setDrawable(drawable)
+        binding.calendarDayRecyclerView.addItemDecoration(verticalLines)
+
+        // horizontal lines
+        val horizontalLines = DividerItemDecoration(
+            binding.calendarDayRecyclerView.context,
+            DividerItemDecoration.HORIZONTAL
+        )
+
+        horizontalLines.setDrawable(drawable)
+        binding.calendarDayRecyclerView.addItemDecoration(horizontalLines)
     }
 
     override fun onResume() {
@@ -62,51 +87,48 @@ class MonthlyCalendarFragment : Fragment() {
         setMonthView()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setMonthView() {
+        // TODO make it so that you can press on this and then choose year and month
+        // text that is displayed at top
+        binding.monthYearTextView.text = monthYearFromDate(selectedDate)
 
-        binding.monthButtonLeft.setOnClickListener {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate!!.minusMonths(1)
-            setMonthView()
-        }
+        // days that should be displayed
+        val daysList = daysForCalendarView(selectedDate)
 
-        binding.monthButtonRight.setOnClickListener {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate!!.plusMonths(1)
-            setMonthView()
-        }
+        // adapter that displays days
+        val calendarMonthAdapter = CalendarMonthAdapter(daysList=daysList,
+            context=requireContext(),
+            onItemClick = {
+                day ->
+                val message = ("Selected Date $day")
+                selectedDate = day
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            })
+        binding.calendarDayRecyclerView.adapter = calendarMonthAdapter
 
-        binding.newEventButton.setOnClickListener {
-            newEvent()
-        }
-
-        // TODO make a custom for this
-        val dividerItemDecoration = DividerItemDecoration(
-            binding.calendarDayRecyclerView.context,
-            DividerItemDecoration.VERTICAL
-        )
-
-        val drawable = ColorDrawable(binding.calendarDayRecyclerView.context.getThemeColor(androidx.appcompat.R.attr.colorPrimary))
-        dividerItemDecoration.setDrawable(drawable)
-        val divider2 = DividerItemDecoration(
-            binding.calendarDayRecyclerView.context,
-            DividerItemDecoration.HORIZONTAL
-        )
-
-        divider2.setDrawable(drawable)
-
-        binding.calendarDayRecyclerView.addItemDecoration(dividerItemDecoration)
-        binding.calendarDayRecyclerView.addItemDecoration(divider2)
+        // defines layout
+        val layoutManager = GridLayoutManager(context, 7)
+        binding.calendarDayRecyclerView.layoutManager = layoutManager
     }
 
-    fun newEvent() {
-
-        //val action = MonthlyCalendarFragmentDirections.actionNotsToEventEdit()
-        //findNavController().navigate(action)
-        val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main) // or your NavHost ID
+    // TODO do this the same way as in stopwatch (figure out why it doesnt work)
+    // is called on button press of create event
+    private fun newEvent() {
+        // navigate to event edit fragment
+        val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
         navController.navigate(R.id.fragment_event_edit)
-        //val navController = findNavController()
-        //navController.navigate(R.id.action_nots_to_event_edit)
+    }
 
+    // what should happen when button for previous month is pressed
+    private fun previousMonthAction() {
+        selectedDate = selectedDate.minusMonths(1)
+        setMonthView()
+    }
+
+    // what should happen when button for next month is pressed
+    private fun nextMonthAction() {
+        selectedDate = selectedDate.plusMonths(1)
+        setMonthView()
     }
 
     override fun onDestroyView() {

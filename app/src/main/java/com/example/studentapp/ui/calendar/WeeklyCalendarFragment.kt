@@ -18,44 +18,31 @@ import java.time.LocalTime
 class WeeklyCalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarWeeklyBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-
-    private lateinit var monthDayText: TextView
-    private lateinit var hourListView : ListView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentCalendarWeeklyBinding.inflate(inflater, container, false)
-        //setContentView(R.layout.activity_daily_calendar)
         val root: View = binding.root
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initWidgets()
 
+        // bind button for next week
         binding.weekButtonLeft.setOnClickListener {
             previousWeekAction()
-            setWeekView()
         }
 
+        // bind button for previous week
         binding.weekButtonRight.setOnClickListener {
             nextWeekAction()
-            setWeekView()
         }
-    }
-
-    private fun initWidgets() {
-        monthDayText = binding.monthYearTextViewWeek
-        hourListView = binding.hourListView
     }
 
     override fun onResume() {
@@ -64,38 +51,41 @@ class WeeklyCalendarFragment : Fragment() {
     }
 
     private fun setWeekView() {
-        monthDayText.text = CalendarUtils.monthYearFromDate(selectedDate!!)
+        // text that is displayed at top
+        binding.monthYearTextViewWeek.text = CalendarUtils.weekMonthYearFromDate(selectedDate)
+
+        // adapter that displays hours and events in that hour
         setHourAdapter()
     }
 
     private fun setHourAdapter() {
+        // get adapter
         val hourAdapter = HourAdapter(requireContext(), hourEventList())
-        hourListView.adapter = hourAdapter
+        binding.hourListView.adapter = hourAdapter
     }
 
+    // returns list of events for each hour in 0..24
     private fun hourEventList(): List<HourEvent> {
-        val list: MutableList<HourEvent> = MutableList<HourEvent>(
+        val list: List<HourEvent> = List(
             size = 24,
             init = {hour ->
                 val time = LocalTime.of(hour, 0)
-                val events = Event.eventsForDateAndTime(selectedDate!!, time)
+                val events = Event.eventsForDateAndTime(selectedDate, time)
                 HourEvent(time, events)
             }
         )
         return list
     }
 
-    fun previousWeekAction() {
-        selectedDate = selectedDate!!.minusWeeks(1)
+    // what should happen when button for previous week is pressed
+    private fun previousWeekAction() {
+        selectedDate = selectedDate.minusWeeks(1)
         setWeekView()
     }
 
-    fun nextWeekAction() {
-        selectedDate = selectedDate!!.plusWeeks(1)
+    // what should happen when button for next week is pressed
+    private fun nextWeekAction() {
+        selectedDate = selectedDate.plusWeeks(1)
         setWeekView()
-    }
-
-    fun newEventAction(view: View?) {
-        //startActivity(Intent(this, EventEditActivity::class.java))
     }
 }

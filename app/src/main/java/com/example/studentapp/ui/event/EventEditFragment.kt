@@ -1,4 +1,4 @@
-package com.example.studentapp.ui.timetable
+package com.example.studentapp.ui.event
 
 import android.content.Context
 import android.os.Bundle
@@ -8,20 +8,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.studentapp.R
-import com.example.studentapp.databinding.FramentEventEditBinding
+import com.example.studentapp.databinding.FragmentEventEditBinding
 import com.example.studentapp.ui.calendar.CalendarUtils
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.time.LocalTime
 
 class EventEditFragment : Fragment() {
-    private var _binding: FramentEventEditBinding? = null
+    private var _binding: FragmentEventEditBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,7 +31,7 @@ class EventEditFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FramentEventEditBinding.inflate(inflater, container, false)
+        _binding = FragmentEventEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         eventNameET = binding.eventNameEditText

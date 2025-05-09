@@ -45,9 +45,9 @@
     </fragment>
 
     <fragment android:id="@+id/fragment_event_edit"
-        android:name="com.example.studentapp.ui.timetable.EventEditFragment"
+        android:name="com.example.studentapp.ui.event.EventEditFragment"
         android:label="Event Edit"
-        tools:layout="@layout/frament_event_edit"/>
+        tools:layout="@layout/fragment_event_edit"/>
 
     <fragment
         android:id="@+id/navigation_insights"

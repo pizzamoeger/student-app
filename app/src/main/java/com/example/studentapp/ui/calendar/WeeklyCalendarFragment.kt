@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
-import com.example.studentapp.ui.timetable.Event
+import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.timetable.HourAdapter
 import com.example.studentapp.ui.timetable.HourEvent
 import java.time.LocalTime

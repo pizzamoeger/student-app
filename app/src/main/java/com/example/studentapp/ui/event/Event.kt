@@ -1,4 +1,4 @@
-package com.example.studentapp.ui.timetable
+package com.example.studentapp.ui.event
 
 import java.time.LocalDate
 import java.time.LocalTime

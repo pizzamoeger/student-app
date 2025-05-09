@@ -50,14 +50,14 @@
         android:textColor="?android:attr/textColorPrimary"/>
 
     <Button
+        android:id="@+id/save_button_event"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?android:attr/textColorPrimary"
         android:background="@null"
         android:textStyle="bold"
-        android:onClick="saveEventAction"
         android:layout_gravity="center"
         android:textSize="20sp"/>
 

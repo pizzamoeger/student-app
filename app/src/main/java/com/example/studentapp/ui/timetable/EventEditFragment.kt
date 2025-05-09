@@ -39,6 +39,10 @@ class EventEditFragment : Fragment() {
         eventDateTV.text = "Date: ${CalendarUtils.formattedDate(CalendarUtils.selectedDate!!)}"
         eventTimeTV.text = "Date: ${CalendarUtils.formattedTime(time)}"
 
+        binding.saveButtonEvent.setOnClickListener { _ ->
+            saveEvent()
+        }
+
         return root
     }
 
@@ -46,6 +50,6 @@ class EventEditFragment : Fragment() {
         val eventName = eventNameET.text.toString()
         val newEvent = Event(name=eventName, CalendarUtils.selectedDate!!, time)
         Event.eventsList.add(newEvent)
-        //requireActivity().supportFragmentManager.popBackStack()
+        requireActivity().supportFragmentManager.popBackStack()
     }
 }

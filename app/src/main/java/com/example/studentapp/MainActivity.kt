@@ -18,6 +18,8 @@ import com.example.studentapp.ui.stopwatch.StopwatchFragment
 import com.example.studentapp.ui.stopwatch.insights.InsightsFragment
 import com.google.android.material.appbar.MaterialToolbar
 
+
+// TODO java.lang.IllegalArgumentException: The fragment EventEditFragment{4f8871c} (ebe88115-7f08-407e-b12b-a6eee164fe69 id=0x7f080128) is unknown to the FragmentNavigator. Please use the navigate() function to add fragments to the FragmentNavigator managed FragmentManager.                                                                                        java.lang.IllegalArgumentException: The fragment EventEditFragment{4f8871c} (ebe88115-7f08-407e-b12b-a6eee164fe69 id=0x7f080128) is unknown to the FragmentNavigator. Please use the navigate() function to add fragments to the FragmentNavigator managed FragmentManager.
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding

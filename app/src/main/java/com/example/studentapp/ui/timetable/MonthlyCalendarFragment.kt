@@ -102,11 +102,12 @@ class MonthlyCalendarFragment : Fragment() {
 
     fun newEvent() {
 
-        val action = MonthlyCalendarFragmentDirections.actionNotsToEventEdit()
-        findNavController().navigate(action)
-        /*val navController = requireActivity()
-            .findNavController(R.id.nav_host_fragment_activity_main) // or your NavHost ID
-        navController.navigate(R.id.fragment_event_edit)*/
+        //val action = MonthlyCalendarFragmentDirections.actionNotsToEventEdit()
+        //findNavController().navigate(action)
+        val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main) // or your NavHost ID
+        navController.navigate(R.id.fragment_event_edit)
+        //val navController = findNavController()
+        //navController.navigate(R.id.action_nots_to_event_edit)
 
     }
 

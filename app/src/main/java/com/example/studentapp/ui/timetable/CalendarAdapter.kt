@@ -1,18 +1,20 @@
 package com.example.studentapp.ui.timetable
 
-import android.R
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studentapp.R
+import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.CalendarDayCellBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
+import java.time.LocalDate
 
 class CalendarAdapter (
-    private val daysOfMonthText: List<String>,
+    private val daysOfMonthText: List<LocalDate>,
     private val daysOfMonthSelected: List<Boolean>,
     private val context:  android.content.Context,
     private val onItemListener: (Int, String) -> Unit
@@ -22,6 +24,7 @@ class CalendarAdapter (
         val binding: CalendarDayCellBinding
     ): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         val dayOfMonth = binding.cellDayText
+        val parentView = binding.cellDayParent
 
         init {
             itemView.setOnClickListener(this)
@@ -45,9 +48,16 @@ class CalendarAdapter (
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        holder.dayOfMonth.text = daysOfMonthText[position]
+        val day = daysOfMonthText[position]
+        holder.dayOfMonth.text = day.dayOfMonth.toString()
+
+        if (day==SharedData.today.value) {
+            holder.parentView.setBackgroundColor(context.getThemeColor(R.attr.windowBackgroundMuted))
+        }
+
+        // TODO can do this without daysOfMonthSelected
         if (daysOfMonthSelected[position]) holder.dayOfMonth.setTextColor(context.getThemeColor(android.R.attr.textColorPrimary))
-        else holder.dayOfMonth.setTextColor(context.getThemeColor(com.example.studentapp.R.attr.textColorPrimaryMuted))
+        else holder.dayOfMonth.setTextColor(context.getThemeColor(R.attr.textColorPrimaryMuted))
     }
 
 

@@ -1,32 +1,27 @@
 package com.example.studentapp.ui.timetable
 
-import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.studentapp.MainActivity
-import com.example.studentapp.SharedData
+import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
-import com.example.studentapp.databinding.FragmentTimetableBinding
+import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.timetable.CalendarUtils.Companion.daysInMonth
 import com.example.studentapp.ui.timetable.CalendarUtils.Companion.monthYearFromDate
 import com.example.studentapp.ui.timetable.CalendarUtils.Companion.selectedDate
-import com.github.mikephil.charting.utils.Utils
-import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 
 
-class TimetableFragment : Fragment() {
+class MonthlyCalendarFragment : Fragment() {
 
-    private var _binding: FragmentTimetableBinding? = null
+    private var _binding: FragmentCalendarMonthlyBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,7 +35,7 @@ class TimetableFragment : Fragment() {
         val timetableViewModel =
             ViewModelProvider(this).get(TimetableViewModel::class.java)
 
-        _binding = FragmentTimetableBinding.inflate(inflater, container, false)
+        _binding = FragmentCalendarMonthlyBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         /*timetableViewModel.text.observe(viewLifecycleOwner) {
@@ -52,7 +47,7 @@ class TimetableFragment : Fragment() {
     }
 
     fun setMonthView() {
-        binding.monthlyCalendarView.monthYearTextView.text = monthYearFromDate(selectedDate!!)
+        binding.monthYearTextView.text = monthYearFromDate(selectedDate!!)
         val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate!!)
 
         Log.d("rr", "here")
@@ -68,26 +63,49 @@ class TimetableFragment : Fragment() {
                 }
             })
         val layoutManager = GridLayoutManager(context, 7)
-        binding.monthlyCalendarView.calendarDayRecyclerView.layoutManager = layoutManager
-        binding.monthlyCalendarView.calendarDayRecyclerView.adapter = calendarAdapter
+        binding.calendarDayRecyclerView.layoutManager = layoutManager
+        binding.calendarDayRecyclerView.adapter = calendarAdapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewBinding = binding.monthlyCalendarView
-
-        viewBinding.monthButtonLeft.setOnClickListener {
+        binding.monthButtonLeft.setOnClickListener {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate!!.minusMonths(1)
             setMonthView()
         }
 
-        viewBinding.monthButtonRight.setOnClickListener {
+        binding.monthButtonRight.setOnClickListener {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate!!.plusMonths(1)
             setMonthView()
         }
+
+        binding.newEventButton.setOnClickListener {
+            newEvent()
+        }
+
+        // TODO make a custom for this
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.calendarDayRecyclerView.context,
+            DividerItemDecoration.VERTICAL
+        )
+
+        val drawable = ColorDrawable(binding.calendarDayRecyclerView.context.getThemeColor(androidx.appcompat.R.attr.colorPrimary))
+        dividerItemDecoration.setDrawable(drawable)
+        val divider2 = DividerItemDecoration(
+            binding.calendarDayRecyclerView.context,
+            DividerItemDecoration.HORIZONTAL
+        )
+
+        divider2.setDrawable(drawable)
+
+        binding.calendarDayRecyclerView.addItemDecoration(dividerItemDecoration)
+        binding.calendarDayRecyclerView.addItemDecoration(divider2)
     }
 
+    fun newEvent() {
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

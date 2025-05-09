@@ -25,7 +25,7 @@ class CalendarUtils {
             return time.format(formatter)
         }
 
-        fun daysInMonth(date: LocalDate) : Pair<List<String>, List<Boolean>> {
+        fun daysInMonth(date: LocalDate) : Pair<List<LocalDate>, List<Boolean>> {
             val yearMonth = YearMonth.from(date)
             val daysInMonthCount = yearMonth.lengthOfMonth()
             val firstDayOfMonth = selectedDate!!.withDayOfMonth(1)
@@ -34,20 +34,22 @@ class CalendarUtils {
             val daysInPreviousMonth = YearMonth.from(date.minusMonths(1)).lengthOfMonth()
 
             // TODO make it not always 42: if it starts on monday, we can remove the first 7 days
-            val daysInMonthArrayText = MutableList<String>(42, { _-> 0.toString() })
+            val daysInMonthArrayText = MutableList<LocalDate>(42, { _-> selectedDate!! })
             val daysInMonthArrayBoolean = MutableList<Boolean>(42, { _-> false })
 
             for (i in 1..42) {
                 if (i <= dayOfWeek || i > daysInMonthCount + dayOfWeek) {
                     daysInMonthArrayBoolean[i-1] = false
                     if (i <= dayOfWeek) {
-                        daysInMonthArrayText[i-1] = (daysInPreviousMonth-dayOfWeek+i).toString()
+                        val lastMonth = LocalDate.of(selectedDate!!.year, selectedDate!!.month, 1).minusMonths(1)
+                        daysInMonthArrayText[i-1] = LocalDate.of(lastMonth.year, lastMonth.month, daysInPreviousMonth-dayOfWeek+i)
                     }
                     else {
-                        daysInMonthArrayText[i-1] = (i-(daysInMonthCount + dayOfWeek)).toString()
+                        val lastMonth = LocalDate.of(selectedDate!!.year, selectedDate!!.month, 1).plusMonths(1)
+                        daysInMonthArrayText[i-1] = LocalDate.of(lastMonth.year, lastMonth.month, i-(daysInMonthCount + dayOfWeek))
                     }
                 } else {
-                    daysInMonthArrayText[i-1] = (i - dayOfWeek).toString()
+                    daysInMonthArrayText[i-1] = LocalDate.of(selectedDate!!.year, selectedDate!!.month, i-dayOfWeek)
                     daysInMonthArrayBoolean[i-1] = true
                 }
             }

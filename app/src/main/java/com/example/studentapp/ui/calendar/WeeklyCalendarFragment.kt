@@ -1,4 +1,4 @@
-package com.example.studentapp.ui.timetable
+package com.example.studentapp.ui.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,10 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
-import com.example.studentapp.databinding.FragmentTimetableBinding
-import com.example.studentapp.ui.timetable.CalendarUtils.Companion.selectedDate
+import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
+import com.example.studentapp.ui.timetable.Event
+import com.example.studentapp.ui.timetable.HourAdapter
+import com.example.studentapp.ui.timetable.HourEvent
 import java.time.LocalTime
 
 

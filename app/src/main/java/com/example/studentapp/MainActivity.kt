@@ -1,8 +1,10 @@
 package com.example.studentapp
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -65,6 +67,13 @@ class MainActivity : AppCompatActivity() {
     // TODO make that this is executed when switching between things in bottom menu
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
+
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = currentFocus
+        if (view != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 

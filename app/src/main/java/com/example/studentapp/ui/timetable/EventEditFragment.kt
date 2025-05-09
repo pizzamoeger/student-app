@@ -1,14 +1,23 @@
 package com.example.studentapp.ui.timetable
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.studentapp.R
 import com.example.studentapp.databinding.FramentEventEditBinding
+import com.example.studentapp.ui.calendar.CalendarUtils
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalTime
 
 class EventEditFragment : Fragment() {
@@ -50,6 +59,15 @@ class EventEditFragment : Fragment() {
         val eventName = eventNameET.text.toString()
         val newEvent = Event(name=eventName, CalendarUtils.selectedDate!!, time)
         Event.eventsList.add(newEvent)
-        requireActivity().supportFragmentManager.popBackStack()
+
+        // Hide the keyboard before navigating up
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = requireActivity().currentFocus
+        if (view != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
+        // Now navigate back
+        findNavController().navigateUp()
     }
 }

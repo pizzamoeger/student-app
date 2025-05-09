@@ -1,25 +1,21 @@
-package com.example.studentapp.ui.timetable
+package com.example.studentapp.ui.calendar
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
 import com.example.studentapp.ui.getThemeColor
-import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
-import com.example.studentapp.ui.timetable.CalendarUtils.Companion.daysInMonth
-import com.example.studentapp.ui.timetable.CalendarUtils.Companion.monthYearFromDate
-import com.example.studentapp.ui.timetable.CalendarUtils.Companion.selectedDate
+import com.example.studentapp.ui.calendar.CalendarUtils.Companion.daysInMonth
+import com.example.studentapp.ui.calendar.CalendarUtils.Companion.monthYearFromDate
+import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 
 
 class MonthlyCalendarFragment : Fragment() {
@@ -38,9 +34,6 @@ class MonthlyCalendarFragment : Fragment() {
         _binding = FragmentCalendarMonthlyBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        /*timetableViewModel.text.observe(viewLifecycleOwner) {
-            monthYearText.text = it
-        }*/
         setMonthView()
 
         return root
@@ -62,6 +55,11 @@ class MonthlyCalendarFragment : Fragment() {
         val layoutManager = GridLayoutManager(context, 7)
         binding.calendarDayRecyclerView.layoutManager = layoutManager
         binding.calendarDayRecyclerView.adapter = calendarAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setMonthView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

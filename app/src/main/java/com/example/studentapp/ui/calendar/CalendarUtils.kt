@@ -1,11 +1,6 @@
-package com.example.studentapp.ui.timetable
+package com.example.studentapp.ui.calendar
 
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.SharedData
-import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.YearMonth

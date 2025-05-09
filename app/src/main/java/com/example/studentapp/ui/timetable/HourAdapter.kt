@@ -27,7 +27,7 @@ class HourAdapter (
         }
 
         setHour(convertView!!, event!!.time)
-        setEvents(convertView, event.events)
+        setEventsWeek(convertView, event.events)
 
         return convertView
     }
@@ -40,38 +40,25 @@ class HourAdapter (
 
     // set events
     // TODO make this actually display the events of the day of the week
-    private fun setEvents(convertView : View, events : List<Event>) {
-        val monTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_mon)
-        val tueTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_tue)
-        val wedTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_wed)
-        val thurTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_thur)
-        val friTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_fri)
+    private fun setEventsWeek(convertView : View, events : Map<String, List<Event>>) {
+        val monTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_mon_1)
+        val tueTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_tue_1)
+        val wedTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_wed_1)
+        val thurTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_thur_1)
+        val friTextView = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_fri_1)
 
-        friTextView.visibility = View.INVISIBLE
-        thurTextView.visibility = View.INVISIBLE
-        wedTextView.visibility = View.INVISIBLE
-
-        if (events.size == 0) {
-            monTextView.visibility = View.INVISIBLE
-            tueTextView.visibility = View.INVISIBLE
-            wedTextView.visibility = View.INVISIBLE
-        } else if (events.size == 1) {
-            setEvent(monTextView, events.get(0))
-            tueTextView.visibility = View.INVISIBLE
-            wedTextView.visibility = View.INVISIBLE
-        } else if (events.size == 2) {
-            setEvent(monTextView, events.get(0))
-            setEvent(tueTextView, events.get(1))
-            wedTextView.visibility = View.INVISIBLE
-        } else {
-            setEvent(monTextView, events.get(0))
-            setEvent(tueTextView, events.get(1))
-            setEvent(wedTextView, events.get(2))
-        }
+        setEvents(monTextView, events["mon"]!!)
+        setEvents(tueTextView, events["tue"]!!)
+        setEvents(wedTextView, events["wed"]!!)
+        setEvents(wedTextView, events["thur"]!!)
+        setEvents(wedTextView, events["fri"]!!)
     }
 
-    private fun setEvent(eventTextView : TextView, event : Event) {
-        eventTextView.text = event.name
-        eventTextView.visibility = View.VISIBLE
+    private fun setEvents(eventTextView : TextView, events : List<Event>) {
+        /*if (events.isEmpty()) eventTextView.visibility = View.INVISIBLE
+        else*/ eventTextView.visibility = View.VISIBLE
+
+        if (events.size > 1) eventTextView.text = events[0].name
+        // else
     }
 }

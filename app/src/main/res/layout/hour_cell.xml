@@ -24,6 +24,7 @@
         android:background="?attr/windowBackgroundMuted">
 
         <LinearLayout
+            android:id="@+id/linear_layout_mon"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_margin="2dp"

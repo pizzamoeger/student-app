@@ -30,15 +30,24 @@
 
     <fragment
         android:id="@+id/navigation_timetable"
-        android:name="com.example.studentapp.ui.timetable.MonthlyCalendarFragment"
+        android:name="com.example.studentapp.ui.timetable.WeeklyCalendarFragment"
         android:label="@string/title_timetable"
-        tools:layout="@layout/fragment_calendar_monthly" />
+        tools:layout="@layout/fragment_calendar_weekly" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.studentapp.ui.notifications.NotificationsFragment"
+        android:name="com.example.studentapp.ui.timetable.MonthlyCalendarFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_calendar_monthly">
+        <action
+            android:id="@+id/action_nots_to_event_edit"
+            tools:destination="@id/fragment_event_edit" />
+    </fragment>
+
+    <fragment android:id="@+id/fragment_event_edit"
+        android:name="com.example.studentapp.ui.timetable.EventEditFragment"
+        android:label="Event Edit"
+        tools:layout="@layout/frament_event_edit"/>
 
     <fragment
         android:id="@+id/navigation_insights"

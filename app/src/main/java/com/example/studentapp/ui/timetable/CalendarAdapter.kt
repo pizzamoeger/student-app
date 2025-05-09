@@ -17,7 +17,7 @@ class CalendarAdapter (
     private val daysOfMonthText: List<LocalDate>,
     private val daysOfMonthSelected: List<Boolean>,
     private val context:  android.content.Context,
-    private val onItemListener: (Int, String) -> Unit
+    private val onItemListener: (LocalDate) -> Unit
 ): RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
 
     inner class CalendarViewHolder (
@@ -31,7 +31,7 @@ class CalendarAdapter (
         }
 
         override fun onClick(view: View) {
-            onItemListener(adapterPosition, dayOfMonth.text as String)
+            onItemListener(daysOfMonthText[adapterPosition])
         }
     }
 

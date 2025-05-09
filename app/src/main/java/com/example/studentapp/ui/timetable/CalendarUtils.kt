@@ -20,9 +20,19 @@ class CalendarUtils {
             return date.format(formatter)
         }
 
+        fun formattedTime(time : LocalTime) : String {
+            val formatter = DateTimeFormatter.ofPattern("hh:mm:ss a")
+            return time.format(formatter)
+        }
+
         fun formattedShortTime(time : LocalTime) : String {
             val formatter = DateTimeFormatter.ofPattern("HH:mm")
             return time.format(formatter)
+        }
+
+        fun formattedDate(date : LocalDate) : String {
+            val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+            return date.format(formatter)
         }
 
         fun daysInMonth(date: LocalDate) : Pair<List<LocalDate>, List<Boolean>> {

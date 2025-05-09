@@ -9,11 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
 import com.example.studentapp.ui.getThemeColor
+import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
 import com.example.studentapp.ui.timetable.CalendarUtils.Companion.daysInMonth
 import com.example.studentapp.ui.timetable.CalendarUtils.Companion.monthYearFromDate
 import com.example.studentapp.ui.timetable.CalendarUtils.Companion.selectedDate
@@ -32,9 +35,6 @@ class MonthlyCalendarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val timetableViewModel =
-            ViewModelProvider(this).get(TimetableViewModel::class.java)
-
         _binding = FragmentCalendarMonthlyBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -50,17 +50,14 @@ class MonthlyCalendarFragment : Fragment() {
         binding.monthYearTextView.text = monthYearFromDate(selectedDate!!)
         val (daysInMonthText, daysInMonthSelected) = daysInMonth(selectedDate!!)
 
-        Log.d("rr", "here")
         val calendarAdapter = CalendarAdapter(daysOfMonthText=daysInMonthText,
             daysOfMonthSelected=daysInMonthSelected,
             context=requireContext(),
             onItemListener = {
-                    position, dayText ->
-                if (dayText != "") {
-                    val message =
-                        ("Selected Date $dayText").toString() + " " + monthYearFromDate(selectedDate!!)
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                }
+                    day ->
+                val message =
+                    ("Selected Date ${day.toString()}")
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
             })
         val layoutManager = GridLayoutManager(context, 7)
         binding.calendarDayRecyclerView.layoutManager = layoutManager
@@ -104,6 +101,12 @@ class MonthlyCalendarFragment : Fragment() {
     }
 
     fun newEvent() {
+
+        val action = MonthlyCalendarFragmentDirections.actionNotsToEventEdit()
+        findNavController().navigate(action)
+        /*val navController = requireActivity()
+            .findNavController(R.id.nav_host_fragment_activity_main) // or your NavHost ID
+        navController.navigate(R.id.fragment_event_edit)*/
 
     }
 

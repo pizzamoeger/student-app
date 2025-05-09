@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
+        // hide keyboard again so that layout updated accordingly
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val view = currentFocus
         if (view != null) {
@@ -77,12 +78,12 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    fun hideDefaultToolbar() {
+    private fun hideDefaultToolbar() {
         supportActionBar?.hide()
         binding.includedToolbar.toolbarStopwatch.visibility = View.VISIBLE
     }
 
-    fun showDefaultToolbar() {
+    private fun showDefaultToolbar() {
         supportActionBar?.show()
         binding.includedToolbar.toolbarStopwatch.visibility = View.GONE
     }

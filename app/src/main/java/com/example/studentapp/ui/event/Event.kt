@@ -10,12 +10,15 @@ class Event (
 ) {
 
     companion object {
-        var eventsList : MutableList<Event> = mutableListOf<Event>()
-        fun eventsForDateAndTime(selectedDate: LocalDate, selectedTime: LocalTime?): List<Event> {
+        // all events
+        var eventsList : MutableList<Event> = mutableListOf()
+
+        // get all events at date and time
+        fun eventsForDateAndTime(selectedDate: LocalDate, selectedTime: LocalTime): List<Event> {
             var events : MutableList<Event> = mutableListOf<Event>()
 
             for (event in eventsList) {
-                if (event.date == selectedDate) events.add(event)
+                if (event.date == selectedDate && event.time.hour == selectedTime.hour) events.add(event)
             }
 
             return events

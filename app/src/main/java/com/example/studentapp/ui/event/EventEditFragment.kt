@@ -16,15 +16,7 @@ import java.time.LocalTime
 
 class EventEditFragment : Fragment() {
     private var _binding: FragmentEventEditBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-
-    lateinit var eventNameET : EditText
-    lateinit var eventDateTV : TextView
-    lateinit var eventTimeTV : TextView
-    lateinit var time : LocalTime
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,35 +25,42 @@ class EventEditFragment : Fragment() {
     ): View {
         _binding = FragmentEventEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        eventNameET = binding.eventNameEditText
-        eventDateTV = binding.eventDateTextView
-        eventTimeTV = binding.eventTimeTextView
-
-        time = LocalTime.now()
-        eventDateTV.text = "Date: ${CalendarUtils.formattedDate(CalendarUtils.selectedDate!!)}"
-        eventTimeTV.text = "Date: ${CalendarUtils.formattedTime(time)}"
-
-        binding.saveButtonEvent.setOnClickListener { _ ->
-            saveEvent()
-        }
-
         return root
     }
 
-    fun saveEvent() {
-        val eventName = eventNameET.text.toString()
-        val newEvent = Event(name=eventName, CalendarUtils.selectedDate!!, time)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // TODO make user be able to select this
+        // assign text for date and time
+        val dateStr = "Date: ${CalendarUtils.formattedDate(CalendarUtils.selectedDate)}"
+        val timeStr = "Time: ${CalendarUtils.formattedTime(LocalTime.now())}"
+        binding.eventDateTextView.text = dateStr
+        binding.eventTimeTextView.text = timeStr
+
+        // bind button for saving
+        binding.saveButtonEvent.setOnClickListener { _ ->
+            saveEvent()
+        }
+    }
+
+    private fun saveEvent() {
+        // get name
+        val eventName = binding.eventNameEditText.text.toString()
+
+        // create a new event and add it to eventsList
+        val newEvent = Event(name=eventName, CalendarUtils.selectedDate, LocalTime.now())
         Event.eventsList.add(newEvent)
 
-        // Hide the keyboard before navigating up
+        // hide keyboard again before heading up
+        // so that layout is calculated correctly
         val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val view = requireActivity().currentFocus
         if (view != null) {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        // Now navigate back
+        // navigate back
         findNavController().navigateUp()
     }
 }

@@ -36,16 +36,11 @@ class ClassesFragment : Fragment() {
         return root
     }
 
-    // TODO temp
     // get random color
     fun randomColor(): Int {
         val random = Random.Default
-        return android.graphics.Color.argb(
-            255,
-            random.nextInt(256),
-            random.nextInt(256),
-            random.nextInt(256)
-        )
+        val hsv = floatArrayOf(random.nextFloat()*360, 0.8F, 0.9F)
+        return android.graphics.Color.HSVToColor(hsv)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

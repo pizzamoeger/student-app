@@ -64,39 +64,33 @@ class HourAdapter (
     }
 
     private fun setEvents(eventTextView1 : TextView, eventTextView2 : TextView, events : List<Event>) {
-        val params1 = eventTextView1.layoutParams as LinearLayout.LayoutParams
-        val params2 = eventTextView2.layoutParams as LinearLayout.LayoutParams
-
         if (events.isEmpty()) {
-            eventTextView1.visibility = View.INVISIBLE
-            eventTextView2.visibility = View.INVISIBLE
+            setEventTextInvisible(eventTextView1)
+            setEventTextInvisible(eventTextView2)
         } else if (events.size == 1) {
-            eventTextView1.visibility = View.VISIBLE
-            eventTextView1.text = events[0].name
-            params1.weight=1f
-            eventTextView1.layoutParams = params1
-            eventTextView2.visibility = View.INVISIBLE
-            params2.weight=0f
-            eventTextView2.layoutParams = params2
+            setEventTextVisible(eventTextView1, events[0].name)
+            setEventTextInvisible(eventTextView2)
         } else if (events.size == 2) {
-            eventTextView1.visibility = View.VISIBLE
-            eventTextView1.text = events[0].name
-            params1.weight=1f
-            eventTextView1.layoutParams = params1
-            eventTextView2.visibility = View.VISIBLE
-            eventTextView2.text = events[1].name
-            params2.weight=1f
-            eventTextView2.layoutParams = params2
+            setEventTextVisible(eventTextView1, events[0].name)
+            setEventTextVisible(eventTextView2, events[1].name)
         } else {
-            eventTextView1.visibility = View.VISIBLE
-            eventTextView1.text = events[0].name
-            params1.weight=1f
-            eventTextView1.layoutParams = params1
-            eventTextView2.visibility = View.VISIBLE
-            eventTextView2.text = "+"+(events.size-1)
-            params2.weight=1f
-            eventTextView2.layoutParams = params2
+            setEventTextVisible(eventTextView1, events[0].name)
+            setEventTextVisible(eventTextView2, "+"+(events.size-1))
         }
-        // else
+    }
+
+    private fun setEventTextVisible(eventTextView : TextView, text : String) {
+        val params = eventTextView.layoutParams as LinearLayout.LayoutParams
+        eventTextView.visibility = View.VISIBLE
+        eventTextView.text = text
+        params.weight=1f
+        eventTextView.layoutParams = params
+    }
+
+    private fun setEventTextInvisible(eventTextView : TextView) {
+        val params = eventTextView.layoutParams as LinearLayout.LayoutParams
+        eventTextView.visibility = View.INVISIBLE
+        params.weight=0f
+        eventTextView.layoutParams = params
     }
 }

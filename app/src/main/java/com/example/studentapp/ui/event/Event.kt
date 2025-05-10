@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.event
 
+import android.util.Log
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -20,18 +21,18 @@ class Event (
             var events : MutableMap<String,MutableList<Event>> = mutableMapOf()
 
             val days = listOf("mon", "tue", "wed", "thur", "fri")
-            val dateCounter = selectedDate.with(
+            var dateCounter = selectedDate.with(
                 TemporalAdjusters.previousOrSame(
                     DayOfWeek.MONDAY))
 
             for (day in days) {
                 events[day] = mutableListOf()
                 for (event in eventsList) {
-                    if (event.date == selectedDate && event.time.hour == selectedTime.hour) {
+                    if (event.date == dateCounter && event.time.hour == selectedTime.hour) {
                         events[day]!!.add(event)
                     }
                 }
-                dateCounter.plusDays(1)
+                dateCounter = dateCounter.plusDays(1)
             }
 
             return events

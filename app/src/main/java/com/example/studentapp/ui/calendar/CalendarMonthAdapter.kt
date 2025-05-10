@@ -56,7 +56,7 @@ class CalendarMonthAdapter (
         holder.dayOfMonth.text = dayStr
 
         // if it is selected we want to highlight it
-        if (day== selectedDate) {
+        if (day == selectedDate) {
             holder.parentView.setBackgroundColor(context.getThemeColor(R.attr.windowBackgroundMuted))
         }
 

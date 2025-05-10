@@ -8,9 +8,9 @@ import java.time.LocalTime
 import java.time.temporal.TemporalAdjusters
 
 class Event (
-    var name : String,
-    var date : LocalDate,
-    var time : LocalTime
+    var name : String = "",
+    var date : LocalDate = LocalDate.now(),
+    var time : LocalTime = LocalTime.now()
 ) {
 
     companion object {

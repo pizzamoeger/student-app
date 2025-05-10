@@ -98,6 +98,10 @@ class SharedData  {
             }
         }
 
+        fun setClassList(newClassList : List<ClassesItem>) {
+            _classesList.value = newClassList
+        }
+
         // TODO call this once at midnight
         // but then if user sets time manually it breaks
         fun updateDate() {

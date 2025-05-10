@@ -19,6 +19,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentEditClassBinding
 import com.example.studentapp.ui.calendar.CalendarUtils
+import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.getThemeColor
 import java.time.LocalDate
 import java.time.LocalTime
@@ -30,6 +31,8 @@ class EditClassFragment : Fragment() {
     private var _binding: FragmentEditClassBinding? = null
     private val binding get() = _binding!!
     private var _classId : Int = 0
+
+    private var color : Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +50,7 @@ class EditClassFragment : Fragment() {
             .setDefaultColor(color)
             .setColorListener({ col, _ ->
                 binding.classColorInput.setBackgroundColor(col)
+                this.color = col
                 // save color for later
             })
             .build()
@@ -81,6 +85,20 @@ class EditClassFragment : Fragment() {
 
     private fun saveClass() {
         // get name
-        TODO()
+        val eventName = binding.eventNameEditText.text.toString()
+
+        // get color
+        val thisClass = SharedData.classList.value?.find { it.id == _classId }
+        val newClassList : MutableList<ClassesItem> = mutableListOf()
+        for (cur in SharedData.classList.value!!) {
+            if (cur == thisClass) continue
+            newClassList.add(cur)
+        }
+
+        newClassList.add(ClassesItem(thisClass!!.id, eventName, mutableMapOf(), color))
+        SharedData.setClassList(newClassList)
+        SharedData.save()
+
+        findNavController().navigateUp()
     }
 }

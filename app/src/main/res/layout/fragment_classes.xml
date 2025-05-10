@@ -12,6 +12,11 @@
         android:id="@+id/add_button_classes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textColor="?android:attr/textColorPrimary"
+        app:iconTint="?android:attr/textColorPrimary"
+        app:icon="@drawable/plus"
+        android:background="@color/transparent"
         android:text="@string/add_class" />
 
     <androidx.recyclerview.widget.RecyclerView

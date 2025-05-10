@@ -1,6 +1,7 @@
 package com.example.studentapp.ui.event
 
 import android.util.Log
+import com.example.studentapp.ui.classesItem.ClassesItem
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime

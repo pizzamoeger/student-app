@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.event.Event
@@ -48,6 +49,7 @@ class HourAdapter (
         val thurTextView1 = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_thur_1)
         val friTextView1 = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_fri_1)
 
+
         val monTextView2 = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_mon_2)
         val tueTextView2 = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_tue_2)
         val wedTextView2 = convertView.findViewById<TextView>(com.example.studentapp.R.id.event_wed_2)
@@ -62,24 +64,38 @@ class HourAdapter (
     }
 
     private fun setEvents(eventTextView1 : TextView, eventTextView2 : TextView, events : List<Event>) {
+        val params1 = eventTextView1.layoutParams as LinearLayout.LayoutParams
+        val params2 = eventTextView2.layoutParams as LinearLayout.LayoutParams
+
         if (events.isEmpty()) {
             eventTextView1.visibility = View.INVISIBLE
             eventTextView2.visibility = View.INVISIBLE
         } else if (events.size == 1) {
             eventTextView1.visibility = View.VISIBLE
             eventTextView1.text = events[0].name
-            eventTextView2.width=100 // TODO figure out how to do this
+            params1.weight=1f
+            eventTextView1.layoutParams = params1
             eventTextView2.visibility = View.INVISIBLE
+            params2.weight=0f
+            eventTextView2.layoutParams = params2
         } else if (events.size == 2) {
             eventTextView1.visibility = View.VISIBLE
             eventTextView1.text = events[0].name
+            params1.weight=1f
+            eventTextView1.layoutParams = params1
             eventTextView2.visibility = View.VISIBLE
             eventTextView2.text = events[1].name
+            params2.weight=1f
+            eventTextView2.layoutParams = params2
         } else {
             eventTextView1.visibility = View.VISIBLE
             eventTextView1.text = events[0].name
+            params1.weight=1f
+            eventTextView1.layoutParams = params1
             eventTextView2.visibility = View.VISIBLE
             eventTextView2.text = "+"+(events.size-1)
+            params2.weight=1f
+            eventTextView2.layoutParams = params2
         }
         // else
     }

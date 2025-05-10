@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 // if we are going to stopwatch or insights hide toolbar
-                R.id.navigation_stopwatch, R.id.navigation_insights -> {hideDefaultToolbar() }
+                R.id.navigation_stopwatch, R.id.navigation_insights, R.id.navigation_timetable -> {hideDefaultToolbar(destination.id) }
                 // else show toolbar
                 else -> {showDefaultToolbar()}
             }
@@ -78,9 +78,15 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    private fun hideDefaultToolbar() {
-        supportActionBar?.hide()
+    private fun showCustomToolbar() {
         binding.includedToolbar.toolbarStopwatch.visibility = View.VISIBLE
+    }
+
+    private fun hideDefaultToolbar(id : Int) {
+        supportActionBar?.hide()
+        if (id == R.id.navigation_insights || id == R.id.navigation_stopwatch) {
+            showCustomToolbar()
+        }
     }
 
     private fun showDefaultToolbar() {

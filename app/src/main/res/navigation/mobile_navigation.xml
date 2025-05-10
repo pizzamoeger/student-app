@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_classes_to_classes_item"
             app:destination="@id/navigation_classes_item" />
+        <action
+            android:id="@+id/action_classes_to_edit_class"
+            app:destination="@id/fragment_edit_class" />
     </fragment>
 
     <fragment
@@ -48,6 +51,15 @@
         android:name="com.example.studentapp.ui.event.EventEditFragment"
         android:label="Event Edit"
         tools:layout="@layout/fragment_event_edit"/>
+
+    <fragment android:id="@+id/fragment_edit_class"
+        android:name="com.example.studentapp.ui.classesItem.EditClassFragment"
+        android:label="Event Edit"
+        tools:layout="@layout/fragment_edit_class">
+        <argument
+            android:name="classId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_insights"

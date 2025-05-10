@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesBinding
 import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
@@ -37,7 +39,7 @@ class ClassesFragment : Fragment() {
     }
 
     // get random color
-    fun randomColor(): Int {
+    private fun randomColor(): Int {
         val random = Random.Default
         val hsv = floatArrayOf(random.nextFloat()*360, 0.8F, 0.9F)
         return android.graphics.Color.HSVToColor(hsv)
@@ -68,10 +70,17 @@ class ClassesFragment : Fragment() {
 
         // when the addButton is pressed, we create a new class
         binding.addButtonClasses.setOnClickListener {
-            SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
+            newClass()
+            // SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
         }
     }
 
+    private fun newClass() {
+        // navigate to event edit fragment
+        val newClass = SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
+        val action = ClassesFragmentDirections.actionClassesToEditClass(newClass.id.toString())
+        findNavController().navigate(action)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

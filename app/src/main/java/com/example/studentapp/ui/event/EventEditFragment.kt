@@ -65,7 +65,6 @@ class EventEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO make user be able to select this
         // assign text for date and time
         binding.pickDate.text = CalendarUtils.formattedDate(date)
         binding.pickTime.text = CalendarUtils.formattedShortTime(time)

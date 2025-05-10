@@ -36,10 +36,12 @@ class SharedData  {
         val today: LiveData<LocalDate> get() = _today
 
         // add class to classList
-        fun addClass(name: String, color : Int) {
-            val newList = _classesList.value.orEmpty() + ClassesItem(nextId++, name, mutableMapOf(), color)
+        fun addClass(name: String, color : Int) : ClassesItem {
+            val newClass = ClassesItem(nextId++, name, mutableMapOf(), color)
+            val newList = _classesList.value.orEmpty() + newClass
             _classesList.value = newList
             save()
+            return newClass
         }
 
         // delete class by id from classList

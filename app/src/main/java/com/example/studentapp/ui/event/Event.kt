@@ -1,6 +1,7 @@
 package com.example.studentapp.ui.event
 
 import android.util.Log
+import com.example.studentapp.SharedData
 import com.example.studentapp.ui.classesItem.ClassesItem
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -10,7 +11,8 @@ import java.time.temporal.TemporalAdjusters
 class Event (
     var name : String = "",
     var date : LocalDate = LocalDate.now(),
-    var time : LocalTime = LocalTime.now()
+    var time : LocalTime = LocalTime.now(),
+    var classesItem : ClassesItem = SharedData.currentClass.value!!
 ) {
 
     companion object {
@@ -34,6 +36,25 @@ class Event (
                     }
                 }
                 dateCounter = dateCounter.plusDays(1)
+            }
+
+            return events
+        }
+
+        fun eventsForTime(selectedTime: LocalTime): Map<String,List<Event>> {
+            var events : MutableMap<String,MutableList<Event>> = mutableMapOf()
+
+            val days = listOf("mon", "tue", "wed", "thur", "fri")
+            var dateCounter = 0
+
+            for (day in days) {
+                events[day] = mutableListOf()
+                for (event in eventsList) {
+                    if (event.date.dayOfWeek.value == dateCounter && event.time.hour == selectedTime.hour) {
+                        events[day]!!.add(event)
+                    }
+                }
+                dateCounter++
             }
 
             return events

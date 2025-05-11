@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.studentapp.R
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.getThemeColor
 import java.time.LocalTime
 
 // TODO da checki iwie alles ned so ganz bruh
@@ -68,21 +70,22 @@ class HourAdapter (
             setEventTextInvisible(eventTextView1)
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 1) {
-            setEventTextVisible(eventTextView1, events[0].name)
+            setEventTextVisible(eventTextView1, events[0].name, events[0].classesItem.color)
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 2) {
-            setEventTextVisible(eventTextView1, events[0].name)
-            setEventTextVisible(eventTextView2, events[1].name)
+            setEventTextVisible(eventTextView1, events[0].name, events[0].classesItem.color)
+            setEventTextVisible(eventTextView2, events[1].name, events[1].classesItem.color)
         } else {
-            setEventTextVisible(eventTextView1, events[0].name)
-            setEventTextVisible(eventTextView2, "+"+(events.size-1))
+            setEventTextVisible(eventTextView1, events[0].name, events[0].classesItem.color)
+            setEventTextVisible(eventTextView2, "+"+(events.size-1), context.getThemeColor(R.attr.windowBackgroundMuted))
         }
     }
 
-    private fun setEventTextVisible(eventTextView : TextView, text : String) {
+    private fun setEventTextVisible(eventTextView : TextView, text : String, color : Int) {
         val params = eventTextView.layoutParams as LinearLayout.LayoutParams
         eventTextView.visibility = View.VISIBLE
         eventTextView.text = text
+        eventTextView.setBackgroundColor(color)
         params.weight=1f
         eventTextView.layoutParams = params
     }

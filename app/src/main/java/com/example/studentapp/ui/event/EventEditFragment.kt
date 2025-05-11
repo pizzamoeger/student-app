@@ -12,6 +12,7 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentEventEditBinding
 import com.example.studentapp.ui.calendar.CalendarUtils
 import java.time.LocalDate
@@ -65,6 +66,8 @@ class EventEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.eventNameEditText.setText(SharedData.currentClass.value!!.name)
+
         // assign text for date and time
         binding.pickDate.text = CalendarUtils.formattedDate(date)
         binding.pickTime.text = CalendarUtils.formattedShortTime(time)
@@ -88,7 +91,7 @@ class EventEditFragment : Fragment() {
         val eventName = binding.eventNameEditText.text.toString()
 
         // create a new event and add it to eventsList
-        val newEvent = Event(name=eventName, date, time)
+        val newEvent = Event(name=eventName, date, time, SharedData.currentClass.value!!)
         Event.eventsList.add(newEvent)
 
         // hide keyboard again before heading up

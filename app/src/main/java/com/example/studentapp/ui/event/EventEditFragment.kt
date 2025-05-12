@@ -91,8 +91,8 @@ class EventEditFragment : Fragment() {
         val eventName = binding.eventNameEditText.text.toString()
 
         // create a new event and add it to eventsList
-        val newEvent = Event(name=eventName, date, time, SharedData.currentClass.value!!)
-        Event.eventsList.add(newEvent)
+        val newEvent = Event(name=eventName, date, time, SharedData.currentClass.value!!, repeated = true)
+        Event.addEvent(newEvent)
 
         // hide keyboard again before heading up
         // so that layout is calculated correctly

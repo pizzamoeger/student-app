@@ -59,9 +59,7 @@ class MonthlyCalendarFragment : Fragment() {
     // TODO you could use a custom divider
     private fun divider() {
         // color of grid
-        val drawable = ColorDrawable(
-            binding.calendarDayRecyclerView.context.getThemeColor(
-                androidx.appcompat.R.attr.colorPrimary))
+        val drawable = ColorDrawable(android.R.attr.listDivider)
 
         // vertical lines
         val verticalLines = DividerItemDecoration(

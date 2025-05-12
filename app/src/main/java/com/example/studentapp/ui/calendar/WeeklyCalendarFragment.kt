@@ -71,7 +71,7 @@ class WeeklyCalendarFragment : Fragment() {
             size = 12, // TODO maybe not
             init = {hour ->
                 val time = LocalTime.of(7+hour, 0)
-                val events = Event.eventsForTime(time)
+                val events = Event.eventsForDateAndTime(selectedDate, time)
                 HourEvent(time, events)
             }
         )

@@ -12,12 +12,19 @@ class Event (
     var name : String = "",
     var date : LocalDate = LocalDate.now(),
     var time : LocalTime = LocalTime.now(),
-    var classesItem : ClassesItem = SharedData.currentClass.value!!
+    var classesItem : ClassesItem = SharedData.currentClass.value!!,
+    var repeated : Boolean = false // todo make this yearly/weekly/biweekly/...
 ) {
 
     companion object {
         // all events
-        var eventsList : MutableList<Event> = mutableListOf()
+        private var eventsList : MutableList<Event> = mutableListOf()
+        private var repeatedEventsList : MutableList<Event> = mutableListOf()
+
+        fun addEvent(event: Event) {
+            if (event.repeated) repeatedEventsList.add(event)
+            else eventsList.add(event)
+        }
 
         // get all events at date and time
         fun eventsForDateAndTime(selectedDate: LocalDate, selectedTime: LocalTime): Map<String,List<Event>> {
@@ -35,26 +42,12 @@ class Event (
                         events[day]!!.add(event)
                     }
                 }
-                dateCounter = dateCounter.plusDays(1)
-            }
-
-            return events
-        }
-
-        fun eventsForTime(selectedTime: LocalTime): Map<String,List<Event>> {
-            var events : MutableMap<String,MutableList<Event>> = mutableMapOf()
-
-            val days = listOf("mon", "tue", "wed", "thur", "fri")
-            var dateCounter = 0
-
-            for (day in days) {
-                events[day] = mutableListOf()
-                for (event in eventsList) {
-                    if (event.date.dayOfWeek.value == dateCounter && event.time.hour == selectedTime.hour) {
+                for (event in repeatedEventsList) {
+                    if (event.date.dayOfWeek == dateCounter.dayOfWeek && event.time.hour == selectedTime.hour) {
                         events[day]!!.add(event)
                     }
                 }
-                dateCounter++
+                dateCounter = dateCounter.plusDays(1)
             }
 
             return events

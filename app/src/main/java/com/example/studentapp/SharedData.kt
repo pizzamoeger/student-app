@@ -72,7 +72,6 @@ class SharedData  {
             return true
         }
 
-        // save to sharedPreferences
         fun saveClass() {
             val gson = Gson()
 

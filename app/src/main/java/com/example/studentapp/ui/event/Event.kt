@@ -36,6 +36,7 @@ class Event (
             else eventsList.add(event)
         }
 
+        // get all events (repeated and non repeated)
         fun getEvents() : List<Event> {
             val events : MutableList<Event> = mutableListOf()
             for (event in eventsList) events.add(event)
@@ -55,15 +56,18 @@ class Event (
             for (day in days) {
                 events[day] = mutableListOf()
                 for (event in eventsList) {
+                    // if date and time matches for events that are not repeated
                     if (event.date == dateCounter && event.time.hour == selectedTime.hour) {
                         events[day]!!.add(event)
                     }
                 }
                 for (event in repeatedEventsList) {
+                    // if weekday and time matches for repeated events
                     if (event.date.dayOfWeek == dateCounter.dayOfWeek && event.time.hour == selectedTime.hour) {
                         events[day]!!.add(event)
                     }
                 }
+                // next (week) day
                 dateCounter = dateCounter.plusDays(1)
             }
 

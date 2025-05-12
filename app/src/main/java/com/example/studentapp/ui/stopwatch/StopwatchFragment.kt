@@ -61,11 +61,12 @@ class StopwatchFragment : Fragment() {
             timeView.text = it
         }
 
+        // decide wether to lock or unlock the user
         stopwatchViewModel.running.observe(viewLifecycleOwner) {
-            if (it) {
+            if (it) { // we are tracking -> lock user
                 requireActivity().startLockTask()
                 SharedData.locked = true
-            } else {
+            } else { // we are not tracking anymore -> unlock user
                 requireActivity().stopLockTask()
                 SharedData.locked = false
             }
@@ -82,14 +83,15 @@ class StopwatchFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner,
             onClassesItemClick = {item ->
                 stopwatchViewModel.stop()
+
+                // navigate s.t. we can still access stopwatch using bottom nav
                 val navController = findNavController()
                 val action = StopwatchFragmentDirections.actionStopwatchToClassesItem(item.id.toString())
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_stopwatch, true) // keeps StopwatchFragment in back stack
                     .build()
-                navController.navigate(action, navOptions)
-                })
+                navController.navigate(action, navOptions)})
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter

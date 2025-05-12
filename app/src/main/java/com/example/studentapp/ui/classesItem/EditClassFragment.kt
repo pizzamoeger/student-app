@@ -45,13 +45,13 @@ class EditClassFragment : Fragment() {
         return root
     }
 
+    // color picker
     private fun pickColor(view: View, color: Int) {
         ColorPickerDialog.Builder(requireContext())
-            .setDefaultColor(color)
+            .setDefaultColor(color) // color at the start
             .setColorListener({ col, _ ->
-                binding.classColorInput.setBackgroundColor(col)
-                this.color = col
-                // save color for later
+                binding.classColorInput.setBackgroundColor(col) // set background
+                this.color = col // set the attribute
             })
             .build()
             .show()
@@ -60,12 +60,13 @@ class EditClassFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // get the class
         val thisClass = SharedData.classList.value?.find { it.id == _classId }
 
         // set text of textinput to classname
         binding.eventNameEditText.setText(thisClass!!.name)
 
-        // assign text for color
+        // set color to color of thisClass
         binding.classColorInput.setBackgroundColor(thisClass.color)
         color = thisClass.color
 
@@ -88,7 +89,7 @@ class EditClassFragment : Fragment() {
         // get name
         val eventName = binding.eventNameEditText.text.toString()
 
-        // get color
+        // create a new list that has all classes but this class
         val thisClass = SharedData.classList.value?.find { it.id == _classId }
         val newClassList : MutableList<ClassesItem> = mutableListOf()
         for (cur in SharedData.classList.value!!) {
@@ -96,10 +97,14 @@ class EditClassFragment : Fragment() {
             newClassList.add(cur)
         }
 
+        // add a new class with the new name/color to the list
         newClassList.add(ClassesItem(thisClass!!.id, eventName, mutableMapOf(), color))
+
+        // set the SharedData list to this new list
         SharedData.setClassList(newClassList)
         SharedData.saveClass()
 
+        // go back
         findNavController().navigateUp()
     }
 }

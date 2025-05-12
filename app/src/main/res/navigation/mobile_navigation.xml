@@ -54,7 +54,7 @@
 
     <fragment android:id="@+id/fragment_edit_class"
         android:name="com.example.studentapp.ui.classesItem.EditClassFragment"
-        android:label="Event Edit"
+        android:label="Class Edit"
         tools:layout="@layout/fragment_edit_class">
         <argument
             android:name="classId"

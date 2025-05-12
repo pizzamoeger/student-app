@@ -76,7 +76,6 @@ class ClassesFragment : Fragment() {
         // when the addButton is pressed, we create a new class
         binding.addButtonClasses.setOnClickListener {
             newClass()
-            // SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
         }
     }
 
@@ -84,6 +83,7 @@ class ClassesFragment : Fragment() {
         // navigate to event edit fragment
         val newClass = SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
         val action = ClassesFragmentDirections.actionClassesToEditClass(newClass.id.toString())
+        // if we move back to classes using the bottomnav, we want to go to classes
         findNavController().popBackStack()
         findNavController().navigate(action)
     }

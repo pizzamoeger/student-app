@@ -132,7 +132,6 @@ class InsightsFragment : Fragment() {
         super.onResume()
 
         // display top navigation
-        val activityBinding = (requireActivity() as MainActivity).binding
         val toolbar = binding.includedToolbar
 
         // left selection links to stopwatch
@@ -141,10 +140,6 @@ class InsightsFragment : Fragment() {
         toolbar.selectionLeft.setOnClickListener {
             val navController = findNavController()
             val action = InsightsFragmentDirections.actionInsightsToStopwatch()
-
-            /*val navOptions = androidx.navigation.NavOptions.Builder()
-                .setPopUpTo(R.id.navigation_stopwatch, true) // keeps StopwatchFragment in back stack
-                .build()*/
             navController.navigate(action)
         }
 

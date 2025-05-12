@@ -65,10 +65,10 @@ class WeeklyCalendarFragment : Fragment() {
         binding.hourListView.adapter = hourAdapter
     }
 
-    // returns list of events for each hour in 0..24
+    // returns list of events for each hour in 7..19
     private fun hourEventList(): List<HourEvent> {
         val list: List<HourEvent> = List(
-            size = 12, // TODO maybe not
+            size = 12, // TODO maybe more
             init = {hour ->
                 val time = LocalTime.of(7+hour, 0)
                 val events = Event.eventsForDateAndTime(selectedDate, time)

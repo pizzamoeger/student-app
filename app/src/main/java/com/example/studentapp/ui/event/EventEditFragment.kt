@@ -32,19 +32,26 @@ class EventEditFragment : Fragment() {
     var date: LocalDate = LocalDate.now()
     var classItem: ClassesItem = SharedData.defaultClass
 
+    // time picker
     private val timePickerDialogListener: TimePickerDialog.OnTimeSetListener =
         object : TimePickerDialog.OnTimeSetListener {
             override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                // set attribute to selected time
                 time = LocalTime.of(hourOfDay, minute)
+
+                // set text to formatted time
                 val formattedTime: String = CalendarUtils.formattedShortTime(time)
                 binding.pickTime.text = formattedTime
             }
         }
 
+    // date picker
     private val datePickerDialogListener: DatePickerDialog.OnDateSetListener =
         object : DatePickerDialog.OnDateSetListener {
             override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-                date = LocalDate.of(year, month+1, dayOfMonth) // months is 0 indexed glaub
+                // set attribute to selected date
+                date = LocalDate.of(year, month+1, dayOfMonth) // selected date is 0 indexed bruh
+                // set text
                 val formattedDate: String = CalendarUtils.formattedDate(date)
                 binding.pickDate.text = formattedDate
             }
@@ -60,11 +67,13 @@ class EventEditFragment : Fragment() {
         return root
     }
 
+    // create and show timepicker
     private fun pickTime() {
         val timePicker = TimePickerDialog(requireContext(), timePickerDialogListener, time.hour, time.minute, true)
         timePicker.show()
     }
 
+    // create and show datepicker
     private fun pickDate() {
         val datePicker = DatePickerDialog(requireContext(), datePickerDialogListener, date.year, date.monthValue-1, date.dayOfMonth)
         datePicker.show()
@@ -73,13 +82,14 @@ class EventEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // get event name
         binding.eventNameEditText.setText(SharedData.defaultClass.name)
 
         // assign text for date and time
         binding.pickDate.text = CalendarUtils.formattedDate(date)
         binding.pickTime.text = CalendarUtils.formattedShortTime(time)
 
-        // make text clickable and bind them
+        // bind pickDate and pickTime
         binding.pickDate.setOnClickListener{
             pickDate()
         }
@@ -92,15 +102,22 @@ class EventEditFragment : Fragment() {
             saveEvent()
         }
 
+        // select the class the event corresponds to
+        // TODO organize this better
         val spinner: Spinner = binding.mySpinner
+
+        // we can use actual classes or default class (which has no name and transparent background)
         val options = listOf(SharedData.defaultClass)+SharedData.classList.value.orEmpty()
 
+        // we create a dropdown when the spinner is clicked
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, options)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // it uses this as layout
         spinner.adapter = adapter
 
+        // when item is selected
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                // we set the class for this event to the selected
                 classItem = options[position]
             }
 
@@ -111,7 +128,7 @@ class EventEditFragment : Fragment() {
     private fun saveEvent() {
         // get name
         var eventName = binding.eventNameEditText.text.toString()
-        if (eventName == "") eventName = classItem.name
+        if (eventName == "") eventName = classItem.name // if event has no name we use class name as default
 
         // create a new event and add it to eventsList
         val newEvent = Event(name=eventName, date, time, classItem.id, repeated = true)

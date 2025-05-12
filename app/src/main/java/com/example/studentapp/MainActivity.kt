@@ -66,37 +66,35 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         // listener that fires everytime fragment is changed
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        /*navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 // if we are going to stopwatch or insights hide toolbar
                 R.id.navigation_stopwatch, R.id.navigation_insights, R.id.navigation_timetable -> {hideDefaultToolbar(destination.id) }
                 // else show toolbar
                 else -> {showDefaultToolbar()}
             }
-        }
+        }*/
 
         // make app follow devices default theme
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
-        // Disable back press
-        // Create the callback and disable back press
+        // if we are locked, backpress should be disabled
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (SharedData.locked) {
-                    // Show a message or do nothing to disable the back button
+                    // disables backpress
                     Toast.makeText(this@MainActivity, "Back button is disabled in this mode", Toast.LENGTH_SHORT).show()
                 } else {
-                    // Allow the back button to function normally
+                    // enables backpress
                     onBackPressed()
                 }
             }
         }
 
-        // Add the callback to the dispatcher
+        // when back is pressed execute our callback
         onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    // TODO make that this is executed when switching between things in bottom menu
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
@@ -110,33 +108,22 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    private fun showCustomToolbar() {
-        //binding.includedToolbar.toolbarStopwatch.visibility = View.VISIBLE
-    }
-
-    private fun hideDefaultToolbar(id : Int) {
-        //supportActionBar?.hide()
-        if (id == R.id.navigation_insights || id == R.id.navigation_stopwatch) {
-            showCustomToolbar()
-        }
-    }
-
     private fun showDefaultToolbar() {
         supportActionBar?.show()
-        //binding.includedToolbar.toolbarStopwatch.visibility = View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_top, menu) // Inflate your menu here
+        // create custom menu
+        menuInflater.inflate(R.menu.menu_top, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_navigation -> {
-                // Find the view for the plus icon in the toolbar
+                // when we click opions thingy in menu display custom menu (or hide it again)
                 val toolbar = findViewById<Toolbar>(R.id.toolbar)
-                showFragmentSelectionMenu(toolbar) // Show the custom menu when the plus icon is clicked
+                showFragmentSelectionMenu(toolbar)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -144,36 +131,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFragmentSelectionMenu(view: View) {
+        // get popup
         val popupMenu = binding.popupMenu.popupMenu
 
+        // if it is already visible, make it invisible and return
         if (popupMenu.visibility == View.VISIBLE) {
             popupMenu.visibility = View.GONE
             return
         }
-        // Inflate the custom menu layout
+
+        // set width and height
         val params = popupMenu.layoutParams
         params.width = resources.displayMetrics.widthPixels/2
         params.height = resources.displayMetrics.heightPixels-binding.toolbar.height
         popupMenu.layoutParams = params
 
+        // make it visible and move it to front
         popupMenu.visibility = View.VISIBLE
         popupMenu.bringToFront()
 
-        // Handle item clicks
+        // TODO item clicks
         val fragment1Button = binding.popupMenu.fragment1Button
         val fragment2Button = binding.popupMenu.fragment2Button
         val fragment3Button = binding.popupMenu.fragment3Button
 
         fragment1Button.setOnClickListener {
-            navigateToFragment(R.id.navigation_stopwatch) // Navigate to Fragment1
+            navigateToFragment(R.id.navigation_stopwatch)
             popupMenu.visibility = View.GONE
         }
         fragment2Button.setOnClickListener {
-            navigateToFragment(R.id.navigation_stopwatch) // Navigate to Fragment2
+            navigateToFragment(R.id.navigation_stopwatch)
             popupMenu.visibility = View.GONE
         }
         fragment3Button.setOnClickListener {
-            navigateToFragment(R.id.navigation_stopwatch) // Navigate to Fragment3
+            navigateToFragment(R.id.navigation_stopwatch)
             popupMenu.visibility = View.GONE
         }
     }

@@ -51,7 +51,7 @@ class StopwatchAdapter (
                 dailyTime.text = it
             }
 
-            // bind button
+            // get background for buttons
             val drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.circle_background)
             val colorFilter = PorterDuffColorFilter(item.color, PorterDuff.Mode.SRC_IN)
             if (drawable != null) {
@@ -60,6 +60,7 @@ class StopwatchAdapter (
             startButton.background = drawable
             startButton.visibility = View.VISIBLE
 
+            // set the icons for buttons
             item.tracking.observe(lifecycleOwner) {
                 if (it) { // tracking is true
                     startButton.setImageResource(R.drawable.pause)
@@ -67,6 +68,8 @@ class StopwatchAdapter (
                     startButton.setImageResource(R.drawable.start)
                 }
             }
+
+            // bind buttons
             startButton.setOnClickListener {
                 onStartClick(item)
             }

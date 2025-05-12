@@ -112,7 +112,6 @@ data class ClassesItem(
 
     // reset secondsToday
     fun reset() {
-        // secondsToday = 0
         updateText()
     }
 }

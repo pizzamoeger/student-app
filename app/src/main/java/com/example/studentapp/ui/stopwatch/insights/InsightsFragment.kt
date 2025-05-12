@@ -15,6 +15,7 @@ import com.example.studentapp.SharedData
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.databinding.FragmentInsightsBinding
 import com.example.studentapp.ui.getThemeColor
+import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -138,9 +139,13 @@ class InsightsFragment : Fragment() {
         context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(com.google.android.material.R.attr.colorOnSurface)) }
         context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(com.google.android.material.R.attr.colorOnSurface)) }
         toolbar.selectionLeft.setOnClickListener {
+            val navController = findNavController()
             val action = InsightsFragmentDirections.actionInsightsToStopwatch()
-            findNavController().popBackStack()
-            findNavController().navigate(action)
+
+            /*val navOptions = androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(R.id.navigation_stopwatch, true) // keeps StopwatchFragment in back stack
+                .build()*/
+            navController.navigate(action)
         }
 
         // right selection links to nothing (is current)

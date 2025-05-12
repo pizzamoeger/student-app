@@ -1,25 +1,38 @@
 package com.example.studentapp
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.PopupMenu
+import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
 import com.example.studentapp.ui.classes.ClassesFragment
+import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.StopwatchFragment
 import com.example.studentapp.ui.stopwatch.insights.InsightsFragment
+import com.github.dhaval2404.colorpicker.util.setVisibility
 import com.google.android.material.appbar.MaterialToolbar
 
 
@@ -111,5 +124,64 @@ class MainActivity : AppCompatActivity() {
     private fun showDefaultToolbar() {
         supportActionBar?.show()
         //binding.includedToolbar.toolbarStopwatch.visibility = View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_top, menu) // Inflate your menu here
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_navigation -> {
+                // Find the view for the plus icon in the toolbar
+                val toolbar = findViewById<Toolbar>(R.id.toolbar)
+                showFragmentSelectionMenu(toolbar) // Show the custom menu when the plus icon is clicked
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showFragmentSelectionMenu(view: View) {
+        val popupMenu = binding.popupMenu.popupMenu
+
+        if (popupMenu.visibility == View.VISIBLE) {
+            popupMenu.visibility = View.GONE
+            return
+        }
+        // Inflate the custom menu layout
+        val params = popupMenu.layoutParams
+        params.width = resources.displayMetrics.widthPixels/2
+        params.height = resources.displayMetrics.heightPixels-binding.toolbar.height
+        popupMenu.layoutParams = params
+
+        popupMenu.visibility = View.VISIBLE
+        popupMenu.bringToFront()
+
+        // Handle item clicks
+        val fragment1Button = binding.popupMenu.fragment1Button
+        val fragment2Button = binding.popupMenu.fragment2Button
+        val fragment3Button = binding.popupMenu.fragment3Button
+
+        fragment1Button.setOnClickListener {
+            navigateToFragment(R.id.navigation_stopwatch) // Navigate to Fragment1
+            popupMenu.visibility = View.GONE
+        }
+        fragment2Button.setOnClickListener {
+            navigateToFragment(R.id.navigation_stopwatch) // Navigate to Fragment2
+            popupMenu.visibility = View.GONE
+        }
+        fragment3Button.setOnClickListener {
+            navigateToFragment(R.id.navigation_stopwatch) // Navigate to Fragment3
+            popupMenu.visibility = View.GONE
+        }
+    }
+
+    private fun navigateToFragment(destinationId: Int) {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        navController.popBackStack()
+        navController.navigate(destinationId)
+        binding.popupMenu.popupMenu.visibility = View.GONE
     }
 }

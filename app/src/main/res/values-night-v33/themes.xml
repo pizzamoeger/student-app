@@ -9,7 +9,8 @@
         <item name="android:textColor">@color/gray_3</item>
         <item name="android:textColorPrimary">@color/gray_1</item>
         <item name="textColorPrimaryMuted">@color/gray_5</item>
-        <item name="windowBackgroundMuted">@color/gray_8</item>
+        <item name="windowBackgroundMuted">@color/gray_7</item>
+        <item name="windowBackgroundMuted1">@color/gray_8</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/limegreen</item>

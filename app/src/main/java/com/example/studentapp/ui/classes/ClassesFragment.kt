@@ -50,6 +50,7 @@ class ClassesFragment : Fragment() {
         adapter = ClassesAdapter (onDeleteClick = {id -> SharedData.deleteClass(id)},
             onClassesItemClick = {item ->
                 val action = ClassesFragmentDirections.actionClassesToClassesItem(item.id.toString())
+                //findNavController().popBackStack()
                 findNavController().navigate(action)})
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
@@ -79,6 +80,7 @@ class ClassesFragment : Fragment() {
         // navigate to event edit fragment
         val newClass = SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
         val action = ClassesFragmentDirections.actionClassesToEditClass(newClass.id.toString())
+        findNavController().popBackStack()
         findNavController().navigate(action)
     }
 

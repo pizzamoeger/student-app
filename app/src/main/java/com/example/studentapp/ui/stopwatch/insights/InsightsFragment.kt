@@ -139,6 +139,7 @@ class InsightsFragment : Fragment() {
         context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(com.google.android.material.R.attr.colorOnSurface)) }
         toolbar.selectionLeft.setOnClickListener {
             val action = InsightsFragmentDirections.actionInsightsToStopwatch()
+            findNavController().popBackStack()
             findNavController().navigate(action)
         }
 

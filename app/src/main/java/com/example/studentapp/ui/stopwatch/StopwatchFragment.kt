@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.stopwatch
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
@@ -80,9 +81,15 @@ class StopwatchFragment : Fragment() {
             stopwatchViewModel.button(SharedData.switchClass(item))},
             lifecycleOwner = viewLifecycleOwner,
             onClassesItemClick = {item ->
+                stopwatchViewModel.stop()
+                val navController = findNavController()
                 val action = StopwatchFragmentDirections.actionStopwatchToClassesItem(item.id.toString())
-                findNavController().navigate(action)
-                stopwatchViewModel.stop()})
+
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setPopUpTo(R.id.navigation_stopwatch, true) // keeps StopwatchFragment in back stack
+                    .build()
+                navController.navigate(action, navOptions)
+                })
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
@@ -124,6 +131,7 @@ class StopwatchFragment : Fragment() {
         context?.let { toolbar.lineRight.setBackgroundColor(it.getThemeColor(com.google.android.material.R.attr.colorOnSurface)) }
         toolbar.selectionRight.setOnClickListener {
             val action = StopwatchFragmentDirections.actionStopwatchToInsights()
+            findNavController().popBackStack()
             findNavController().navigate(action)
             // remove for live updates
             stopwatchViewModel.stop()

@@ -2,4 +2,5 @@
 <resources>
     <attr name="textColorPrimaryMuted" format="color"/>
     <attr name="windowBackgroundMuted" format="color"/>
+    <attr name="windowBackgroundMuted1" format="color"/>
 </resources>

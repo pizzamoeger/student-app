@@ -67,6 +67,7 @@ class EditClassFragment : Fragment() {
 
         // assign text for color
         binding.classColorInput.setBackgroundColor(thisClass.color)
+        color = thisClass.color
 
         // make text clickable and bind
         binding.classColorInput.apply {

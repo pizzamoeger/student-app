@@ -23,6 +23,8 @@ class SharedData  {
         private val _classesList = MutableLiveData<List<ClassesItem>>(emptyList())
         lateinit var prefs: SharedPreferences
 
+        var locked = false
+
         // is called once when app is created
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
@@ -31,7 +33,7 @@ class SharedData  {
             load()
         }
 
-        private var nextId = 0;
+        private var nextId = 1;
         private val _currentClass = MutableLiveData<ClassesItem?>()
         private val _today = MutableLiveData<LocalDate> ()
 

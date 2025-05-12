@@ -5,6 +5,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -62,6 +64,23 @@ class MainActivity : AppCompatActivity() {
 
         // make app follow devices default theme
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+        // Disable back press
+        // Create the callback and disable back press
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (SharedData.locked) {
+                    // Show a message or do nothing to disable the back button
+                    Toast.makeText(this@MainActivity, "Back button is disabled in this mode", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Allow the back button to function normally
+                    onBackPressed()
+                }
+            }
+        }
+
+        // Add the callback to the dispatcher
+        onBackPressedDispatcher.addCallback(this, callback)
     }
 
     // TODO make that this is executed when switching between things in bottom menu

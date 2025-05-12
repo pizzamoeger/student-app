@@ -2,6 +2,7 @@ package com.example.studentapp.ui.stopwatch
 
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
@@ -25,7 +26,8 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val _time = MutableLiveData<String>()
     val time: LiveData<String> = _time
 
-    private var running = false;
+    private var _running = MutableLiveData<Boolean>(false)
+    val running: LiveData<Boolean> = _running
     private var secondsTodayAll = 0
     private var secondsTotalAll = 0
 
@@ -45,7 +47,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
                 if (currentClass != null) currentClass!!.updateText()
 
                 // if the stopwatch is running we increase seconds and save them
-                if (running) {
+                if (_running.value!!) {
                     secondsTodayAll++
                     secondsTotalAll++
 
@@ -69,16 +71,16 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     // stop tracking
     fun stop() {
-        running = false
+        _running.value = false
         if (SharedData.currentClass.value != null) SharedData.currentClass.value!!.updateTracking(false)
     }
 
     // button functionality
     fun button(switched: Boolean = false) {
         // if switched is true, the class has switched
-        if (switched) running = true
+        if (switched) _running.value = true
         else {
-            running = !running
+            _running.value= !(_running.value!!)
         }
     }
 

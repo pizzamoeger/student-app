@@ -1,14 +1,18 @@
 package com.example.studentapp.ui.stopwatch
 
+import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -54,6 +58,16 @@ class StopwatchFragment : Fragment() {
 
         stopwatchViewModel.time.observe(viewLifecycleOwner) {
             timeView.text = it
+        }
+
+        stopwatchViewModel.running.observe(viewLifecycleOwner) {
+            if (it) {
+                requireActivity().startLockTask()
+                SharedData.locked = true
+            } else {
+                requireActivity().stopLockTask()
+                SharedData.locked = false
+            }
         }
 
         // reset the viewModel any time today changes

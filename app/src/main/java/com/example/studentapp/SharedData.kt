@@ -38,6 +38,7 @@ class SharedData  {
         val classList: LiveData<List<ClassesItem>> get() = _classesList
         val currentClass: LiveData<ClassesItem?> get() = _currentClass
         val today: LiveData<LocalDate> get() = _today
+        val defaultClass = ClassesItem(0, "", mutableMapOf(), R.color.transparent)
 
         // add class to classList
         fun addClass(name: String, color : Int) : ClassesItem {

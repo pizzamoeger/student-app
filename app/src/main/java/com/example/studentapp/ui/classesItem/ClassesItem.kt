@@ -16,7 +16,9 @@ data class ClassesItem(
     val studyTime: MutableMap<String, Int>,
     val color : Int
 ) {
-
+    override fun toString(): String {
+        return name
+    }
     // static
     companion object {
         fun getTimeStringFromSeconds(secs: Int): String {

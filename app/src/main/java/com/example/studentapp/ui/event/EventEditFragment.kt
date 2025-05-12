@@ -8,13 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.Spinner
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentEventEditBinding
 import com.example.studentapp.ui.calendar.CalendarUtils
+import com.example.studentapp.ui.classesItem.ClassesItem
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -24,6 +30,7 @@ class EventEditFragment : Fragment() {
 
     var time: LocalTime = LocalTime.now()
     var date: LocalDate = LocalDate.now()
+    var classItem: ClassesItem = SharedData.defaultClass
 
     private val timePickerDialogListener: TimePickerDialog.OnTimeSetListener =
         object : TimePickerDialog.OnTimeSetListener {
@@ -66,7 +73,7 @@ class EventEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.eventNameEditText.setText(SharedData.currentClass.value!!.name)
+        binding.eventNameEditText.setText(SharedData.defaultClass.name)
 
         // assign text for date and time
         binding.pickDate.text = CalendarUtils.formattedDate(date)
@@ -84,15 +91,30 @@ class EventEditFragment : Fragment() {
         binding.saveButtonEvent.setOnClickListener { _ ->
             saveEvent()
         }
+
+        val spinner: Spinner = binding.mySpinner
+        val options = listOf(SharedData.defaultClass)+SharedData.classList.value.orEmpty()
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, options)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                classItem = options[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
     private fun saveEvent() {
         // get name
-        val eventName = binding.eventNameEditText.text.toString()
+        var eventName = binding.eventNameEditText.text.toString()
+        if (eventName == "") eventName = classItem.name
 
         // create a new event and add it to eventsList
-        // TODO this id is temp
-        val newEvent = Event(name=eventName, date, time, 1, repeated = true)
+        val newEvent = Event(name=eventName, date, time, classItem.id, repeated = true)
         Event.addEvent(newEvent)
 
         // hide keyboard again before heading up

@@ -7,9 +7,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.SerializableClassesItem
+import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.event.SerializableEvent
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
+import java.time.LocalTime
 
 enum class TimeInterval {
     DAY, WEEK, MONTH, TOTAL, DEFAULT
@@ -23,6 +26,7 @@ class SharedData  {
         // is called once when app is created
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
+            //prefs.edit().clear().apply()
             updateDate()
             load()
         }
@@ -40,14 +44,14 @@ class SharedData  {
             val newClass = ClassesItem(nextId++, name, mutableMapOf(), color)
             val newList = _classesList.value.orEmpty() + newClass
             _classesList.value = newList
-            save()
+            saveClass()
             return newClass
         }
 
         // delete class by id from classList
         fun deleteClass(id: Int) {
             _classesList.value = _classesList.value?.filterNot { it.id == id }
-            save()
+            saveClass()
         }
 
         // switch currentClass to item
@@ -66,7 +70,7 @@ class SharedData  {
         }
 
         // save to sharedPreferences
-        fun save() {
+        fun saveClass() {
             val gson = Gson()
 
             // create a serializable list from classeslist
@@ -78,8 +82,27 @@ class SharedData  {
             prefs.edit().putString("classes_list", json).apply()
         }
 
+        fun saveEvent() {
+            val gson = Gson()
+
+            // create a serializable list from classeslist
+            val events = Event.getEvents()
+
+            val serializableEvents = events.orEmpty().map {
+                SerializableEvent(it.name, it.date.toString(), it.time.toString(), it.classesItemId, it.repeated)
+            }
+
+            val json: String = gson.toJson(serializableEvents)
+            prefs.edit().putString("events_list", json).apply()
+        }
+
         // load from sharedPreferences
         fun load() {
+            loadClasses()
+            loadEvents()
+        }
+
+        fun loadClasses() {
             val gson = Gson()
             val json = prefs.getString("classes_list", null)
 
@@ -95,6 +118,22 @@ class SharedData  {
                 
                 _classesList.value = restored
                 nextId = (list.maxOfOrNull { it.id } ?: 0) + 1
+            }
+        }
+
+        fun loadEvents() {
+            val gson = Gson()
+            val json = prefs.getString("events_list", null)
+
+            if (json != null) {
+                // load list of serializableClass
+                val type = object : TypeToken<List<SerializableEvent>>() {}.type
+                val list: List<SerializableEvent> = gson.fromJson(json, type)
+
+                // create list of ClassesItem from this
+                for (e in list) {
+                    Event.addEvent(Event(e.name, LocalDate.parse(e.date), LocalTime.parse(e.time), e.classesItemId, e.repeated))
+                }
             }
         }
 

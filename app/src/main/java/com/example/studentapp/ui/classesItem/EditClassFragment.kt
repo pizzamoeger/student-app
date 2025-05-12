@@ -97,7 +97,7 @@ class EditClassFragment : Fragment() {
 
         newClassList.add(ClassesItem(thisClass!!.id, eventName, mutableMapOf(), color))
         SharedData.setClassList(newClassList)
-        SharedData.save()
+        SharedData.saveClass()
 
         findNavController().navigateUp()
     }

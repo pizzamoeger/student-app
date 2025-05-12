@@ -91,7 +91,8 @@ class EventEditFragment : Fragment() {
         val eventName = binding.eventNameEditText.text.toString()
 
         // create a new event and add it to eventsList
-        val newEvent = Event(name=eventName, date, time, SharedData.currentClass.value!!, repeated = true)
+        // TODO this id is temp
+        val newEvent = Event(name=eventName, date, time, 1, repeated = true)
         Event.addEvent(newEvent)
 
         // hide keyboard again before heading up
@@ -101,6 +102,8 @@ class EventEditFragment : Fragment() {
         if (view != null) {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
+
+        SharedData.saveEvent()
 
         // navigate back
         findNavController().navigateUp()

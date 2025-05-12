@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.studentapp.R
+import com.example.studentapp.SharedData
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.getThemeColor
@@ -70,13 +71,17 @@ class HourAdapter (
             setEventTextInvisible(eventTextView1)
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 1) {
-            setEventTextVisible(eventTextView1, events[0].name, events[0].classesItem.color)
+            val class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            setEventTextVisible(eventTextView1, events[0].name, class1!!.color)
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 2) {
-            setEventTextVisible(eventTextView1, events[0].name, events[0].classesItem.color)
-            setEventTextVisible(eventTextView2, events[1].name, events[1].classesItem.color)
+            val class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            val class2 = SharedData.classList.value!!.find { item -> item.id == events[1].classesItemId }
+            setEventTextVisible(eventTextView1, events[0].name, class1!!.color)
+            setEventTextVisible(eventTextView2, events[1].name, class2!!.color)
         } else {
-            setEventTextVisible(eventTextView1, events[0].name, events[0].classesItem.color)
+            val class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            setEventTextVisible(eventTextView1, events[0].name, class1!!.color)
             setEventTextVisible(eventTextView2, "+"+(events.size-1), context.getThemeColor(R.attr.windowBackgroundMuted))
         }
     }

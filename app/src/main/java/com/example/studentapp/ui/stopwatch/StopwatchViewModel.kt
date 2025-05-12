@@ -64,7 +64,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     }
 
     fun saveSeconds() {
-        SharedData.save()
+        SharedData.saveClass()
     }
 
     // stop tracking

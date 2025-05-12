@@ -112,7 +112,7 @@ class StopwatchFragment : Fragment() {
         // TODO make function for this
         // display top navigation
         val activityBinding = (requireActivity() as MainActivity).binding
-        val toolbar = activityBinding.includedToolbar
+        val toolbar = binding.includedToolbar
 
         // left selection links to nothing (is current)
         context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(androidx.appcompat.R.attr.colorPrimary)) }

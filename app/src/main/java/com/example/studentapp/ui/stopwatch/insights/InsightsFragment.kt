@@ -132,7 +132,7 @@ class InsightsFragment : Fragment() {
 
         // display top navigation
         val activityBinding = (requireActivity() as MainActivity).binding
-        val toolbar = activityBinding.includedToolbar
+        val toolbar = binding.includedToolbar
 
         // left selection links to stopwatch
         context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(com.google.android.material.R.attr.colorOnSurface)) }

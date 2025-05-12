@@ -98,11 +98,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCustomToolbar() {
-        binding.includedToolbar.toolbarStopwatch.visibility = View.VISIBLE
+        //binding.includedToolbar.toolbarStopwatch.visibility = View.VISIBLE
     }
 
     private fun hideDefaultToolbar(id : Int) {
-        supportActionBar?.hide()
+        //supportActionBar?.hide()
         if (id == R.id.navigation_insights || id == R.id.navigation_stopwatch) {
             showCustomToolbar()
         }
@@ -110,6 +110,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDefaultToolbar() {
         supportActionBar?.show()
-        binding.includedToolbar.toolbarStopwatch.visibility = View.GONE
+        //binding.includedToolbar.toolbarStopwatch.visibility = View.GONE
     }
 }

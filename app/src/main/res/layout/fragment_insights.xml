@@ -8,6 +8,16 @@
     android:padding="16dp"
     tools:context=".ui.stopwatch.insights.InsightsFragment">
 
+    <include
+        android:id="@+id/included_toolbar"
+        layout="@layout/stopwatch_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/daily_chart"
         android:layout_width="match_parent"

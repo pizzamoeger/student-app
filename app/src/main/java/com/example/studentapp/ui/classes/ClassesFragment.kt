@@ -4,18 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.studentapp.R
-import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
-import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
 import kotlin.random.Random
 
 class ClassesFragment : Fragment() {
@@ -48,7 +43,7 @@ class ClassesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
-        adapter = ClassesAdapter (onDeleteClick = {id -> ClassesItem.deleteClass(id)},
+        adapter = ClassesAdapter (onDeleteClick = {id -> ClassesItem.delete(id)},
             onClassesItemClick = {item ->
                 val navController = findNavController()
                 val action = ClassesFragmentDirections.actionClassesToEditClass(item.id.toString())
@@ -82,7 +77,7 @@ class ClassesFragment : Fragment() {
 
     private fun newClass() {
         // navigate to event edit fragment
-        val newClass = ClassesItem.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
+        val newClass = ClassesItem.add("Class ${System.currentTimeMillis() % 1000}", randomColor())
         val action = ClassesFragmentDirections.actionClassesToEditClass(newClass.id.toString())
         // if we move back to classes using the bottomnav, we want to go to classes
         // TODO findNavController().popBackStack()

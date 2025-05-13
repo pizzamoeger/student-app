@@ -38,17 +38,17 @@ class InsightsViewModel(app : Application) : AndroidViewModel(app) {
                 // update what time(s) should display
 
                 // day
-                _entriesDay.value = ClassesItem.classesList.map { classItem ->
+                _entriesDay.value = ClassesItem.getList().map { classItem ->
                     PieEntry(classItem.getSeconds(TimeInterval.DAY).toFloat(), classItem.name)
                 }
 
                 // month
-                _entriesWeek.value = ClassesItem.classesList.map { classItem ->
+                _entriesWeek.value = ClassesItem.getList().map { classItem ->
                     PieEntry(classItem.getSeconds(TimeInterval.WEEK).toFloat(), classItem.name)
                 }
 
                 // week
-                _entriesMonth.value = ClassesItem.classesList.map { classItem ->
+                _entriesMonth.value = ClassesItem.getList().map { classItem ->
                     PieEntry(classItem.getSeconds(TimeInterval.MONTH).toFloat(), classItem.name)
                 }
 

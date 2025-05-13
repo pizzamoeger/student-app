@@ -59,9 +59,9 @@ class ClassesAdapter (
     override fun onBindViewHolder(
         holder: ClassesViewHolder,
         position: Int) {
-        holder.bind(ClassesItem.classesList[position])
+        holder.bind(ClassesItem.getByIndex(position))
     }
 
     // how many items to display
-    override fun getItemCount(): Int = ClassesItem.classesList.size
+    override fun getItemCount(): Int = ClassesItem.getCount()
 }

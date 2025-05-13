@@ -86,22 +86,12 @@ class EditClassFragment : Fragment() {
     }
 
     private fun saveClass() {
-        // get name
-        val eventName = binding.eventNameEditText.text.toString()
-
-        // create a new list that has all classes but this class
         val thisClass = ClassesItem.get(_classId)
-        val newClassList : MutableList<ClassesItem> = mutableListOf()
-        for (cur in ClassesItem.classesList) {
-            if (cur == thisClass) continue
-            newClassList.add(cur)
-        }
 
-        // add a new class with the new name/color to the list
-        newClassList.add(ClassesItem(thisClass.id, eventName, mutableMapOf(), color))
+        // get name
+        thisClass.name = binding.eventNameEditText.text.toString()
+        thisClass.color = color
 
-        // set the SharedData list to this new list
-        ClassesItem.setClassList(newClassList)
         ClassesItem.save()
 
         // go back

@@ -76,7 +76,7 @@ class InsightsFragment : Fragment() {
     private fun getDataPieChart(type : TimeInterval = TimeInterval.TOTAL, from : String = "", to : String = "") : PieData? {
 
         // get the entries
-        val entries = ClassesItem.classesList.filter { classItem ->
+        val entries = ClassesItem.getList().filter { classItem ->
             classItem.getSeconds(type, from, to) != 0 // skip entry if it has not been studied
         }.map { classItem ->
             PieEntry(classItem.getSeconds(type, from, to).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
@@ -85,7 +85,7 @@ class InsightsFragment : Fragment() {
         val dataSet = PieDataSet(entries, "Subjects")
 
         // get the colors for the data entries
-        dataSet.colors = ClassesItem.classesList.filter { classItem ->
+        dataSet.colors = ClassesItem.getList().filter { classItem ->
             classItem.getSeconds(type, from, to) != 0 // skip class if in has not been studied
         }.map { classItem ->
             classItem.color

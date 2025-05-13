@@ -111,12 +111,16 @@ class MonthlyCalendarFragment : Fragment() {
         binding.calendarDayRecyclerView.layoutManager = layoutManager
     }
 
-    // TODO do this the same way as in stopwatch (figure out why it doesnt work)
     // is called on button press of create event
     private fun newEvent() {
         // navigate to event edit fragment
-        val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
-        navController.navigate(R.id.fragment_event_edit)
+        val navController = findNavController()
+        val action = MonthlyCalendarFragmentDirections.actionMonthToEventEdit(id.toString())
+
+        val navOptions = androidx.navigation.NavOptions.Builder()
+            .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+            .build()
+        navController.navigate(action, navOptions)
     }
 
     // what should happen when button for previous month is pressed

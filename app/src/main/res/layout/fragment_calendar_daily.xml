@@ -8,6 +8,17 @@
     android:orientation="vertical"
     tools:context=".ui.calendar.MonthlyCalendarFragment">
 
+    <Button
+        android:id="@+id/new_event_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Event"
+        android:textColor="?android:attr/textColorPrimary"
+        android:background="@color/transparent"
+        android:textStyle="bold"
+        android:backgroundTint="@color/transparent"
+        android:textSize="20sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

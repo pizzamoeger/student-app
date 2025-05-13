@@ -20,7 +20,7 @@ import java.time.temporal.TemporalAdjusters
 class DayHourAdapter (
     context : Context,
     hourEvents : List<HourEvent>,
-    private val onCellEventClicked: (LocalDate) -> Unit)
+    private val onCellEventClicked: (Int) -> Unit)
     : ArrayAdapter<HourEvent?>(context, 0, hourEvents) {
 
     override fun getView(position: Int, convertViewArg: View?, parent: ViewGroup): View {
@@ -92,12 +92,15 @@ class DayHourAdapter (
             setEventTextInvisible(tv3)
             return
         }
-        /*eventTextView1.setOnClickListener{
-            onCellEventClicked(events[0].date)
+        tv1.setOnClickListener{
+            onCellEventClicked(events[0].id)
         }
-        eventTextView2.setOnClickListener{
-            onCellEventClicked(events[0].date)
-        }*/
+        tv2.setOnClickListener{
+            onCellEventClicked(events[1].id)
+        }
+        tv3.setOnClickListener{
+            onCellEventClicked(events[2].id)
+        }
         if (events.size == 1) {
             // if we have one then only first should be visible
             var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }

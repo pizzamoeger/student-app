@@ -35,13 +35,24 @@
         android:id="@+id/navigation_timetable"
         android:name="com.example.studentapp.ui.calendar.WeeklyCalendarFragment"
         android:label="@string/title_timetable"
-        tools:layout="@layout/fragment_calendar_weekly" />
+        tools:layout="@layout/fragment_calendar_weekly">
+        <action
+            android:id="@+id/action_week_to_event_edit"
+            app:destination="@id/fragment_event_edit" />
+        <action
+            android:id="@+id/action_week_to_calendar_day"
+            app:destination="@id/fragment_calendar_day" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_calendar_day"
         android:name="com.example.studentapp.ui.calendar.DailyCalendarFragment"
         android:label="Day"
-        tools:layout="@layout/fragment_calendar_daily" />
+        tools:layout="@layout/fragment_calendar_daily">
+        <action
+            android:id="@+id/action_day_to_event_edit"
+            app:destination="@id/fragment_event_edit" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -49,14 +60,18 @@
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_calendar_monthly">
         <action
-            android:id="@+id/action_nots_to_event_edit"
-            tools:destination="@id/fragment_event_edit" />
+            android:id="@+id/action_month_to_event_edit"
+            app:destination="@id/fragment_event_edit" />
     </fragment>
 
     <fragment android:id="@+id/fragment_event_edit"
         android:name="com.example.studentapp.ui.event.EventEditFragment"
         android:label="Event Edit"
-        tools:layout="@layout/fragment_event_edit"/>
+        tools:layout="@layout/fragment_event_edit">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </fragment>
 
     <fragment android:id="@+id/fragment_edit_class"
         android:name="com.example.studentapp.ui.classesItem.EditClassFragment"

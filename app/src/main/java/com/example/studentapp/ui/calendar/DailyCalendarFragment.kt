@@ -11,6 +11,7 @@ import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarDailyBinding
 import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
+import com.example.studentapp.ui.classes.ClassesFragmentDirections
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.timetable.DayHourAdapter
 import com.example.studentapp.ui.timetable.WeekHourAdapter
@@ -46,6 +47,17 @@ class DailyCalendarFragment : Fragment() {
         binding.dayButtonRight.setOnClickListener {
             nextDayAction()
         }
+
+        // bind button for new event
+        binding.newEventButton.setOnClickListener {
+            newEvent()
+        }
+    }
+
+    private fun newEvent() {
+        // navigate to event edit fragment
+        val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
+        navController.navigate(R.id.fragment_event_edit)
     }
 
     override fun onResume() {
@@ -64,21 +76,24 @@ class DailyCalendarFragment : Fragment() {
     private fun setHourAdapter() {
         // get adapter
         val hourAdapter = DayHourAdapter(requireContext(), hourEventList(),
-            onCellEventClicked = {date ->
-                CalendarUtils.selectedDate = date
-                val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
-                findNavController().popBackStack()
-                navController.navigate(R.id.navigation_classes)
-            })
+            onCellEventClicked = {id ->
+                val navController = findNavController()
+                val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id.toString())
+
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+                    .build()
+                navController.navigate(action, navOptions)}
+        )
         binding.hourListView.adapter = hourAdapter
     }
 
-    // returns list of events for each hour in 7..19
+    // returns list of events for each hour in 0..23
     private fun hourEventList(): List<HourEvent> {
         val list: List<HourEvent> = List(
-            size = 12, // TODO maybe more
+            size = 24,
             init = {hour ->
-                val time = LocalTime.of(7+hour, 0)
+                val time = LocalTime.of(hour, 0)
                 val events = Event.eventsForDateAndTime(selectedDate, time)
                 HourEvent(time, events)
             }

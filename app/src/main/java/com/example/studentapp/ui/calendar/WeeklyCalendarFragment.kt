@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.studentapp.R
+import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.event.Event
@@ -63,17 +64,26 @@ class WeeklyCalendarFragment : Fragment() {
         // get adapter
         val hourAdapter = WeekHourAdapter(requireContext(), hourEventList(),
             onCellClicked = {date, time ->
-            CalendarUtils.selectedDate = date
-            CalendarUtils.selectedTime = time
-            val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
-            navController.navigate(R.id.fragment_event_edit)
+                CalendarUtils.selectedDate = date
+                CalendarUtils.selectedTime = time
+                val navController = findNavController()
+                val action = WeeklyCalendarFragmentDirections.actionWeekToEventEdit("-1")
+
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+                    .build()
+                navController.navigate(action, navOptions)
             },
             onCellEventClicked = {date ->
-                CalendarUtils.selectedDate = date
-                val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
-                //findNavController().popBackStack()
-                navController.navigate(R.id.fragment_calendar_day)
-            })
+                selectedDate = date
+                val navController = findNavController()
+                val action = WeeklyCalendarFragmentDirections.actionWeekToCalendarDay()
+
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+                    .build()
+                navController.navigate(action, navOptions)}
+            )
         binding.hourListView.adapter = hourAdapter
     }
 

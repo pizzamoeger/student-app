@@ -144,6 +144,18 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/delete_button_event"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textColor="?attr/colorOnPrimary"
+        android:background="@null"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textSize="20sp"/>
+
+    <Button
         android:id="@+id/save_button_event"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"

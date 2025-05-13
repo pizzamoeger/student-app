@@ -29,7 +29,7 @@ class SharedData  {
         // is called once when app is created
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
-            //prefs.edit().clear().apply()
+            prefs.edit().clear().apply()
             defaultClass.color = context.getThemeColor(R.color.transparent)
             updateDate()
             load()
@@ -51,6 +51,13 @@ class SharedData  {
             _classesList.value = newList
             saveClass()
             return newClass
+        }
+
+        fun get(id : Int) : ClassesItem {
+            for (classs in _classesList.value!!) {
+                if (classs.id == id) return classs
+            }
+            return defaultClass
         }
 
         // delete class by id from classList
@@ -99,7 +106,7 @@ class SharedData  {
             val events = Event.getEvents()
 
             val serializableEvents = events.orEmpty().map {
-                SerializableEvent(it.name, it.date.toString(), it.time.toString(), it.classesItemId, it.repeated)
+                SerializableEvent(it.id, it.name, it.date.toString(), it.time.toString(), it.classesItemId, it.repeated)
             }
 
             val json: String = gson.toJson(serializableEvents)
@@ -142,7 +149,7 @@ class SharedData  {
 
                 // create list of ClassesItem from this
                 for (e in list) {
-                    Event.addEvent(Event(e.name, LocalDate.parse(e.date), LocalTime.parse(e.time), e.classesItemId, e.repeated))
+                    Event.addEvent(Event(id=e.id, name=e.name, date=LocalDate.parse(e.date), time=LocalTime.parse(e.time), classesItemId = e.classesItemId, repeated = e.repeated))
                 }
             }
         }

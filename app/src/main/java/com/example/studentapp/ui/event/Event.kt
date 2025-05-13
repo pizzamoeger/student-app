@@ -11,6 +11,7 @@ import java.time.temporal.TemporalAdjusters
 
 // data class for ClassesItem so that gson can save
 data class SerializableEvent(
+    var id : Int,
     var name : String,
     var date : String,
     var time : String,
@@ -19,6 +20,7 @@ data class SerializableEvent(
 )
 
 class Event (
+    var id : Int = nextId++,
     var name : String = "",
     var date : LocalDate = LocalDate.now(),
     var time : LocalTime = LocalTime.now(),
@@ -28,12 +30,28 @@ class Event (
 
     companion object {
         // all events
-        /*private*/ var eventsList : MutableList<Event> = mutableListOf()
-        /*private*/ var repeatedEventsList : MutableList<Event> = mutableListOf()
+        private var eventsList : MutableList<Event> = mutableListOf()
+        private var repeatedEventsList : MutableList<Event> = mutableListOf()
+        private var nextId = 0
 
         fun addEvent(event: Event) {
             if (event.repeated) repeatedEventsList.add(event)
             else eventsList.add(event)
+        }
+
+        fun get(id : Int) : Event? {
+            for (event in eventsList) {
+                if (event.id == id) return event
+            }
+            for (event in repeatedEventsList) {
+                if (event.id == id) return event
+            }
+            return null
+        }
+
+        fun delete(id : Int) {
+            eventsList = eventsList.filterNot { it.id == id }.toMutableList()
+            repeatedEventsList = repeatedEventsList.filterNot { it.id == id }.toMutableList()
         }
 
         fun removeAllOfClass(id : Int) {

@@ -28,7 +28,7 @@ class SharedData  {
         // is called once when app is created
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
-            //prefs.edit().clear().apply()
+            prefs.edit().clear().apply()
             updateDate()
             load()
         }
@@ -54,7 +54,8 @@ class SharedData  {
         // delete class by id from classList
         fun deleteClass(id: Int) {
             _classesList.value = _classesList.value?.filterNot { it.id == id }
-            saveClass()
+            Event.removeAllOfClass(id)
+            save()
         }
 
         // switch currentClass to item
@@ -70,6 +71,11 @@ class SharedData  {
             item.updateTracking(true)
             _currentClass.value = item
             return true
+        }
+
+        fun save() {
+            saveClass()
+            saveEvent()
         }
 
         fun saveClass() {

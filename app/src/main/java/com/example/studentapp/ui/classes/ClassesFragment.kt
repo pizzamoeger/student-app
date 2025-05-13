@@ -84,7 +84,7 @@ class ClassesFragment : Fragment() {
         val newClass = SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
         val action = ClassesFragmentDirections.actionClassesToEditClass(newClass.id.toString())
         // if we move back to classes using the bottomnav, we want to go to classes
-        findNavController().popBackStack()
+        // TODO findNavController().popBackStack()
         findNavController().navigate(action)
     }
 

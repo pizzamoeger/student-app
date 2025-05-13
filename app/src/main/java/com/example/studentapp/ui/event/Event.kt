@@ -36,6 +36,11 @@ class Event (
             else eventsList.add(event)
         }
 
+        fun removeAllOfClass(id : Int) {
+            eventsList = eventsList.filterNot { it.classesItemId == id }.toMutableList()
+            repeatedEventsList = repeatedEventsList.filterNot { it.classesItemId == id }.toMutableList()
+        }
+
         // get all events (repeated and non repeated)
         fun getEvents() : List<Event> {
             val events : MutableList<Event> = mutableListOf()

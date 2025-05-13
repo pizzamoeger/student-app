@@ -44,35 +44,6 @@ class DayHourAdapter (
         return convertView
     }
 
-    private fun bindCells(convertView : View, time: LocalTime) {
-        val monCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_mon)
-        val tueCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_tue)
-        val wedCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_wed)
-        val thurCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_thur)
-        val friCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_fri)
-
-        // make all clickable
-        val day = CalendarUtils.selectedDate.with(
-            TemporalAdjusters.previousOrSame(
-                DayOfWeek.MONDAY))
-
-        monCell.setOnClickListener{
-            //onCellClicked(day, time)
-        }
-        tueCell.setOnClickListener{
-            //onCellClicked(day.plusDays(1), time)
-        }
-        wedCell.setOnClickListener{
-            //onCellClicked(day.plusDays(2), time)
-        }
-        thurCell.setOnClickListener{
-            //onCellClicked(day.plusDays(3), time)
-        }
-        friCell.setOnClickListener{
-            //onCellClicked(day.plusDays(4), time)
-        }
-    }
-
     // set text for hour
     private fun setHour(convertView : View, time : LocalTime) {
         val timeTextView = convertView.findViewById<TextView>(R.id.hour_cell)

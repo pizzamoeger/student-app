@@ -50,12 +50,12 @@ class ClassesFragment : Fragment() {
         adapter = ClassesAdapter (onDeleteClick = {id -> SharedData.deleteClass(id)},
             onClassesItemClick = {item ->
                 val navController = findNavController()
-                val action = ClassesFragmentDirections.actionClassesToClassesItem(item.id.toString())
+                val action = ClassesFragmentDirections.actionClassesToEditClass(item.id.toString())
 
-                val navOptions = androidx.navigation.NavOptions.Builder()
+                /*val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_classes, true) // keeps StopwatchFragment in back stack
                     .build()
-                navController.navigate(action, navOptions)})
+                navController.navigate(action, navOptions)*/navController.navigate(action)})
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter

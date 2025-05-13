@@ -8,17 +8,23 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.navigation.findNavController
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.ui.calendar.CalendarUtils
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.getThemeColor
+import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalTime
+import java.time.temporal.TemporalAdjusters
 
 class HourAdapter (
     context : Context,
-    hourEvents : List<HourEvent>
-): ArrayAdapter<HourEvent?>(context, 0, hourEvents) {
+    hourEvents : List<HourEvent>,
+    private val onCellEventClicked: (LocalDate, LocalTime) -> Unit)
+: ArrayAdapter<HourEvent?>(context, 0, hourEvents) {
 
     override fun getView(position: Int, convertViewArg: View?, parent: ViewGroup): View {
         // set view
@@ -34,8 +40,39 @@ class HourAdapter (
         setHour(convertView!!, event!!.time)
         // set all events for this week
         setEventsWeek(convertView, event.events)
+        // bind all cells
+        bindCells(convertView, event!!.time)
 
         return convertView
+    }
+
+    private fun bindCells(convertView : View, time: LocalTime) {
+        val monCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_mon)
+        val tueCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_tue)
+        val wedCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_wed)
+        val thurCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_thur)
+        val friCell = convertView.findViewById<LinearLayout>(R.id.linear_layout_fri)
+
+        // make all clickable
+        var day = CalendarUtils.selectedDate.with(
+            TemporalAdjusters.previousOrSame(
+                DayOfWeek.MONDAY))
+
+        monCell.setOnClickListener{
+            onCellEventClicked(day, time)
+        }
+        tueCell.setOnClickListener{
+            onCellEventClicked(day.plusDays(1), time)
+        }
+        wedCell.setOnClickListener{
+            onCellEventClicked(day.plusDays(2), time)
+        }
+        thurCell.setOnClickListener{
+            onCellEventClicked(day.plusDays(3), time)
+        }
+        friCell.setOnClickListener{
+            onCellEventClicked(day.plusDays(4), time)
+        }
     }
 
     // set text for hour
@@ -75,20 +112,24 @@ class HourAdapter (
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 1) {
             // if we have one then only first should be visible
-            val class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
-            setEventTextVisible(eventTextView1, events[0].name, class1!!.color)
+            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            if (class1 == null) class1 = SharedData.defaultClass
+            setEventTextVisible(eventTextView1, events[0].name, class1.color)
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 2) {
             // if we have two, both should be visible
-            val class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
-            val class2 = SharedData.classList.value!!.find { item -> item.id == events[1].classesItemId }
-            setEventTextVisible(eventTextView1, events[0].name, class1!!.color)
-            setEventTextVisible(eventTextView2, events[1].name, class2!!.color)
+            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            var class2 = SharedData.classList.value!!.find { item -> item.id == events[1].classesItemId }
+            if (class1 == null) class1 = SharedData.defaultClass
+            if (class2 == null) class2 = SharedData.defaultClass
+            setEventTextVisible(eventTextView1, events[0].name, class1.color)
+            setEventTextVisible(eventTextView2, events[1].name, class2.color)
         } else {
             // if we have more, both things should be visible but second should display how many more we have
-            val class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
-            setEventTextVisible(eventTextView1, events[0].name, class1!!.color)
-            setEventTextVisible(eventTextView2, "+"+(events.size-1), context.getThemeColor(R.attr.windowBackgroundMuted))
+            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            if (class1 == null) class1 = SharedData.defaultClass
+            setEventTextVisible(eventTextView1, events[0].name, class1.color)
+            setEventTextVisible(eventTextView2, "+"+(events.size-1), context.getThemeColor(R.color.transparent))
         }
     }
 

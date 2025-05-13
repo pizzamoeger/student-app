@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.event.Event
@@ -61,7 +63,13 @@ class WeeklyCalendarFragment : Fragment() {
 
     private fun setHourAdapter() {
         // get adapter
-        val hourAdapter = HourAdapter(requireContext(), hourEventList())
+        val hourAdapter = HourAdapter(requireContext(), hourEventList(),
+            {date, time ->
+            CalendarUtils.selectedDate = date
+            CalendarUtils.selectedTime = time
+            val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
+            navController.navigate(R.id.fragment_event_edit)
+            })
         binding.hourListView.adapter = hourAdapter
     }
 

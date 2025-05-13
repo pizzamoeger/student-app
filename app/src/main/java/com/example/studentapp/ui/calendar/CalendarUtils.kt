@@ -10,6 +10,7 @@ import java.time.temporal.TemporalAdjusters
 class CalendarUtils {
     companion object {
         var selectedDate : LocalDate = LocalDate.now()
+        var selectedTime : LocalTime = LocalTime.now()
 
         // returns month and year as string
         fun monthYearFromDate(date: LocalDate) : String {

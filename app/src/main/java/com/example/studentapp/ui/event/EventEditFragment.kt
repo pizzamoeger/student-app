@@ -28,8 +28,8 @@ class EventEditFragment : Fragment() {
     private var _binding: FragmentEventEditBinding? = null
     private val binding get() = _binding!!
 
-    var time: LocalTime = LocalTime.now()
-    var date: LocalDate = LocalDate.now()
+    var time: LocalTime = CalendarUtils.selectedTime
+    var date: LocalDate = CalendarUtils.selectedDate
     var classItem: ClassesItem = SharedData.defaultClass
 
     // time picker

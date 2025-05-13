@@ -1,9 +1,5 @@
 package com.example.studentapp.ui.event
 
-import android.util.Log
-import com.example.studentapp.SharedData
-import com.example.studentapp.ui.classesItem.ClassesItem
-import com.example.studentapp.ui.classesItem.SerializableClassesItem
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -68,7 +64,7 @@ class Event (
         }
 
         // get all events at date and time
-        fun eventsForDateAndTime(selectedDate: LocalDate, selectedTime: LocalTime): Map<String,List<Event>> {
+        fun eventsForDateAndTimeWeek(selectedDate: LocalDate, selectedTime: LocalTime): Map<String,List<Event>> {
             var events : MutableMap<String,MutableList<Event>> = mutableMapOf()
 
             val days = listOf("mon", "tue", "wed", "thur", "fri")
@@ -92,6 +88,25 @@ class Event (
                 }
                 // next (week) day
                 dateCounter = dateCounter.plusDays(1)
+            }
+
+            return events
+        }
+
+        fun eventsForDateAndTimeDay(selectedDate: LocalDate, selectedTime: LocalTime): List<Event> {
+            var events : MutableList<Event> = mutableListOf()
+
+            for (event in eventsList) {
+                // if date and time matches for events that are not repeated
+                if (event.date == selectedDate && event.time.hour == selectedTime.hour) {
+                    events.add(event)
+                }
+            }
+            for (event in repeatedEventsList) {
+                // if weekday and time matches for repeated events
+                if (event.date.dayOfWeek == selectedDate.dayOfWeek && event.time.hour == selectedTime.hour) {
+                    events.add(event)
+                }
             }
 
             return events

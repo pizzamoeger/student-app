@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.studentapp.R
-import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.event.Event
@@ -93,7 +91,7 @@ class WeeklyCalendarFragment : Fragment() {
             size = 12, // TODO maybe more
             init = {hour ->
                 val time = LocalTime.of(7+hour, 0)
-                val events = Event.eventsForDateAndTime(selectedDate, time)
+                val events = Event.eventsForDateAndTimeWeek(selectedDate, time)
                 HourEvent(time, events)
             }
         )

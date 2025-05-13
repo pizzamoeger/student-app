@@ -9,12 +9,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarDailyBinding
-import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
-import com.example.studentapp.ui.classes.ClassesFragmentDirections
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.timetable.DayHourAdapter
-import com.example.studentapp.ui.timetable.WeekHourAdapter
 import com.example.studentapp.ui.timetable.HourEvent
 import java.time.LocalTime
 
@@ -94,7 +91,7 @@ class DailyCalendarFragment : Fragment() {
             size = 24,
             init = {hour ->
                 val time = LocalTime.of(hour, 0)
-                val events = Event.eventsForDateAndTime(selectedDate, time)
+                val events = mapOf(Pair("", Event.eventsForDateAndTimeDay(selectedDate, time)))
                 HourEvent(time, events)
             }
         )

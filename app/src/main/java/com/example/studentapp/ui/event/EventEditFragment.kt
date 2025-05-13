@@ -92,6 +92,9 @@ class EventEditFragment : Fragment() {
             event = Event(name=SharedData.defaultClass.name, date = date, time=time, classesItemId = SharedData.defaultClass.id, repeated = false)
         }
 
+        // set repeated
+        binding.checkBox.isChecked = event!!.repeated
+
         // get event name
         binding.eventNameEditText.setText(event!!.name)
 
@@ -153,6 +156,9 @@ class EventEditFragment : Fragment() {
         // get name
         event!!.name = binding.eventNameEditText.text.toString()
         if (event!!.name == "") event!!.name = classItem.name // if event has no name we use class name as default
+
+        // get repeated
+        event!!.repeated = binding.checkBox.isChecked
 
         Event.delete(event!!.id)
 

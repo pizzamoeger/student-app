@@ -36,9 +36,8 @@ class DayHourAdapter (
         // set the correct hour
         setHour(convertView!!, event!!.time)
         // set all events for this week
-        var events = null
 
-        setEvents(convertView, event.events["mon"]!!) // TODO
+        setEvents(convertView, event.events[""]!!)
         // bind all cells
         // bindCells(convertView, event.time)
 

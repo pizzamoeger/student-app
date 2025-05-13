@@ -29,7 +29,7 @@ class SharedData  {
         // is called once when app is created
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
-            prefs.edit().clear().apply()
+            //prefs.edit().clear().apply()
             defaultClass.color = context.getThemeColor(R.color.transparent)
             updateDate()
             load()

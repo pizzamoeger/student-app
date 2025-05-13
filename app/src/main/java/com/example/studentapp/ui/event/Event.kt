@@ -28,8 +28,8 @@ class Event (
 
     companion object {
         // all events
-        private var eventsList : MutableList<Event> = mutableListOf()
-        private var repeatedEventsList : MutableList<Event> = mutableListOf()
+        /*private*/ var eventsList : MutableList<Event> = mutableListOf()
+        /*private*/ var repeatedEventsList : MutableList<Event> = mutableListOf()
 
         fun addEvent(event: Event) {
             if (event.repeated) repeatedEventsList.add(event)

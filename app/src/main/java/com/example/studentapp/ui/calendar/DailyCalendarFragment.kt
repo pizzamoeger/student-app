@@ -8,17 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.studentapp.R
+import com.example.studentapp.databinding.FragmentCalendarDailyBinding
 import com.example.studentapp.databinding.FragmentCalendarWeeklyBinding
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.timetable.DayHourAdapter
 import com.example.studentapp.ui.timetable.WeekHourAdapter
 import com.example.studentapp.ui.timetable.HourEvent
 import java.time.LocalTime
 
 
-class WeeklyCalendarFragment : Fragment() {
+class DailyCalendarFragment : Fragment() {
 
-    private var _binding: FragmentCalendarWeeklyBinding? = null
+    private var _binding: FragmentCalendarDailyBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,7 +29,7 @@ class WeeklyCalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        _binding = FragmentCalendarWeeklyBinding.inflate(inflater, container, false)
+        _binding = FragmentCalendarDailyBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
     }
@@ -36,24 +38,24 @@ class WeeklyCalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // bind button for next week
-        binding.weekButtonLeft.setOnClickListener {
-            previousWeekAction()
+        binding.dayButtonLeft.setOnClickListener {
+            previousDayAction()
         }
 
         // bind button for previous week
-        binding.weekButtonRight.setOnClickListener {
-            nextWeekAction()
+        binding.dayButtonRight.setOnClickListener {
+            nextDayAction()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        setWeekView()
+        setDayView()
     }
 
-    private fun setWeekView() {
+    private fun setDayView() {
         // text that is displayed at top
-        binding.monthYearTextViewWeek.text = CalendarUtils.weekMonthYearFromDate(selectedDate)
+        binding.dateTextView.text = CalendarUtils.formattedDate(selectedDate)
 
         // adapter that displays hours and events in that hour
         setHourAdapter()
@@ -61,18 +63,12 @@ class WeeklyCalendarFragment : Fragment() {
 
     private fun setHourAdapter() {
         // get adapter
-        val hourAdapter = WeekHourAdapter(requireContext(), hourEventList(),
-            onCellClicked = {date, time ->
-            CalendarUtils.selectedDate = date
-            CalendarUtils.selectedTime = time
-            val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
-            navController.navigate(R.id.fragment_event_edit)
-            },
+        val hourAdapter = DayHourAdapter(requireContext(), hourEventList(),
             onCellEventClicked = {date ->
                 CalendarUtils.selectedDate = date
                 val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
-                //findNavController().popBackStack()
-                navController.navigate(R.id.fragment_calendar_day)
+                findNavController().popBackStack()
+                navController.navigate(R.id.navigation_classes)
             })
         binding.hourListView.adapter = hourAdapter
     }
@@ -91,14 +87,14 @@ class WeeklyCalendarFragment : Fragment() {
     }
 
     // what should happen when button for previous week is pressed
-    private fun previousWeekAction() {
-        selectedDate = selectedDate.minusWeeks(1)
-        setWeekView()
+    private fun previousDayAction() {
+        selectedDate = selectedDate.minusDays(1)
+        setDayView()
     }
 
     // what should happen when button for next week is pressed
-    private fun nextWeekAction() {
-        selectedDate = selectedDate.plusWeeks(1)
-        setWeekView()
+    private fun nextDayAction() {
+        selectedDate = selectedDate.plusDays(1)
+        setDayView()
     }
 }

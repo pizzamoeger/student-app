@@ -9,6 +9,7 @@ import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.SerializableClassesItem
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.event.SerializableEvent
+import com.example.studentapp.ui.getThemeColor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
@@ -29,6 +30,7 @@ class SharedData  {
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
             prefs.edit().clear().apply()
+            defaultClass.color = context.getThemeColor(R.color.transparent)
             updateDate()
             load()
         }
@@ -40,7 +42,7 @@ class SharedData  {
         val classList: LiveData<List<ClassesItem>> get() = _classesList
         val currentClass: LiveData<ClassesItem?> get() = _currentClass
         val today: LiveData<LocalDate> get() = _today
-        val defaultClass = ClassesItem(0, "", mutableMapOf(), R.color.transparent)
+        var defaultClass = ClassesItem(0, "", mutableMapOf(), 0)
 
         // add class to classList
         fun addClass(name: String, color : Int) : ClassesItem {

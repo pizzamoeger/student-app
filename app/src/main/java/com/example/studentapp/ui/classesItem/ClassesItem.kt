@@ -14,7 +14,7 @@ data class ClassesItem(
     val id: Int,
     val name: String,
     val studyTime: MutableMap<String, Int>,
-    val color : Int
+    var color : Int
 ) {
     override fun toString(): String {
         return name

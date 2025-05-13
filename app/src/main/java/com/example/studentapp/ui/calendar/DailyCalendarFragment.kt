@@ -53,8 +53,13 @@ class DailyCalendarFragment : Fragment() {
 
     private fun newEvent() {
         // navigate to event edit fragment
-        val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
-        navController.navigate(R.id.fragment_event_edit)
+        val navController = findNavController()
+        val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id.toString())
+
+        val navOptions = androidx.navigation.NavOptions.Builder()
+            .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+            .build()
+        navController.navigate(action, navOptions)
     }
 
     override fun onResume() {

@@ -9,14 +9,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
+import com.example.studentapp.SharedData.Companion.currentClass
+import com.example.studentapp.SharedData.Companion.defaultClass
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.classesItem.ClassesItem
 import java.time.LocalDate
 
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val handler = Handler(Looper.getMainLooper());
-
-    private var currentClass : ClassesItem? = null
 
     // is called each time the class in sharedViewModel changes
     fun submitItem(newClass: ClassesItem) {
@@ -44,17 +44,15 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
             override fun run() {
                 // update what time(s) should display
                 _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
-                if (currentClass != null) currentClass!!.updateText()
+                currentClass.updateText()
 
                 // if the stopwatch is running we increase seconds and save them
                 if (_running.value!!) {
                     secondsTodayAll++
                     secondsTotalAll++
 
-                    if (currentClass != null) {
-                        val today = SharedData.today.value.toString()
-                        currentClass!!.studyTime[today] = currentClass!!.studyTime.getOrDefault(today, 0)+1
-                    }
+                    val today = SharedData.today.value.toString()
+                    currentClass.studyTime[today] = currentClass.studyTime.getOrDefault(today, 0)+1
 
                     saveSeconds()
                 }
@@ -72,7 +70,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     // stop tracking
     fun stop() {
         _running.value = false
-        if (SharedData.currentClass.value != null) SharedData.currentClass.value!!.updateTracking(false)
+        if (currentClass != defaultClass) currentClass.updateTracking(false)
     }
 
     // button functionality

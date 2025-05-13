@@ -31,17 +31,19 @@ class SharedData  {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
             prefs.edit().clear().apply()
             defaultClass.color = context.getThemeColor(R.color.transparent)
+            _today.value = LocalDate.now()
             updateDate()
             load()
         }
 
         private var nextId = 1;
-        private val _currentClass = MutableLiveData<ClassesItem?>()
         private val _today = MutableLiveData<LocalDate> ()
-
-        val currentClass: LiveData<ClassesItem?> get() = _currentClass
         val today: LiveData<LocalDate> get() = _today
+
         var defaultClass = ClassesItem(0, "", mutableMapOf(), 0)
+        var currentClass = defaultClass
+
+
 
         // add class to classList
         fun addClass(name: String, color : Int) : ClassesItem {
@@ -68,15 +70,15 @@ class SharedData  {
         // switch currentClass to item
         fun switchClass(item: ClassesItem): Boolean {
             // returns true if the class changed
-            if (_currentClass.value == item) {
+            if (currentClass == item) {
                 item.updateTracking(!item.tracking.value!!)
                 return false
             }
-            if (_currentClass.value != null) {
-                _currentClass.value!!.updateTracking(false)
+            if (currentClass != defaultClass) {
+                currentClass.updateTracking(false)
             }
             item.updateTracking(true)
-            _currentClass.value = item
+            currentClass = item
             return true
         }
 

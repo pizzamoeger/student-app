@@ -61,10 +61,10 @@ class EditClassFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // get the class
-        val thisClass = SharedData.classesList.find { it.id == _classId }
+        val thisClass = ClassesItem.get(_classId)
 
         // set text of textinput to classname
-        binding.eventNameEditText.setText(thisClass!!.name)
+        binding.eventNameEditText.setText(thisClass.name)
 
         // set color to color of thisClass
         binding.classColorInput.setBackgroundColor(thisClass.color)
@@ -90,19 +90,19 @@ class EditClassFragment : Fragment() {
         val eventName = binding.eventNameEditText.text.toString()
 
         // create a new list that has all classes but this class
-        val thisClass = SharedData.classesList.find { it.id == _classId }
+        val thisClass = ClassesItem.get(_classId)
         val newClassList : MutableList<ClassesItem> = mutableListOf()
-        for (cur in SharedData.classesList) {
+        for (cur in ClassesItem.classesList) {
             if (cur == thisClass) continue
             newClassList.add(cur)
         }
 
         // add a new class with the new name/color to the list
-        newClassList.add(ClassesItem(thisClass!!.id, eventName, mutableMapOf(), color))
+        newClassList.add(ClassesItem(thisClass.id, eventName, mutableMapOf(), color))
 
         // set the SharedData list to this new list
-        SharedData.setClassList(newClassList)
-        SharedData.saveClass()
+        ClassesItem.setClassList(newClassList)
+        ClassesItem.save()
 
         // go back
         findNavController().navigateUp()

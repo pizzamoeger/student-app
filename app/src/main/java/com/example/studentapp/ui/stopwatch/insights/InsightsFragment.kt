@@ -14,6 +14,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.databinding.FragmentInsightsBinding
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
 import com.github.mikephil.charting.charts.PieChart
@@ -75,27 +76,25 @@ class InsightsFragment : Fragment() {
     private fun getDataPieChart(type : TimeInterval = TimeInterval.TOTAL, from : String = "", to : String = "") : PieData? {
 
         // get the entries
-        val entries = SharedData.classesList.filter { classItem ->
+        val entries = ClassesItem.classesList.filter { classItem ->
             classItem.getSeconds(type, from, to) != 0 // skip entry if it has not been studied
-        }?.map { classItem ->
+        }.map { classItem ->
             PieEntry(classItem.getSeconds(type, from, to).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
         }
 
         val dataSet = PieDataSet(entries, "Subjects")
 
         // get the colors for the data entries
-        dataSet.colors = SharedData.classesList.filter { classItem ->
+        dataSet.colors = ClassesItem.classesList.filter { classItem ->
             classItem.getSeconds(type, from, to) != 0 // skip class if in has not been studied
-        }?.map { classItem ->
+        }.map { classItem ->
             classItem.color
         }
 
         dataSet.valueTextSize = 14f
         dataSet.valueTextColor = requireContext().getThemeColor(android.R.attr.textColorSecondary)
 
-        if (entries != null) {
-            if (entries.isEmpty()) return null
-        }
+        if (entries.isEmpty()) return null
         return PieData(dataSet)
     }
 

@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.ui.calendar.CalendarUtils
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.getThemeColor
 import java.time.DayOfWeek
@@ -73,27 +74,21 @@ class DayHourAdapter (
         }
         if (events.size == 1) {
             // if we have one then only first should be visible
-            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
-            if (class1 == null) class1 = SharedData.defaultClass
+            val class1 = ClassesItem.get(events[0].classesItemId)
             setEventTextVisible(tv1, events[0].name, class1.color)
             setEventTextInvisible(tv2)
             setEventTextInvisible(tv3)
         } else if (events.size == 2) {
             // if we have two, both should be visible
-            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
-            var class2 = SharedData.classesList.find { item -> item.id == events[1].classesItemId }
-            if (class1 == null) class1 = SharedData.defaultClass
-            if (class2 == null) class2 = SharedData.defaultClass
+            val class1 = ClassesItem.get(events[0].classesItemId)
+            val class2 = ClassesItem.get(events[1].classesItemId)
             setEventTextVisible(tv1, events[0].name, class1.color)
             setEventTextVisible(tv2, events[1].name, class2.color)
             setEventTextInvisible(tv3)
         } else if (events.size == 3) {
-            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
-            var class2 = SharedData.classesList.find { item -> item.id == events[1].classesItemId }
-            var class3 = SharedData.classesList.find { item -> item.id == events[2].classesItemId }
-            if (class1 == null) class1 = SharedData.defaultClass
-            if (class2 == null) class2 = SharedData.defaultClass
-            if (class3 == null) class3 = SharedData.defaultClass
+            val class1 = ClassesItem.get(events[0].classesItemId)
+            val class2 = ClassesItem.get(events[1].classesItemId)
+            val class3 = ClassesItem.get(events[2].classesItemId)
             setEventTextVisible(tv1, events[0].name, class1.color)
             setEventTextVisible(tv2, events[1].name, class2.color)
             setEventTextVisible(tv3, events[2].name, class3.color)

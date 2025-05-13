@@ -28,9 +28,9 @@ class ClassesItemViewModel : ViewModel() {
 
     // writes information to the variables
     fun write() {
-        val thisClass = SharedData.classesList.find { it.id == _classId }
+        val thisClass = ClassesItem.get(_classId)
 
-        _dailyTime.value = "Day ${ClassesItem.getTimeStringFromSeconds(thisClass!!.getSeconds(TimeInterval.DAY))}"
+        _dailyTime.value = "Day ${ClassesItem.getTimeStringFromSeconds(thisClass.getSeconds(TimeInterval.DAY))}"
         _weeklyTime.value = "Week ${ClassesItem.getTimeStringFromSeconds(thisClass.getSeconds(TimeInterval.WEEK))}"
         _monthlyTime.value = "Month ${ClassesItem.getTimeStringFromSeconds(thisClass.getSeconds(TimeInterval.MONTH))}"
         _totalTime.value = "Total ${ClassesItem.getTimeStringFromSeconds(thisClass.getSeconds(TimeInterval.TOTAL))}"

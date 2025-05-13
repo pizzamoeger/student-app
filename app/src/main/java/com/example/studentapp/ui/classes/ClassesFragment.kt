@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentClassesBinding
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
 import kotlin.random.Random
 
@@ -47,7 +48,7 @@ class ClassesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
-        adapter = ClassesAdapter (onDeleteClick = {id -> SharedData.deleteClass(id)},
+        adapter = ClassesAdapter (onDeleteClick = {id -> ClassesItem.deleteClass(id)},
             onClassesItemClick = {item ->
                 val navController = findNavController()
                 val action = ClassesFragmentDirections.actionClassesToEditClass(item.id.toString())
@@ -81,7 +82,7 @@ class ClassesFragment : Fragment() {
 
     private fun newClass() {
         // navigate to event edit fragment
-        val newClass = SharedData.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
+        val newClass = ClassesItem.addClass("Class ${System.currentTimeMillis() % 1000}", randomColor())
         val action = ClassesFragmentDirections.actionClassesToEditClass(newClass.id.toString())
         // if we move back to classes using the bottomnav, we want to go to classes
         // TODO findNavController().popBackStack()

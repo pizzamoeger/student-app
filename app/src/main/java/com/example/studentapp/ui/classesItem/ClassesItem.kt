@@ -4,14 +4,21 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
+import com.example.studentapp.SharedData.Companion.currentClass
+import com.example.studentapp.SharedData.Companion.defaultClass
+import com.example.studentapp.SharedData.Companion.prefs
+import com.example.studentapp.SharedData.Companion.save
 import com.example.studentapp.TimeInterval
+import com.example.studentapp.ui.event.Event
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
 import java.util.Locale
 
 data class ClassesItem(
-    val id: Int,
+    val id: Int = nextId++,
     val name: String,
     val studyTime: MutableMap<String, Int>,
     var color : Int
@@ -19,8 +26,16 @@ data class ClassesItem(
     override fun toString(): String {
         return name
     }
+
+    fun setNextId(id : Int) {
+        nextId=id
+    }
+
     // static
     companion object {
+        private var nextId = 1;
+        var classesList : MutableList<ClassesItem> = mutableListOf()
+
         fun getTimeStringFromSeconds(secs: Int): String {
             // calculate hours, minutes and seconds and update _time accordingly
             val hours = secs / 3600
@@ -29,6 +44,64 @@ data class ClassesItem(
 
             val time = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds)
             return time
+        }
+
+        // add class to classList
+        fun addClass(name: String, color : Int) : ClassesItem {
+            val newClass = ClassesItem(name=name, studyTime = mutableMapOf(), color = color)
+            classesList.add(newClass)
+            //Semester.
+            save()
+            return newClass
+        }
+
+        fun get(id : Int) : ClassesItem {
+            for (classs in classesList) {
+                if (classs.id == id) return classs
+            }
+            return defaultClass
+        }
+
+        // delete class by id from classList
+        fun deleteClass(id: Int) {
+            classesList.removeAll{it.id == id}
+            Event.removeAllOfClass(id)
+            save()
+        }
+
+        fun save() {
+            val gson = Gson()
+
+            // create a serializable list from classeslist
+            val serializableList = classesList.map {
+                SerializableClassesItem(it.id, it.name, it.studyTime, it.color)
+            }
+
+            val json: String = gson.toJson(serializableList)
+            prefs.edit().putString("classes_list", json).apply()
+        }
+
+        fun load() {
+            val gson = Gson()
+            val json = prefs.getString("classes_list", null)
+
+            if (json != null) {
+                // load list of serializableClass
+                val type = object : TypeToken<List<SerializableClassesItem>>() {}.type
+                val list: List<SerializableClassesItem> = gson.fromJson(json, type)
+
+                // create list of ClassesItem from this
+                val restored = list.map {
+                    ClassesItem(it.id, it.name, it.studyTime, it.color)
+                }
+
+                classesList = restored.toMutableList()
+                currentClass.setNextId((list.maxOfOrNull { it.id } ?: 0) + 1)
+            }
+        }
+
+        fun setClassList(newClassList : MutableList<ClassesItem>) {
+            classesList = newClassList
         }
     }
 

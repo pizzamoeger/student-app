@@ -92,9 +92,9 @@ class StopwatchAdapter (
     override fun onBindViewHolder(
         holder: StopwatchViewHolder,
         position: Int) {
-        holder.bind(SharedData.classesList[position])
+        holder.bind(ClassesItem.classesList[position])
     }
 
     // how many items to display
-    override fun getItemCount(): Int = SharedData.classesList.size
+    override fun getItemCount(): Int = ClassesItem.classesList.size
 }

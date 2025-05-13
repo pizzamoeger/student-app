@@ -10,6 +10,8 @@ import com.example.studentapp.ui.classesItem.SerializableClassesItem
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.event.SerializableEvent
 import com.example.studentapp.ui.getThemeColor
+import com.example.studentapp.ui.semester.Semester
+import com.example.studentapp.ui.semester.SerializableSemester
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
@@ -21,7 +23,8 @@ enum class TimeInterval {
 
 class SharedData  {
     companion object {
-        var classesList : MutableList<ClassesItem> = mutableListOf()
+
+        lateinit var semester : Semester
         lateinit var prefs: SharedPreferences
 
         var locked = false
@@ -36,36 +39,11 @@ class SharedData  {
             load()
         }
 
-        private var nextId = 1;
         private val _today = MutableLiveData<LocalDate> ()
         val today: LiveData<LocalDate> get() = _today
 
         var defaultClass = ClassesItem(0, "", mutableMapOf(), 0)
         var currentClass = defaultClass
-
-
-
-        // add class to classList
-        fun addClass(name: String, color : Int) : ClassesItem {
-            val newClass = ClassesItem(nextId++, name, mutableMapOf(), color)
-            classesList.add(newClass)
-            saveClass()
-            return newClass
-        }
-
-        fun get(id : Int) : ClassesItem {
-            for (classs in classesList) {
-                if (classs.id == id) return classs
-            }
-            return defaultClass
-        }
-
-        // delete class by id from classList
-        fun deleteClass(id: Int) {
-            classesList.removeAll{it.id == id}
-            Event.removeAllOfClass(id)
-            save()
-        }
 
         // switch currentClass to item
         fun switchClass(item: ClassesItem): Boolean {
@@ -83,20 +61,8 @@ class SharedData  {
         }
 
         fun save() {
-            saveClass()
+            ClassesItem.save()
             saveEvent()
-        }
-
-        fun saveClass() {
-            val gson = Gson()
-
-            // create a serializable list from classeslist
-            val serializableList = classesList.map {
-                SerializableClassesItem(it.id, it.name, it.studyTime, it.color)
-            }
-
-            val json: String = gson.toJson(serializableList)
-            prefs.edit().putString("classes_list", json).apply()
         }
 
         fun saveEvent() {
@@ -115,26 +81,27 @@ class SharedData  {
 
         // load from sharedPreferences
         fun load() {
-            loadClasses()
+            ClassesItem.load()
             loadEvents()
+            loadSemester()
         }
 
-        fun loadClasses() {
+        fun loadSemester() {
             val gson = Gson()
-            val json = prefs.getString("classes_list", null)
+            val json = prefs.getString("semester_list", null)
 
             if (json != null) {
                 // load list of serializableClass
-                val type = object : TypeToken<List<SerializableClassesItem>>() {}.type
-                val list: List<SerializableClassesItem> = gson.fromJson(json, type)
+                val type = object : TypeToken<List<SerializableSemester>>() {}.type
+                val list: List<SerializableSemester> = gson.fromJson(json, type)
 
                 // create list of ClassesItem from this
                 val restored = list.map {
-                    ClassesItem(it.id, it.name, it.studyTime, it.color)
+                    Semester(it.start, it.end, it.classesInSemester)
                 }
 
-                classesList = restored.toMutableList()
-                nextId = (list.maxOfOrNull { it.id } ?: 0) + 1
+                Semester.semesterList = restored.toMutableList()
+                // TODO                 currentClass.setNextId((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
         }
 
@@ -151,11 +118,9 @@ class SharedData  {
                 for (e in list) {
                     Event.addEvent(Event(id=e.id, name=e.name, date=LocalDate.parse(e.date), time=LocalTime.parse(e.time), classesItemId = e.classesItemId, repeated = e.repeated))
                 }
-            }
-        }
 
-        fun setClassList(newClassList : MutableList<ClassesItem>) {
-            classesList = newClassList
+                // TODO :                 currentClass.setNextId((list.maxOfOrNull { it.id } ?: 0) + 1)
+            }
         }
 
         // TODO call this once at midnight

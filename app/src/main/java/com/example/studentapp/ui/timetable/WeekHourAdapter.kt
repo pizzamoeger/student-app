@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.ui.calendar.CalendarUtils
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.getThemeColor
 import java.time.DayOfWeek
@@ -117,22 +118,18 @@ class WeekHourAdapter (
         }
         if (events.size == 1) {
             // if we have one then only first should be visible
-            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
-            if (class1 == null) class1 = SharedData.defaultClass
+            val class1 = ClassesItem.get(events[0].classesItemId)
             setEventTextVisible(eventTextView1, events[0].name, class1.color)
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 2) {
             // if we have two, both should be visible
-            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
-            var class2 = SharedData.classesList.find { item -> item.id == events[1].classesItemId }
-            if (class1 == null) class1 = SharedData.defaultClass
-            if (class2 == null) class2 = SharedData.defaultClass
+            val class1 = ClassesItem.get(events[0].classesItemId)
+            val class2 = ClassesItem.get(events[1].classesItemId)
             setEventTextVisible(eventTextView1, events[0].name, class1.color)
             setEventTextVisible(eventTextView2, events[1].name, class2.color)
         } else {
             // if we have more, both things should be visible but second should display how many more we have
-            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
-            if (class1 == null) class1 = SharedData.defaultClass
+            val class1 = ClassesItem.get(events[0].classesItemId)
             setEventTextVisible(eventTextView1, events[0].name, class1.color)
             setEventTextVisible(eventTextView2, "+"+(events.size-1), context.getThemeColor(R.color.transparent))
         }

@@ -53,8 +53,8 @@ class ClassesItemFragment : Fragment() {
         classesItemViewModel.setId(_classId)
 
         // set the label of this fragment
-        val thisClass = SharedData.classesList.find { it.id == _classId }
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = thisClass!!.name
+        val thisClass = ClassesItem.get(_classId)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = thisClass.name
 
         // bind all time informations
         bindTimeInformation(binding.timeDailyClassesItem, classesItemViewModel.dailyTime)

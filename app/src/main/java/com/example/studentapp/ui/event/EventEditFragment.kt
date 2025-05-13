@@ -125,7 +125,7 @@ class EventEditFragment : Fragment() {
         val spinner: Spinner = binding.mySpinner
 
         // we can use actual classes or default class (which has no name and transparent background)
-        val options = listOf(SharedData.defaultClass)+SharedData.classList.value.orEmpty()
+        val options = listOf(SharedData.defaultClass)+SharedData.classesList
 
         // we create a dropdown when the spinner is clicked
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, options)

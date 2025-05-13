@@ -73,24 +73,24 @@ class DayHourAdapter (
         }
         if (events.size == 1) {
             // if we have one then only first should be visible
-            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
             if (class1 == null) class1 = SharedData.defaultClass
             setEventTextVisible(tv1, events[0].name, class1.color)
             setEventTextInvisible(tv2)
             setEventTextInvisible(tv3)
         } else if (events.size == 2) {
             // if we have two, both should be visible
-            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
-            var class2 = SharedData.classList.value!!.find { item -> item.id == events[1].classesItemId }
+            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
+            var class2 = SharedData.classesList.find { item -> item.id == events[1].classesItemId }
             if (class1 == null) class1 = SharedData.defaultClass
             if (class2 == null) class2 = SharedData.defaultClass
             setEventTextVisible(tv1, events[0].name, class1.color)
             setEventTextVisible(tv2, events[1].name, class2.color)
             setEventTextInvisible(tv3)
         } else if (events.size == 3) {
-            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
-            var class2 = SharedData.classList.value!!.find { item -> item.id == events[1].classesItemId }
-            var class3 = SharedData.classList.value!!.find { item -> item.id == events[2].classesItemId }
+            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
+            var class2 = SharedData.classesList.find { item -> item.id == events[1].classesItemId }
+            var class3 = SharedData.classesList.find { item -> item.id == events[2].classesItemId }
             if (class1 == null) class1 = SharedData.defaultClass
             if (class2 == null) class2 = SharedData.defaultClass
             if (class3 == null) class3 = SharedData.defaultClass

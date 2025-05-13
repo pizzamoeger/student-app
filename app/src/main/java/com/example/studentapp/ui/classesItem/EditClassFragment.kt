@@ -61,7 +61,7 @@ class EditClassFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // get the class
-        val thisClass = SharedData.classList.value?.find { it.id == _classId }
+        val thisClass = SharedData.classesList.find { it.id == _classId }
 
         // set text of textinput to classname
         binding.eventNameEditText.setText(thisClass!!.name)
@@ -90,9 +90,9 @@ class EditClassFragment : Fragment() {
         val eventName = binding.eventNameEditText.text.toString()
 
         // create a new list that has all classes but this class
-        val thisClass = SharedData.classList.value?.find { it.id == _classId }
+        val thisClass = SharedData.classesList.find { it.id == _classId }
         val newClassList : MutableList<ClassesItem> = mutableListOf()
-        for (cur in SharedData.classList.value!!) {
+        for (cur in SharedData.classesList) {
             if (cur == thisClass) continue
             newClassList.add(cur)
         }

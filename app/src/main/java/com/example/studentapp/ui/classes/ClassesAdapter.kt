@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
+import com.example.studentapp.SharedData
 import com.example.studentapp.ui.classesItem.ClassesItem
 
 // bridge between ClassesItem and RecyclerView, which displays each class
@@ -58,9 +59,9 @@ class ClassesAdapter (
     override fun onBindViewHolder(
         holder: ClassesViewHolder,
         position: Int) {
-        holder.bind(classesList[position])
+        holder.bind(SharedData.classesList[position])
     }
 
     // how many items to display
-    override fun getItemCount(): Int = classesList.size
+    override fun getItemCount(): Int = SharedData.classesList.size
 }

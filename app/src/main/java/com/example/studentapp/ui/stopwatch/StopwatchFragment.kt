@@ -105,9 +105,9 @@ class StopwatchFragment : Fragment() {
         binding.recyclerViewClasses.addItemDecoration(dividerItemDecoration)
 
         // each time classList changes we call adapter.submitList
-        SharedData.classList.observe(viewLifecycleOwner) { classList ->
+        /*SharedData.classList.observe(viewLifecycleOwner) { classList ->
             adapter.submitList(classList)
-        }
+        }*/
 
         // each time currentClass changes, we call stopwatchViewModel.submitItem
         SharedData.currentClass.observe(viewLifecycleOwner) { item ->

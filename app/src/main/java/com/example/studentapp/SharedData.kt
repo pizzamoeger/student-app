@@ -21,7 +21,7 @@ enum class TimeInterval {
 
 class SharedData  {
     companion object {
-        private val _classesList = MutableLiveData<List<ClassesItem>>(emptyList())
+        var classesList : MutableList<ClassesItem> = mutableListOf()
         lateinit var prefs: SharedPreferences
 
         var locked = false
@@ -39,7 +39,6 @@ class SharedData  {
         private val _currentClass = MutableLiveData<ClassesItem?>()
         private val _today = MutableLiveData<LocalDate> ()
 
-        val classList: LiveData<List<ClassesItem>> get() = _classesList
         val currentClass: LiveData<ClassesItem?> get() = _currentClass
         val today: LiveData<LocalDate> get() = _today
         var defaultClass = ClassesItem(0, "", mutableMapOf(), 0)
@@ -47,14 +46,13 @@ class SharedData  {
         // add class to classList
         fun addClass(name: String, color : Int) : ClassesItem {
             val newClass = ClassesItem(nextId++, name, mutableMapOf(), color)
-            val newList = _classesList.value.orEmpty() + newClass
-            _classesList.value = newList
+            classesList.add(newClass)
             saveClass()
             return newClass
         }
 
         fun get(id : Int) : ClassesItem {
-            for (classs in _classesList.value!!) {
+            for (classs in classesList) {
                 if (classs.id == id) return classs
             }
             return defaultClass
@@ -62,7 +60,7 @@ class SharedData  {
 
         // delete class by id from classList
         fun deleteClass(id: Int) {
-            _classesList.value = _classesList.value?.filterNot { it.id == id }
+            classesList.removeAll{it.id == id}
             Event.removeAllOfClass(id)
             save()
         }
@@ -91,7 +89,7 @@ class SharedData  {
             val gson = Gson()
 
             // create a serializable list from classeslist
-            val serializableList = _classesList.value.orEmpty().map {
+            val serializableList = classesList.map {
                 SerializableClassesItem(it.id, it.name, it.studyTime, it.color)
             }
 
@@ -132,8 +130,8 @@ class SharedData  {
                 val restored = list.map {
                     ClassesItem(it.id, it.name, it.studyTime, it.color)
                 }
-                
-                _classesList.value = restored
+
+                classesList = restored.toMutableList()
                 nextId = (list.maxOfOrNull { it.id } ?: 0) + 1
             }
         }
@@ -154,8 +152,8 @@ class SharedData  {
             }
         }
 
-        fun setClassList(newClassList : List<ClassesItem>) {
-            _classesList.value = newClassList
+        fun setClassList(newClassList : MutableList<ClassesItem>) {
+            classesList = newClassList
         }
 
         // TODO call this once at midnight

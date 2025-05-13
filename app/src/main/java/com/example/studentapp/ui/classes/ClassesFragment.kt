@@ -69,9 +69,9 @@ class ClassesFragment : Fragment() {
         binding.recyclerViewClasses.addItemDecoration(dividerItemDecoration)
 
         // each time classList changes we call adapter.submitList
-        SharedData.classList.observe(viewLifecycleOwner) { classList ->
+        /*SharedData.classesList.observe(viewLifecycleOwner) { classList ->
             adapter.submitList(classList)
-        }
+        }*/
 
         // when the addButton is pressed, we create a new class
         binding.addButtonClasses.setOnClickListener {

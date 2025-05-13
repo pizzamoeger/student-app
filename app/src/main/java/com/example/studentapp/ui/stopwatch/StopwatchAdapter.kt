@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
+import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.ItemClassBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
 
@@ -91,9 +92,9 @@ class StopwatchAdapter (
     override fun onBindViewHolder(
         holder: StopwatchViewHolder,
         position: Int) {
-        holder.bind(classesList[position])
+        holder.bind(SharedData.classesList[position])
     }
 
     // how many items to display
-    override fun getItemCount(): Int = classesList.size
+    override fun getItemCount(): Int = SharedData.classesList.size
 }

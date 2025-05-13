@@ -117,21 +117,21 @@ class WeekHourAdapter (
         }
         if (events.size == 1) {
             // if we have one then only first should be visible
-            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
             if (class1 == null) class1 = SharedData.defaultClass
             setEventTextVisible(eventTextView1, events[0].name, class1.color)
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 2) {
             // if we have two, both should be visible
-            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
-            var class2 = SharedData.classList.value!!.find { item -> item.id == events[1].classesItemId }
+            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
+            var class2 = SharedData.classesList.find { item -> item.id == events[1].classesItemId }
             if (class1 == null) class1 = SharedData.defaultClass
             if (class2 == null) class2 = SharedData.defaultClass
             setEventTextVisible(eventTextView1, events[0].name, class1.color)
             setEventTextVisible(eventTextView2, events[1].name, class2.color)
         } else {
             // if we have more, both things should be visible but second should display how many more we have
-            var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
+            var class1 = SharedData.classesList.find { item -> item.id == events[0].classesItemId }
             if (class1 == null) class1 = SharedData.defaultClass
             setEventTextVisible(eventTextView1, events[0].name, class1.color)
             setEventTextVisible(eventTextView2, "+"+(events.size-1), context.getThemeColor(R.color.transparent))

@@ -88,7 +88,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     fun load() {
         secondsTotalAll = 0
         secondsTodayAll = 0
-        SharedData.classList.value!!.forEach { entry ->
+        SharedData.classesList.forEach { entry ->
             secondsTotalAll += entry.getSeconds(TimeInterval.TOTAL)
             secondsTodayAll += entry.getSeconds(TimeInterval.DAY)
         }
@@ -97,7 +97,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     // TODO is this actually still needed? rename maybe
     fun reset() {
-        for (item in SharedData.classList.value!!) item.reset()
+        for (item in SharedData.classesList) item.reset()
         saveSeconds()
     }
 }

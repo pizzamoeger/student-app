@@ -100,4 +100,10 @@
             android:name="classId"
             app:argType="string" />
     </fragment>
+
+    <fragment android:id="@+id/fragment_semester"
+        android:name="com.example.studentapp.ui.semester.SemesterFragment"
+        android:label="Manage Semester"
+        tools:layout="@layout/fragment_semester">
+    </fragment>
 </navigation>

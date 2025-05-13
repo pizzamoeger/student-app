@@ -13,7 +13,7 @@
         android:id="@+id/fragment1_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fragment1"
+        android:text="Manage semester"
         android:textColor="?android:attr/textColor"
         android:background="@color/transparent"/>
 

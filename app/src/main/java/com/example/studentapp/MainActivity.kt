@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         val fragment3Button = binding.popupMenu.fragment3Button
 
         fragment1Button.setOnClickListener {
-            navigateToFragment(R.id.navigation_stopwatch)
+            navigateToFragment(R.id.fragment_semester)
             popupMenu.visibility = View.GONE
         }
         fragment2Button.setOnClickListener {

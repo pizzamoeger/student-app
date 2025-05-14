@@ -24,6 +24,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentStopwatchBinding
 import com.example.studentapp.ui.classes.StopwatchAdapter
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.insights.InsightsFragmentDirections
 
@@ -79,7 +80,7 @@ class StopwatchFragment : Fragment() {
 
         // gets adapter
         adapter = StopwatchAdapter (onStartClick = {item ->
-            stopwatchViewModel.button(SharedData.switchClass(item))},
+            stopwatchViewModel.button(ClassesItem.switch(item))},
             lifecycleOwner = viewLifecycleOwner,
             onClassesItemClick = {item ->
                 stopwatchViewModel.stop()

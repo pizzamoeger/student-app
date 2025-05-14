@@ -34,7 +34,7 @@ class EventEditFragment : Fragment() {
 
     var time: LocalTime = CalendarUtils.selectedTime
     var date: LocalDate = CalendarUtils.selectedDate
-    var classItem: ClassesItem = SharedData.defaultClass
+    var classItem: ClassesItem = ClassesItem()
     var event: Event? = null
 
     // time picker
@@ -89,7 +89,7 @@ class EventEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (event == null) {
-            event = Event(name=SharedData.defaultClass.name, date = date, time=time, classesItemId = SharedData.defaultClass.id, repeated = false)
+            event = Event(name="", date = date, time=time, classesItemId = 0, repeated = false)
         }
 
         // set repeated
@@ -125,7 +125,7 @@ class EventEditFragment : Fragment() {
         val spinner: Spinner = binding.mySpinner
 
         // we can use actual classes or default class (which has no name and transparent background)
-        val options = listOf(SharedData.defaultClass)+ClassesItem.getList()
+        val options = listOf(ClassesItem(id=0))+ClassesItem.getList()
 
         // we create a dropdown when the spinner is clicked
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, options)

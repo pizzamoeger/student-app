@@ -32,8 +32,7 @@ class SharedData  {
         // is called once when app is created
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
-            prefs.edit().clear().apply()
-            defaultClass.color = context.getThemeColor(R.color.transparent)
+            //prefs.edit().clear().apply()
             _today.value = LocalDate.now()
             updateDate()
             load()
@@ -42,23 +41,7 @@ class SharedData  {
         private val _today = MutableLiveData<LocalDate> ()
         val today: LiveData<LocalDate> get() = _today
 
-        var defaultClass = ClassesItem(0, "", mutableMapOf(), 0)
-        var currentClass = defaultClass
 
-        // switch currentClass to item
-        fun switchClass(item: ClassesItem): Boolean {
-            // returns true if the class changed
-            if (currentClass == item) {
-                item.updateTracking(!item.tracking.value!!)
-                return false
-            }
-            if (currentClass != defaultClass) {
-                currentClass.updateTracking(false)
-            }
-            item.updateTracking(true)
-            currentClass = item
-            return true
-        }
 
         fun save() {
             ClassesItem.save()

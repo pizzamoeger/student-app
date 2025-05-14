@@ -9,19 +9,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
-import com.example.studentapp.SharedData.Companion.currentClass
-import com.example.studentapp.SharedData.Companion.defaultClass
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.classesItem.ClassesItem
 import java.time.LocalDate
 
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val handler = Handler(Looper.getMainLooper());
-
-    // is called each time the class in sharedViewModel changes
-    fun submitItem(newClass: ClassesItem) {
-        currentClass = newClass
-    }
 
     private val _time = MutableLiveData<String>()
     val time: LiveData<String> = _time
@@ -44,7 +37,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
             override fun run() {
                 // update what time(s) should display
                 _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
-                currentClass.updateText()
+                ClassesItem.getCurrent().updateText()
 
                 // if the stopwatch is running we increase seconds and save them
                 if (_running.value!!) {
@@ -52,7 +45,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
                     secondsTotalAll++
 
                     val today = SharedData.today.value.toString()
-                    currentClass.studyTime[today] = currentClass.studyTime.getOrDefault(today, 0)+1
+                    ClassesItem.getCurrent().studyTime[today] = ClassesItem.getCurrent().studyTime.getOrDefault(today, 0)+1 // todo private
 
                     saveSeconds()
                 }
@@ -70,7 +63,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     // stop tracking
     fun stop() {
         _running.value = false
-        if (currentClass != defaultClass) currentClass.updateTracking(false)
+        if (ClassesItem.getCurrent() != ClassesItem()) ClassesItem.getCurrent().updateTracking(false)
     }
 
     // button functionality

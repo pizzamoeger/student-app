@@ -3,8 +3,8 @@ package com.example.studentapp.ui.classesItem
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
-import com.example.studentapp.SharedData.Companion.defaultClass
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.event.Event
@@ -17,9 +17,9 @@ import java.util.Locale
 
 data class ClassesItem(
     val id: Int = nextId++,
-    var name: String,
-    val studyTime: MutableMap<String, Int>,
-    var color : Int
+    var name: String = "",
+    val studyTime: MutableMap<String, Int> = mutableMapOf(),
+    var color : Int = R.color.transparent
 ) {
     override fun toString(): String {
         return name
@@ -113,6 +113,25 @@ data class ClassesItem(
         private var nextId = 1;
         private var classesList : MutableList<ClassesItem> = mutableListOf() // list of all classes
 
+        private var currentClass = ClassesItem()
+
+        // switch currentClass to item
+        fun switch(item: ClassesItem): Boolean {
+            // returns true if the class changed
+            if (currentClass == item) {
+                item.updateTracking(!item.tracking.value!!)
+                return false
+            }
+            if (currentClass != ClassesItem()) {
+                currentClass.updateTracking(false)
+            }
+            item.updateTracking(true)
+            currentClass = item
+            return true
+        }
+
+        fun getCurrent() : ClassesItem = currentClass;
+
         // TODO makes no sense here
         fun getTimeStringFromSeconds(secs: Int): String {
             // calculate hours, minutes and seconds and update _time accordingly
@@ -132,23 +151,23 @@ data class ClassesItem(
         fun add(name: String, color : Int) : ClassesItem {
             val newClass = ClassesItem(name=name, studyTime = mutableMapOf(), color = color)
             classesList.add(newClass)
-            //Semester.
             save()
             return newClass
         }
 
         // get the class with this id or default
         fun get(id : Int) : ClassesItem {
-            for (classs in classesList) {
-                if (classs.id == id) return classs
+            for (item in classesList) {
+                if (item.id == id) return item
             }
-            return defaultClass
+            Log.e("ClassesItem", "Tried to get a class with id not in classList")
+            return ClassesItem()
         }
 
         fun getByIndex(index : Int) : ClassesItem {
             if (index >= classesList.size) {
                 Log.e("ClassesItem", "Tried to get a class with index bigger than size")
-                return defaultClass
+                return ClassesItem()
             }
             return classesList[index]
         }

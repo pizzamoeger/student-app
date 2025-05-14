@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.SerializableClassesItem
 import com.example.studentapp.ui.event.Event
@@ -38,6 +39,7 @@ class SharedData  {
 
         fun save() {
             ClassesItem.save()
+            Assignment.save()
             saveEvent()
         }
 
@@ -59,6 +61,7 @@ class SharedData  {
         fun load() {
             ClassesItem.load()
             loadEvents()
+            Assignment.load()
             loadSemester()
         }
 

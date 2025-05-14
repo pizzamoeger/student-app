@@ -1,17 +1,30 @@
 package com.example.studentapp.ui.assignments.assignment
 
+import com.example.studentapp.SharedData.Companion.prefs
+import com.example.studentapp.ui.assignments.assignment.Assignment.Companion.nextId
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
+
+data class SerializableAssignment(
+    var dueDate : LocalDate,
+    var classId : Int,
+    var title : String,
+    var id : Int,
+    var completed: Boolean,
+    var progress: Double)
 
 class Assignment (
     private var dueDate : LocalDate,
     private var classId : Int,
     private var title : String,
-    private var id : Int = nextId++
+    private var id : Int = nextId++,
+    private var completed: Boolean = false,
+    private var progress: Double = 0.0
 ) {
-    private var completed = false
-    private var progress = 0.0
+
 
     fun getDueDate() = dueDate
     fun setDueDate(due : LocalDate) {
@@ -48,6 +61,7 @@ class Assignment (
 
         fun add(assignment: Assignment) {
             assignmentsList.add(assignment)
+            save()
         }
 
         fun delete(id : Int) {
@@ -58,5 +72,36 @@ class Assignment (
         fun get(id : Int) = assignmentsList.find{it.id == id}
 
         fun getList() = assignmentsList
+
+        fun save() {
+            val gson = Gson()
+
+            // create a serializable list from classeslist
+            val serializableList = assignmentsList.map {
+                SerializableAssignment(it.dueDate, it.classId, it.title, it.id, it.completed, it.progress)
+            }
+
+            val json: String = gson.toJson(serializableList)
+            prefs.edit().putString("assignments_list", json).apply()
+        }
+
+        fun load() {
+            val gson = Gson()
+            val json = prefs.getString("assignments_list", null)
+
+            if (json != null) {
+                // load list of serializableClass
+                val type = object : TypeToken<List<SerializableAssignment>>() {}.type
+                val list: List<SerializableAssignment> = gson.fromJson(json, type)
+
+                // create list of ClassesItem from this
+                val restored = list.map {
+                    Assignment(it.dueDate, it.classId, it.title, it.id, it.completed, it.progress)
+                }
+
+                assignmentsList = restored.toMutableList()
+                nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
+            }
+        }
     }
 }

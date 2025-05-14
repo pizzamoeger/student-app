@@ -16,6 +16,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
 import java.util.Locale
+import kotlin.random.Random
 
 data class ClassesItem(
     val id: Int = nextId++,

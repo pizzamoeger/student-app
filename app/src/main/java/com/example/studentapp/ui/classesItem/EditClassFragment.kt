@@ -25,6 +25,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog
 import com.github.dhaval2404.colorpicker.ColorPickerDialog
+import kotlin.random.Random
 
 class EditClassFragment : Fragment() {
     private val args: ClassesItemFragmentArgs by navArgs()
@@ -49,19 +50,26 @@ class EditClassFragment : Fragment() {
     private fun pickColor(view: View, color: Int) {
         ColorPickerDialog.Builder(requireContext())
             .setDefaultColor(color) // color at the start
-            .setColorListener({ col, _ ->
+            .setColorListener{ col, _ ->
                 binding.classColorInput.setBackgroundColor(col) // set background
                 this.color = col // set the attribute
-            })
+            }
             .build()
             .show()
+    }
+
+    private fun randomColor(): Int {
+        val random = Random.Default
+        val hsv = floatArrayOf(random.nextFloat()*360, 0.8F, 0.9F)
+        return Color.HSVToColor(hsv)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // get the class
-        val thisClass = ClassesItem.get(_classId)
+        var thisClass = ClassesItem.get(_classId)
+        if (_classId == -1) thisClass = ClassesItem(id=_classId, color = randomColor(), name = "Class ${System.currentTimeMillis() % 1000}")
 
         // set text of textinput to classname
         binding.eventNameEditText.setText(thisClass.name)
@@ -93,6 +101,7 @@ class EditClassFragment : Fragment() {
         thisClass.color = color
 
         ClassesItem.save()
+        if (_classId == -1) ClassesItem.add(thisClass.name, thisClass.color)
 
         // go back
         findNavController().navigateUp()

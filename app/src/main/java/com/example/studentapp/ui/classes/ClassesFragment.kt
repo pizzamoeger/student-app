@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentClassesBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
 import kotlin.random.Random
@@ -34,13 +35,6 @@ class ClassesFragment : Fragment() {
         return root
     }
 
-    // get random color
-    private fun randomColor(): Int {
-        val random = Random.Default
-        val hsv = floatArrayOf(random.nextFloat()*360, 0.8F, 0.9F)
-        return android.graphics.Color.HSVToColor(hsv)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
         adapter = ClassesAdapter (onDeleteClick = { id ->
@@ -50,10 +44,10 @@ class ClassesFragment : Fragment() {
                 val navController = findNavController()
                 val action = ClassesFragmentDirections.actionClassesToEditClass(item.id.toString())
 
-                /*val navOptions = androidx.navigation.NavOptions.Builder()
+                val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_classes, true) // keeps StopwatchFragment in back stack
                     .build()
-                navController.navigate(action, navOptions)*/navController.navigate(action)})
+                navController.navigate(action, navOptions)})
 
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
@@ -66,11 +60,6 @@ class ClassesFragment : Fragment() {
 
         binding.recyclerViewClasses.addItemDecoration(dividerItemDecoration)
 
-        // each time classList changes we call adapter.submitList
-        /*SharedData.classesList.observe(viewLifecycleOwner) { classList ->
-            adapter.submitList(classList)
-        }*/
-
         // when the addButton is pressed, we create a new class
         binding.addButtonClasses.setOnClickListener {
             newClass()
@@ -79,11 +68,12 @@ class ClassesFragment : Fragment() {
 
     private fun newClass() {
         // navigate to event edit fragment
-        val newClass = ClassesItem.add("Class ${System.currentTimeMillis() % 1000}", randomColor())
-        val action = ClassesFragmentDirections.actionClassesToEditClass(newClass.id.toString())
+        val action = ClassesFragmentDirections.actionClassesToEditClass("-1")
         // if we move back to classes using the bottomnav, we want to go to classes
-        // TODO findNavController().popBackStack()
-        findNavController().navigate(action)
+        val navOptions = androidx.navigation.NavOptions.Builder()
+            .setPopUpTo(R.id.navigation_classes, true) // keeps StopwatchFragment in back stack
+            .build()
+        findNavController().navigate(action, navOptions)
     }
 
     override fun onDestroyView() {

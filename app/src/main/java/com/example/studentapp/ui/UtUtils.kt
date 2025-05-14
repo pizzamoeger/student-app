@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import kotlin.random.Random
 
 // returns the color of the App Theme with ID attrResIt
 fun Context.getThemeColor(attrResId : Int) : Int {

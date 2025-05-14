@@ -55,7 +55,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_assignments"
         android:name="com.example.studentapp.ui.calendar.MonthlyCalendarFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_calendar_monthly">
@@ -73,7 +73,7 @@
             app:destination="@id/navigation_timetable" />
         <action
             android:id="@+id/action_edit_event_to_monthly"
-            app:destination="@id/navigation_notifications" />
+            app:destination="@id/navigation_assignments" />
         <argument
             android:name="eventId"
             app:argType="string" />

@@ -1,39 +1,22 @@
 package com.example.studentapp
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.PopupMenu
-import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
-import com.example.studentapp.ui.classes.ClassesFragment
-import com.example.studentapp.ui.getThemeColor
-import com.example.studentapp.ui.stopwatch.StopwatchFragment
-import com.example.studentapp.ui.stopwatch.insights.InsightsFragment
-import com.github.dhaval2404.colorpicker.util.setVisibility
-import com.google.android.material.appbar.MaterialToolbar
 
 
 // TODO java.lang.IllegalArgumentException: The fragment EventEditFragment{4f8871c} (ebe88115-7f08-407e-b12b-a6eee164fe69 id=0x7f080128) is unknown to the FragmentNavigator. Please use the navigate() function to add fragments to the FragmentNavigator managed FragmentManager.                                                                                        java.lang.IllegalArgumentException: The fragment EventEditFragment{4f8871c} (ebe88115-7f08-407e-b12b-a6eee164fe69 id=0x7f080128) is unknown to the FragmentNavigator. Please use the navigate() function to add fragments to the FragmentNavigator managed FragmentManager.
@@ -59,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_classes,
                 R.id.navigation_stopwatch,
                 R.id.navigation_timetable,
-                R.id.navigation_notifications
+                R.id.navigation_assignments
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

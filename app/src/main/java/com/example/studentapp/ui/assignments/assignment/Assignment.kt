@@ -1,12 +1,14 @@
 package com.example.studentapp.ui.assignments.assignment
 
 import com.example.studentapp.ui.classesItem.ClassesItem
+import com.example.studentapp.ui.event.Event
 import java.time.LocalDate
 
 class Assignment (
     private var dueDate : LocalDate,
     private var classId : Int,
-    private var title : String
+    private var title : String,
+    private var id : Int = nextId++
 ) {
     private var completed = false
     private var progress = 0.0
@@ -38,5 +40,22 @@ class Assignment (
     fun getTitle() = title
     fun setTitle(newTitle : String) {
         title = newTitle
+    }
+
+    companion object {
+        private var assignmentsList : MutableList<Assignment> = mutableListOf()
+        private var nextId = 0
+
+        fun add(assignment: Assignment) {
+            assignmentsList.add(assignment)
+        }
+
+        fun delete(id : Int) {
+            assignmentsList.removeIf{it.id == id}
+        }
+
+        fun getByIndex(index : Int) = assignmentsList[index]
+
+        fun getList() = assignmentsList
     }
 }

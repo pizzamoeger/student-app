@@ -154,16 +154,16 @@ class EditAssignmentFragment : Fragment() {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        SharedData.saveEvent()
+        Assignment.add(assignment!!)
 
         // navigate back
         val navController = findNavController()
         val action = EditAssignmentFragmentDirections.actionFragmentEditAssignmentToNavigationAssignments()
 
-        /*val navOptions = androidx.navigation.NavOptions.Builder() // TODO this is a bug in event navigatin back!!!!!
-            .setPopUpTo(R.id., true)
+        val navOptions = androidx.navigation.NavOptions.Builder() // TODO this is a bug in event navigatin back!!!!!
+            .setPopUpTo(R.id.fragment_edit_assignment, true)
             .build()
-        navController.navigate(action, navOptions)*/
+        navController.navigate(action, navOptions)
     }
 
     private fun delete() {

@@ -43,7 +43,9 @@ class ClassesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
-        adapter = ClassesAdapter (onDeleteClick = {id -> ClassesItem.delete(id)},
+        adapter = ClassesAdapter (onDeleteClick = { id ->
+            ClassesItem.delete(id)
+            onViewCreated(view, savedInstanceState)},
             onClassesItemClick = {item ->
                 val navController = findNavController()
                 val action = ClassesFragmentDirections.actionClassesToEditClass(item.id.toString())

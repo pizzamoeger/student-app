@@ -141,7 +141,7 @@ class EventEditFragment : Fragment() {
 
         // when item is selected
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 // we set the class for this event to the selected
                 classItem = options[position]
             }

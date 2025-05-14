@@ -18,7 +18,6 @@ class ClassesFragment : Fragment() {
 
     private var _binding: FragmentClassesBinding? = null
     private lateinit var adapter: ClassesAdapter
-    private val classesViewModel : ClassesViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -45,7 +44,7 @@ class ClassesFragment : Fragment() {
                 val action = ClassesFragmentDirections.actionClassesToEditClass(item.id.toString())
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(R.id.navigation_classes, true) // keeps StopwatchFragment in back stack
+                    .setPopUpTo(R.id.navigation_classes, false) // keeps StopwatchFragment in back stack
                     .build()
                 navController.navigate(action, navOptions)})
 

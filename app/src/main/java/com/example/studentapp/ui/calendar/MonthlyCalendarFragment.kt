@@ -118,7 +118,7 @@ class MonthlyCalendarFragment : Fragment() {
         val action = MonthlyCalendarFragmentDirections.actionMonthToEventEdit(id.toString())
 
         val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+            .setPopUpTo(R.id.navigation_notifications, false) // keeps StopwatchFragment in back stack
             .build()
         navController.navigate(action, navOptions)
     }

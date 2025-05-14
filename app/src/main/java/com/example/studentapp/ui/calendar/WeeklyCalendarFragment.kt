@@ -68,7 +68,7 @@ class WeeklyCalendarFragment : Fragment() {
                 val action = WeeklyCalendarFragmentDirections.actionWeekToEventEdit("-1")
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+                    .setPopUpTo(R.id.navigation_timetable, false) // keeps StopwatchFragment in back stack
                     .build()
                 navController.navigate(action, navOptions)
             },
@@ -78,7 +78,7 @@ class WeeklyCalendarFragment : Fragment() {
                 val action = WeeklyCalendarFragmentDirections.actionWeekToCalendarDay()
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+                    .setPopUpTo(R.id.navigation_timetable, false) // keeps StopwatchFragment in back stack
                     .build()
                 navController.navigate(action, navOptions)}
             )

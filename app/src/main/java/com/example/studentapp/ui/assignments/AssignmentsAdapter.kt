@@ -7,18 +7,28 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
+import com.example.studentapp.databinding.AssignmentBinding
+import com.example.studentapp.databinding.ItemClassBinding
 import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.classesItem.ClassesItem
+import com.example.studentapp.ui.getThemeColor
+import java.time.LocalDate
 
 class AssignmentsAdapter : RecyclerView.Adapter<AssignmentsAdapter.AssignmentsViewHolder> ()  {
-    inner class AssignmentsViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        private val text: TextView = itemView.findViewById(R.id.assignment_text)
-        private val colorBlock: View = itemView.findViewById(R.id.assignment_class_color)
-        private val dueDate: TextView = itemView.findViewById(R.id.due_date)
+    inner class AssignmentsViewHolder(
+        private val binding: AssignmentBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        private val text: TextView = binding.assignmentText
+        private val colorBlock: View = binding.assignmentClassColor
+        private val dueDate: TextView = binding.dueDate
 
         fun bind(item: Assignment) {
             // bind name
             text.text = item.getTitle()
+            if (item.getDueDate() < LocalDate.now()) {
+                text.setTextColor(binding.root.context.getColor(R.color.red))
+                dueDate.setTextColor(binding.root.context.getColor(R.color.red))
+            }
 
             dueDate.text = item.getDueDate().toString()
 
@@ -33,8 +43,9 @@ class AssignmentsAdapter : RecyclerView.Adapter<AssignmentsAdapter.AssignmentsVi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AssignmentsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.assignment, parent, false)
-        return AssignmentsViewHolder(view)
+        val binding = AssignmentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return AssignmentsViewHolder(binding)
     }
 
     override fun getItemCount() = Assignment.getList().size

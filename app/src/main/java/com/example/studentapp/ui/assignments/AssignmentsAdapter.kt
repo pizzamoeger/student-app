@@ -14,10 +14,13 @@ class AssignmentsAdapter : RecyclerView.Adapter<AssignmentsAdapter.AssignmentsVi
     inner class AssignmentsViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private val text: TextView = itemView.findViewById(R.id.assignment_text)
         private val colorBlock: View = itemView.findViewById(R.id.assignment_class_color)
+        private val dueDate: TextView = itemView.findViewById(R.id.due_date)
 
         fun bind(item: Assignment) {
             // bind name
             text.text = item.getTitle()
+
+            dueDate.text = item.getDueDate().toString()
 
             // bind delete button
             colorBlock.setBackgroundColor(item.getClass().color)

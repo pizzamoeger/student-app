@@ -12,7 +12,15 @@
     <TextView
         android:id="@+id/assignment_text"
         android:layout_width="0dp"
+        android:layout_marginStart="10dp"
         android:layout_height="wrap_content"
-        android:layout_weight="15" />
+        android:layout_weight="30" />
+
+    <TextView
+        android:id="@+id/due_date"
+        android:layout_width="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="30" />
 
 </LinearLayout>

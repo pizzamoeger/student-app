@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
 
 data class SerializableAssignment(
-    var dueDate : LocalDate,
+    var dueDate : String,
     var classId : Int,
     var title : String,
     var id : Int,
@@ -61,6 +61,7 @@ class Assignment (
 
         fun add(assignment: Assignment) {
             assignmentsList.add(assignment)
+            assignmentsList.sortBy { it.dueDate }
             save()
         }
 
@@ -78,7 +79,7 @@ class Assignment (
 
             // create a serializable list from classeslist
             val serializableList = assignmentsList.map {
-                SerializableAssignment(it.dueDate, it.classId, it.title, it.id, it.completed, it.progress)
+                SerializableAssignment(it.dueDate.toString(), it.classId, it.title, it.id, it.completed, it.progress)
             }
 
             val json: String = gson.toJson(serializableList)
@@ -96,7 +97,7 @@ class Assignment (
 
                 // create list of ClassesItem from this
                 val restored = list.map {
-                    Assignment(it.dueDate, it.classId, it.title, it.id, it.completed, it.progress)
+                    Assignment(LocalDate.parse(it.dueDate), it.classId, it.title, it.id, it.completed, it.progress)
                 }
 
                 assignmentsList = restored.toMutableList()

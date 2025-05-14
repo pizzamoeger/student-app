@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
+import com.example.studentapp.SharedData.Companion.today
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.event.Event
 import com.google.gson.Gson
@@ -101,7 +102,6 @@ data class ClassesItem(
     // update if this class is being tracked
     fun updateTracking(to : Boolean) {
         _tracking.value = to
-        // TODO bug: total time is more than time of classes added
     }
 
     // reset secondsToday
@@ -123,9 +123,7 @@ data class ClassesItem(
                 item.updateTracking(!item.tracking.value!!)
                 return false
             }
-            if (currentClass != ClassesItem()) {
-                currentClass.updateTracking(false)
-            }
+            currentClass.updateTracking(false)
             item.updateTracking(true)
             currentClass = item
             return true

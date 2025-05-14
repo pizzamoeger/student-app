@@ -24,14 +24,6 @@ class StopwatchAdapter (
     private val onClassesItemClick: (ClassesItem) -> Unit)
     : RecyclerView.Adapter<StopwatchAdapter.StopwatchViewHolder> () {
 
-    private var classesList : List<ClassesItem> = emptyList()
-
-    // is called each time the list in sharedViewModel changes
-    fun submitList(list: List<ClassesItem>) {
-        classesList = list
-        notifyDataSetChanged()
-    }
-
     // view holder for class item
     inner class StopwatchViewHolder(
         private val binding: ItemClassBinding,

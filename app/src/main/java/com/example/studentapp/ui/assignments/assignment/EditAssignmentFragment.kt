@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,7 +71,7 @@ class EditAssignmentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (assignment == null) {
-            assignment = Assignment(LocalDate.now(), 0, "") // TODO temp
+            assignment = Assignment(LocalDate.now(), 0, "", 0) // TODO temp
         }
 
         // set repeated
@@ -117,6 +118,10 @@ class EditAssignmentFragment : Fragment() {
             if (option == assignment!!.getClass()) break
             index++
         }
+        if (index == options.size) {
+            Log.e("Event edit", "Invalid class id (class not in classlist)")
+            index = 0
+        }
         spinner.setSelection(index)
 
         // when item is selected
@@ -127,7 +132,7 @@ class EditAssignmentFragment : Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                //classItem = SharedData.get(event!!.classesItemId)
+                classItem = assignment!!.getClass()
             }
         }
     }
@@ -169,7 +174,7 @@ class EditAssignmentFragment : Fragment() {
     private fun delete() {
         // create a new event and add it to eventsList
         //Event.delete(assignment!!.id)
-        SharedData.saveEvent()
+        //SharedData.saveEvent()
         val navController = findNavController()
         val action = EditAssignmentFragmentDirections.actionFragmentEditAssignmentToNavigationAssignments()
 

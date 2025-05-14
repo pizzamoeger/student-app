@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -139,6 +140,10 @@ class EventEditFragment : Fragment() {
         for (option in options) {
             if (option.id == event!!.classesItemId) break
             index++
+        }
+        if (index == options.size) {
+            Log.e("Event edit", "Invalid class id (class not in classlist)")
+            index = 0
         }
         spinner.setSelection(index)
 

@@ -52,16 +52,16 @@ class AssignmentsFragment : Fragment() {
 
         // when the addButton is pressed, we create a new class
         binding.addButton.setOnClickListener {
-            newClass()
+            newAssignment()
         }
     }
 
-    private fun newClass() {
+    private fun newAssignment() {
         // navigate to event edit fragment
         val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentEditAssignment("-1")
         // if we move back to classes using the bottomnav, we want to go to classes
         val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.navigation_classes, true) // keeps StopwatchFragment in back stack
+            .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
             .build()
         findNavController().navigate(action, navOptions)
     }

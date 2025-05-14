@@ -55,6 +55,7 @@ class Assignment (
         }
 
         fun getByIndex(index : Int) = assignmentsList[index]
+        fun get(id : Int) = assignmentsList.find{it.id == id}
 
         fun getList() = assignmentsList
     }

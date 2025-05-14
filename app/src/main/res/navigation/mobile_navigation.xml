@@ -10,9 +10,7 @@
         android:name="com.example.studentapp.ui.classes.ClassesFragment"
         android:label="@string/title_classes"
         tools:layout="@layout/fragment_classes">
-        <action
-            android:id="@+id/action_classes_to_classes_item"
-            app:destination="@id/navigation_classes_item" />
+
         <action
             android:id="@+id/action_classes_to_edit_class"
             app:destination="@id/fragment_edit_class" />
@@ -56,12 +54,13 @@
 
     <fragment
         android:id="@+id/navigation_assignments"
-        android:name="com.example.studentapp.ui.calendar.MonthlyCalendarFragment"
+        android:name="com.example.studentapp.ui.assignments.AssignmentsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_calendar_monthly">
+        tools:layout="@layout/fragment_assignments">
+
         <action
-            android:id="@+id/action_month_to_event_edit"
-            app:destination="@id/fragment_event_edit" />
+            android:id="@+id/action_navigation_assignments_to_fragment_edit_assignment"
+            app:destination="@id/fragment_edit_assignment" />
     </fragment>
 
     <fragment android:id="@+id/fragment_event_edit"
@@ -71,9 +70,7 @@
         <action
             android:id="@+id/action_edit_event_to_weekly"
             app:destination="@id/navigation_timetable" />
-        <action
-            android:id="@+id/action_edit_event_to_monthly"
-            app:destination="@id/navigation_assignments" />
+
         <argument
             android:name="eventId"
             app:argType="string" />
@@ -89,6 +86,18 @@
         <argument
             android:name="classId"
             app:argType="string" />
+    </fragment>
+
+    <fragment android:id="@+id/fragment_edit_assignment"
+        android:name="com.example.studentapp.ui.assignments.assignment.EditAssignmentFragment"
+        android:label="Class Edit"
+        tools:layout="@layout/fragment_assignment_edit">
+        <argument
+            android:name="classId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragment_edit_assignment_to_navigation_assignments"
+            app:destination="@id/navigation_assignments" />
     </fragment>
 
     <fragment

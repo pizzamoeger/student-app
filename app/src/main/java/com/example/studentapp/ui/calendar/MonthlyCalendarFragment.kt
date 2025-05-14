@@ -19,7 +19,7 @@ import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 
 class MonthlyCalendarFragment : Fragment() {
 
-    private var _binding: FragmentCalendarMonthlyBinding? = null
+    /*private var _binding: FragmentCalendarMonthlyBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -135,5 +135,5 @@ class MonthlyCalendarFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
+    }*/
 }

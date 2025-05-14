@@ -33,15 +33,8 @@ class SharedData  {
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
             //prefs.edit().clear().apply()
-            _today.value = LocalDate.now()
-            updateDate()
             load()
         }
-
-        private val _today = MutableLiveData<LocalDate> ()
-        val today: LiveData<LocalDate> get() = _today
-
-
 
         fun save() {
             ClassesItem.save()
@@ -103,14 +96,6 @@ class SharedData  {
                 }
 
                 // TODO :                 currentClass.setNextId((list.maxOfOrNull { it.id } ?: 0) + 1)
-            }
-        }
-
-        // TODO call this once at midnight
-        // but then if user sets time manually it breaks
-        fun updateDate() {
-            if (LocalDate.now().toString() != _today.value.toString()) {
-                _today.value = LocalDate.now()
             }
         }
     }

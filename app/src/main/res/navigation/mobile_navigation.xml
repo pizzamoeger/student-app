@@ -68,6 +68,12 @@
         android:name="com.example.studentapp.ui.event.EventEditFragment"
         android:label="Event Edit"
         tools:layout="@layout/fragment_event_edit">
+        <action
+            android:id="@+id/action_edit_event_to_weekly"
+            app:destination="@id/navigation_timetable" />
+        <action
+            android:id="@+id/action_edit_event_to_monthly"
+            app:destination="@id/navigation_notifications" />
         <argument
             android:name="eventId"
             app:argType="string" />
@@ -77,6 +83,9 @@
         android:name="com.example.studentapp.ui.classesItem.EditClassFragment"
         android:label="Class Edit"
         tools:layout="@layout/fragment_edit_class">
+        <action
+            android:id="@+id/action_edit_class_to_classes"
+            app:destination="@id/navigation_classes" />
         <argument
             android:name="classId"
             app:argType="string" />

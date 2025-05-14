@@ -14,6 +14,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.databinding.FragmentInsightsBinding
+import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import java.time.LocalDate
 
 class InsightsFragment : Fragment() {
 
@@ -107,8 +109,8 @@ class InsightsFragment : Fragment() {
 
         // center text
         when {type == TimeInterval.TOTAL -> pieChart.centerText = "Total" }
-        when {type == TimeInterval.MONTH -> pieChart.centerText = "This Month"} // todo month name
-        when {type == TimeInterval.WEEK -> pieChart.centerText = "This Week"} // todo KW
+        when {type == TimeInterval.MONTH -> pieChart.centerText = CalendarUtils.monthYearFromDate(LocalDate.now())}
+        when {type == TimeInterval.WEEK -> pieChart.centerText = CalendarUtils.weekFromDate(LocalDate.now())}
         when {type == TimeInterval.DAY -> pieChart.centerText = "Today"}
         when {type == TimeInterval.DEFAULT -> pieChart.centerText = "Custom Interval"}
 

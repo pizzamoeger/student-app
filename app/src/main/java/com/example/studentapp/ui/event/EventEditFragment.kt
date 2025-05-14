@@ -14,6 +14,7 @@ import android.widget.DatePicker
 import android.widget.Spinner
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,6 +24,7 @@ import com.example.studentapp.databinding.FragmentEventEditBinding
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.ClassesItemFragmentArgs
+import com.example.studentapp.ui.classesItem.EditClassFragmentDirections
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.properties.Delegates
@@ -70,6 +72,7 @@ class EventEditFragment : Fragment() {
         _binding = FragmentEventEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
         event = Event.get(args.eventId.toInt())
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         return root
     }
 
@@ -178,13 +181,25 @@ class EventEditFragment : Fragment() {
         SharedData.saveEvent()
 
         // navigate back
-        findNavController().navigateUp()
+        val navController = findNavController()
+        val action = EventEditFragmentDirections.actionEditEventToWeekly()
+
+        val navOptions = androidx.navigation.NavOptions.Builder()
+            .setPopUpTo(R.id.navigation_classes, true)
+            .build()
+        navController.navigate(action, navOptions)
     }
 
     private fun deleteEvent() {
         // create a new event and add it to eventsList
         Event.delete(event!!.id)
         SharedData.saveEvent()
-        findNavController().navigateUp()
+        val navController = findNavController()
+        val action = EventEditFragmentDirections.actionEditEventToWeekly()
+
+        val navOptions = androidx.navigation.NavOptions.Builder()
+            .setPopUpTo(R.id.navigation_classes, true)
+            .build()
+        navController.navigate(action, navOptions)
     }
 }

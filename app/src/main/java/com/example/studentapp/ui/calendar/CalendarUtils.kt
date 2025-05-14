@@ -24,6 +24,11 @@ class CalendarUtils {
             return date.format(formatter)
         }
 
+        fun weekFromDate(date: LocalDate) : String {
+            val formatter = DateTimeFormatter.ofPattern("'Week' w")
+            return date.format(formatter)
+        }
+
         // returns time as string
         fun formattedTime(time : LocalTime) : String {
             val formatter = DateTimeFormatter.ofPattern("hh:mm:ss a")

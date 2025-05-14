@@ -73,11 +73,6 @@ class StopwatchFragment : Fragment() {
             }
         }
 
-        // reset the viewModel any time today changes
-        SharedData.today.observe(viewLifecycleOwner) {
-            stopwatchViewModel.reset()
-        }
-
         // gets adapter
         adapter = StopwatchAdapter (onStartClick = {item ->
             stopwatchViewModel.button(ClassesItem.switch(item))},
@@ -109,9 +104,7 @@ class StopwatchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // TODO make function for this
         // display top navigation
-        val activityBinding = (requireActivity() as MainActivity).binding
         val toolbar = binding.includedToolbar
 
         // left selection links to nothing (is current)

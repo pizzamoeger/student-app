@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.classesItem.ClassesItem
+import java.time.LocalDate
 
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val handler = Handler(Looper.getMainLooper())
@@ -23,9 +24,6 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     init {
         runTimer()
-        // TODO change this so that time is reset at midnight every day
-        // update date each time we switch to timer
-        SharedData.updateDate()
         load()
     }
 
@@ -34,17 +32,15 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
             override fun run() {
                 // if the stopwatch is running we increase seconds and save them
                 if (_running.value!!) {
-                    secondsTodayAll++
-                    secondsTotalAll++
-
-                    val today = SharedData.today.value.toString()
+                    val today = LocalDate.now().toString()
                     ClassesItem.getCurrent().studyTime[today] = ClassesItem.getCurrent().studyTime.getOrDefault(today, 0)+1 // todo private
 
+                    load()
                     saveSeconds()
 
                     // update what time(s) should display
                     _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
-                    ClassesItem.getCurrent().updateText()
+                    for (classItem in ClassesItem.getList()) classItem.updateText()
                 }
 
                 // execute this every second
@@ -81,11 +77,5 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
             secondsTodayAll += entry.getSeconds(TimeInterval.DAY)
         }
         _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
-    }
-
-    // TODO is this actually still needed? rename maybe
-    fun reset() {
-        for (item in ClassesItem.getList()) item.reset()
-        saveSeconds()
     }
 }

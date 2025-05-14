@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
-import com.example.studentapp.SharedData.Companion.today
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.event.Event
 import com.google.gson.Gson
@@ -54,15 +53,13 @@ data class ClassesItem(
 
     // get seconds spent studying today
     private fun secondsToday() : Int {
-        SharedData.updateDate()
-        val today = SharedData.today.value
+        val today = LocalDate.now()
         return secondsInInterval(today.toString(), today.toString())
     }
 
     // get seconds spent studying this week
     private fun secondsThisWeek() : Int {
-        SharedData.updateDate()
-        val today : LocalDate? = SharedData.today.value
+        val today = LocalDate.now()
         // TODO be able to choose when week starts
         val monday = today!!.with(TemporalAdjusters.previous(DayOfWeek.MONDAY))
         return secondsInInterval(monday.toString(), today.toString())
@@ -70,17 +67,14 @@ data class ClassesItem(
 
     // get seconds spent studying this month
     private fun secondsThisMonth() : Int {
-        SharedData.updateDate()
-        val today : LocalDate? = SharedData.today.value
+        val today = LocalDate.now()
         val firstOfMonth = LocalDate.of(today!!.year, today.month, 1)
         return secondsInInterval(firstOfMonth.toString(), today.toString())
     }
 
     // get total seconds spent studying
     private fun secondsTotal() : Int {
-        SharedData.updateDate()
-        val today : LocalDate? = SharedData.today.value
-        return secondsInInterval(LocalDate.MIN.toString(), today.toString())
+        return secondsInInterval(LocalDate.MIN.toString(), LocalDate.now().toString())
     }
 
     // string of secondsToday

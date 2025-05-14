@@ -44,9 +44,6 @@ class ClassesItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // update Date as we are displaying time again
-        SharedData.updateDate()
-
         // create viewmodel and setId
         val classesItemViewModel =
             ViewModelProvider(this).get(ClassesItemViewModel::class.java)

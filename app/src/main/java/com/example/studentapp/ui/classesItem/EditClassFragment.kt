@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,6 +20,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentEditClassBinding
 import com.example.studentapp.ui.calendar.CalendarUtils
+import com.example.studentapp.ui.classes.ClassesFragmentDirections
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.getThemeColor
 import java.time.LocalDate
@@ -42,6 +44,7 @@ class EditClassFragment : Fragment() {
     ): View {
         _classId = args.classId.toInt()
         _binding = FragmentEditClassBinding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         val root: View = binding.root
         return root
     }
@@ -104,6 +107,12 @@ class EditClassFragment : Fragment() {
         if (_classId == -1) ClassesItem.add(thisClass.name, thisClass.color)
 
         // go back
-        findNavController().navigateUp()
+        val navController = findNavController()
+        val action = EditClassFragmentDirections.actionEditClassToClasses()
+
+        val navOptions = androidx.navigation.NavOptions.Builder()
+            .setPopUpTo(R.id.navigation_classes, false)
+            .build()
+        navController.navigate(action, navOptions)
     }
 }

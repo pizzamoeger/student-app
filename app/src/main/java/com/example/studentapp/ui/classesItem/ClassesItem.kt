@@ -1,6 +1,7 @@
 package com.example.studentapp.ui.classesItem
 
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.R
@@ -19,7 +20,7 @@ data class ClassesItem(
     val id: Int = nextId++,
     var name: String = "",
     val studyTime: MutableMap<String, Int> = mutableMapOf(),
-    var color : Int = R.color.transparent
+    var color : Int = 0 // TODO this is hacky transparent
 ) {
     override fun toString(): String {
         return name

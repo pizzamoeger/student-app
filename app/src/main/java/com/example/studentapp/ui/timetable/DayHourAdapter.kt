@@ -1,6 +1,8 @@
 package com.example.studentapp.ui.timetable
 
 import android.content.Context
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,71 +54,39 @@ class DayHourAdapter (
     }
 
     private fun setEvents(convertView : View, events : List<Event>) {
-        val tv1 = convertView.findViewById<TextView>(R.id.event_1)
-        val tv2 = convertView.findViewById<TextView>(R.id.event_2)
-        val tv3 = convertView.findViewById<TextView>(R.id.event_3)
+        val linearLayout = convertView.findViewById<LinearLayout>(R.id.linear_layout)
+        for (event in events) {
+            val classItem = ClassesItem.get(event.classesItemId)
 
-        if (events.isEmpty()) {
-            // if we have no events then both should be invisible
-            setEventTextInvisible(tv1)
-            setEventTextInvisible(tv2)
-            setEventTextInvisible(tv3)
-            return
-        }
-        tv1.setOnClickListener{
-            onCellEventClicked(events[0].id)
-        }
-        tv2.setOnClickListener{
-            onCellEventClicked(events[1].id)
-        }
-        tv3.setOnClickListener{
-            onCellEventClicked(events[2].id)
-        }
-        if (events.size == 1) {
-            // if we have one then only first should be visible
-            val class1 = ClassesItem.get(events[0].classesItemId)
-            setEventTextVisible(tv1, events[0].name, class1.color)
-            setEventTextInvisible(tv2)
-            setEventTextInvisible(tv3)
-        } else if (events.size == 2) {
-            // if we have two, both should be visible
-            val class1 = ClassesItem.get(events[0].classesItemId)
-            val class2 = ClassesItem.get(events[1].classesItemId)
-            setEventTextVisible(tv1, events[0].name, class1.color)
-            setEventTextVisible(tv2, events[1].name, class2.color)
-            setEventTextInvisible(tv3)
-        } else if (events.size == 3) {
-            val class1 = ClassesItem.get(events[0].classesItemId)
-            val class2 = ClassesItem.get(events[1].classesItemId)
-            val class3 = ClassesItem.get(events[2].classesItemId)
-            setEventTextVisible(tv1, events[0].name, class1.color)
-            setEventTextVisible(tv2, events[1].name, class2.color)
-            setEventTextVisible(tv3, events[2].name, class3.color)
-        } else {
-            // if we have more, both things should be visible but second should display how many more we have
-            // TODO
-            /*var class1 = SharedData.classList.value!!.find { item -> item.id == events[0].classesItemId }
-            if (class1 == null) class1 = SharedData.defaultClass
-            setEventTextVisible(eventTextView1, events[0].name, class1.color)
-            setEventTextVisible(eventTextView2, "+"+(events.size-1), context.getThemeColor(R.color.transparent))*/
-        }
-    }
+            val textView = TextView(context).apply {
+                text = event.name
+                gravity = Gravity.CENTER
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                setLines(2)
+                setTextColor(
+                    TypedValue()
+                        .apply { context.theme.resolveAttribute(android.R.attr.textColorPrimary, this, true) }
+                        .data
+                )
+                setBackgroundColor(classItem.color)
 
-    private fun setEventTextVisible(eventTextView : TextView, text : String, color : Int) {
-        // set the thingy to visible and make it have the correct width, text and color
-        val params = eventTextView.layoutParams as LinearLayout.LayoutParams
-        eventTextView.visibility = View.VISIBLE
-        eventTextView.text = text
-        eventTextView.setBackgroundColor(color)
-        params.weight=1f
-        eventTextView.layoutParams = params
-    }
+                layoutParams = LinearLayout.LayoutParams(
+                    0, // width
+                    LinearLayout.LayoutParams.MATCH_PARENT
+                ).apply {
+                    weight = 1f
+                    val marginPx = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, 0.75f, context.resources.displayMetrics
+                    ).toInt()
+                    setMargins(marginPx, marginPx, marginPx, marginPx)
+                }
+            }
 
-    private fun setEventTextInvisible(eventTextView : TextView) {
-        // set thingy to invisible and width to 0
-        val params = eventTextView.layoutParams as LinearLayout.LayoutParams
-        eventTextView.visibility = View.INVISIBLE
-        params.weight=0f
-        eventTextView.layoutParams = params
+            textView.setOnClickListener{
+                onCellEventClicked(event.id)
+            }
+
+            linearLayout.addView(textView)
+        }
     }
 }

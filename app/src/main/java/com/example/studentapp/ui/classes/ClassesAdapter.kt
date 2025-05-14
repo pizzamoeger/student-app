@@ -17,14 +17,6 @@ class ClassesAdapter (
     private val onClassesItemClick: (ClassesItem) -> Unit)
     : RecyclerView.Adapter<ClassesAdapter.ClassesViewHolder> () {
 
-    private var classesList : List<ClassesItem> = emptyList()
-
-    // is called each time the list in sharedViewModel changes
-    fun submitList(list: List<ClassesItem>) {
-        classesList = list
-        notifyDataSetChanged()
-    }
-
     // view holder for class item
     inner class ClassesViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         // each class has a name and a delete button

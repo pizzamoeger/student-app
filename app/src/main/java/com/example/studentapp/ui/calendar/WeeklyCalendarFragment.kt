@@ -88,7 +88,7 @@ class WeeklyCalendarFragment : Fragment() {
     // returns list of events for each hour in 7..19
     private fun hourEventList(): List<HourEvent> {
         val list: List<HourEvent> = List(
-            size = 12, // TODO maybe more
+            size = 12,
             init = {hour ->
                 val time = LocalTime.of(7+hour, 0)
                 val events = Event.eventsForDateAndTimeWeek(selectedDate, time)

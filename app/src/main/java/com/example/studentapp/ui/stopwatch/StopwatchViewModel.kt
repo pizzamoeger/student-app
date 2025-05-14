@@ -1,8 +1,6 @@
 package com.example.studentapp.ui.stopwatch
 
 import android.app.Application
-import android.content.Context
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
@@ -11,15 +9,14 @@ import androidx.lifecycle.MutableLiveData
 import com.example.studentapp.SharedData
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.classesItem.ClassesItem
-import java.time.LocalDate
 
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
-    private val handler = Handler(Looper.getMainLooper());
+    private val handler = Handler(Looper.getMainLooper())
 
     private val _time = MutableLiveData<String>()
     val time: LiveData<String> = _time
 
-    private var _running = MutableLiveData<Boolean>(false)
+    private var _running = MutableLiveData(false)
     val running: LiveData<Boolean> = _running
     private var secondsTodayAll = 0
     private var secondsTotalAll = 0
@@ -32,7 +29,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         load()
     }
 
-    fun runTimer() {
+    private fun runTimer() {
         handler.post(object : Runnable {
             override fun run() {
                 // update what time(s) should display

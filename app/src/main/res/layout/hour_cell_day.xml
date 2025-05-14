@@ -16,49 +16,14 @@
         android:text="10:00" />
 
     <LinearLayout
-        android:id="@+id/linear_layout_mon"
+        android:id="@+id/linear_layout"
         android:layout_width="0dp"
         android:layout_weight="8"
         android:layout_margin="2dp"
         android:orientation="horizontal"
         android:layout_height="match_parent"
         tools:ignore="NestedWeights">
-        <!--TODO somehow add more textviews when needed? or use list-->
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:background="?attr/colorSecondary"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:id="@+id/event_1"
-            android:layout_margin="0.75dp"
-            android:textSize="12sp"
-            android:lines="2"
-            android:textColor="?android:attr/textColorPrimary"
-            android:text="Class" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:background="?attr/colorSecondary"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:id="@+id/event_2"
-            android:layout_margin="0.75dp"
-            android:textSize="12sp"
-            android:lines="2"
-            android:textColor="?android:attr/textColorPrimary"
-            android:text="Class" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_margin="0.75dp"
-            android:background="?attr/colorPrimary"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:id="@+id/event_3"
-            android:textSize="12sp"
-            android:lines="2"
-            android:textColor="?android:attr/textColorPrimary"
-            android:text="Class" />
+
+        <!--TEXTVIEW WILL BE ADDED DYNAMICALLY HERE-->
     </LinearLayout>
 </LinearLayout>

@@ -55,10 +55,10 @@ class SharedData  {
 
                 // create list of ClassesItem from this
                 val restored = list.map {
-                    Semester(it.start, it.end, it.classesInSemester)
+                    Semester(it.start, it.end, it.classesInSemester, name="HS")
                 }
 
-                Semester.semesterList = restored.toMutableList()
+                //Semester.semesterList = restored.toMutableList()
                 // TODO                 currentClass.setNextId((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
         }

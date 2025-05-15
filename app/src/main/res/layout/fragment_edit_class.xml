@@ -92,7 +92,6 @@
             android:background="@color/transparent"
             android:text="@string/delete"
             android:textColor="?android:attr/textColorPrimary"
-            android:textStyle="bold"
             android:layout_gravity="center"
             android:textSize="20sp" />
 
@@ -111,7 +110,6 @@
             android:background="@color/transparent"
             android:text="@string/save"
             android:textColor="?android:attr/textColorPrimary"
-            android:textStyle="bold"
             android:layout_gravity="center"
             android:textSize="20sp"/>
     </LinearLayout>

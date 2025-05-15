@@ -3,7 +3,7 @@
     <item
         android:id="@+id/menu_navigation"
         android:icon="@drawable/ic_menu"
-        android:title="Go to Fragment"
+        android:title="@string/go_to_fragment"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 </menu>

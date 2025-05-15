@@ -42,4 +42,5 @@
     <string name="color">Color:</string>
     <string name="assignments">Assignments</string>
     <string name="week">Week</string>
+    <string name="go_to_fragment">Go to Fragment</string>
 </resources>

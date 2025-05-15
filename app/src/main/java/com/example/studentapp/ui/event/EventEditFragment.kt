@@ -27,6 +27,8 @@ import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.ClassesItemFragmentArgs
 import com.example.studentapp.ui.classesItem.EditClassFragmentDirections
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
@@ -43,19 +45,6 @@ class EventEditFragment : Fragment() {
     var classItem: ClassesItem = ClassesItem()
     var event: Event? = null
 
-    // time picker
-    private val timePickerDialogListener: TimePickerDialog.OnTimeSetListener =
-        object : TimePickerDialog.OnTimeSetListener {
-            override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                // set attribute to selected time
-                time = LocalTime.of(hourOfDay, minute)
-
-                // set text to formatted time
-                val formattedTime: String = CalendarUtils.formattedShortTime(time)
-                binding.pickTime.text = formattedTime
-            }
-        }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,8 +59,25 @@ class EventEditFragment : Fragment() {
 
     // create and show timepicker
     private fun pickTime() {
-        val timePicker = TimePickerDialog(requireContext(), timePickerDialogListener, time.hour, time.minute, true)
-        timePicker.show()
+        val picker = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_24H) // or TimeFormat.CLOCK_12H
+            .setHour(12)
+            .setMinute(0)
+            .setTheme(R.style.CustomTimePicker)
+            .build()
+
+        picker.show(parentFragmentManager, "TIME_PICKER")
+
+        picker.addOnPositiveButtonClickListener {
+            val hour = picker.hour
+            val minute = picker.minute
+            // set attribute to selected time
+            time = LocalTime.of(hour, minute)
+
+            // set text to formatted time
+            val formattedTime: String = CalendarUtils.formattedShortTime(time)
+            binding.pickTime.text = formattedTime
+        }
     }
 
     // create and show datepicker

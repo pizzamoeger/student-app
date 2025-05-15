@@ -38,4 +38,9 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
     </style>
+
+    <style name="CustomTimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="colorOnSurface">@color/gray_2</item>
+        <item name="colorSurface">@color/gray_9</item>
+    </style>
 </resources>

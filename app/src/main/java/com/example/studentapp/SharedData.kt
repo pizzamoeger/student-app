@@ -25,7 +25,6 @@ enum class TimeInterval {
 class SharedData  {
     companion object {
 
-        lateinit var semester : Semester
         lateinit var prefs: SharedPreferences
 
         var locked = false
@@ -38,31 +37,15 @@ class SharedData  {
         }
 
         fun save() {
-            ClassesItem.save()
-            Assignment.save()
-            saveEvent()
-        }
-
-        fun saveEvent() {
-            val gson = Gson()
-
-            // create a serializable list from classeslist
-            val events = Event.getEvents()
-
-            val serializableEvents = events.orEmpty().map {
-                SerializableEvent(it.id, it.name, it.date.toString(), it.time.toString(), it.classesItemId, it.repeated)
-            }
-
-            val json: String = gson.toJson(serializableEvents)
-            prefs.edit().putString("events_list", json).apply()
+            //Semester.save()
         }
 
         // load from sharedPreferences
         fun load() {
             ClassesItem.load()
-            loadEvents()
+            Event.load()
             Assignment.load()
-            loadSemester()
+            //Semester.load()
         }
 
         fun loadSemester() {
@@ -81,24 +64,6 @@ class SharedData  {
 
                 Semester.semesterList = restored.toMutableList()
                 // TODO                 currentClass.setNextId((list.maxOfOrNull { it.id } ?: 0) + 1)
-            }
-        }
-
-        fun loadEvents() {
-            val gson = Gson()
-            val json = prefs.getString("events_list", null)
-
-            if (json != null) {
-                // load list of serializableClass
-                val type = object : TypeToken<List<SerializableEvent>>() {}.type
-                val list: List<SerializableEvent> = gson.fromJson(json, type)
-
-                // create list of ClassesItem from this
-                for (e in list) {
-                    Event.addEvent(Event(id=e.id, name=e.name, date=LocalDate.parse(e.date), time=LocalTime.parse(e.time), classesItemId = e.classesItemId, repeated = e.repeated))
-                }
-
-                // TODO :                 currentClass.setNextId((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
         }
     }

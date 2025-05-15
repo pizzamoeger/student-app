@@ -51,6 +51,7 @@ class Assignment (
     fun setProgress(p : Double) {
         progress = p
         if (p >= 1.0) setCompleted()
+        save()
     }
 
     fun getTitle() = title
@@ -70,6 +71,7 @@ class Assignment (
 
         fun delete(id : Int) {
             assignmentsList.removeIf{it.id == id}
+            save()
         }
 
         fun getByIndex(index : Int) = assignmentsList[index]
@@ -87,7 +89,7 @@ class Assignment (
 
         fun getList() = assignmentsList
 
-        fun save() {
+        private fun save() {
             val gson = Gson()
 
             // create a serializable list from classeslist

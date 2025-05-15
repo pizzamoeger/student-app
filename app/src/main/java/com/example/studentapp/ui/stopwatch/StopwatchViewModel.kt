@@ -32,11 +32,9 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
             override fun run() {
                 // if the stopwatch is running we increase seconds and save them
                 if (_running.value!!) {
-                    val today = LocalDate.now().toString()
-                    ClassesItem.getCurrent().studyTime[today] = ClassesItem.getCurrent().studyTime.getOrDefault(today, 0)+1 // todo private
+                    ClassesItem.getCurrent().addSecond()
 
                     load()
-                    saveSeconds()
 
                     // update what time(s) should display
                     _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
@@ -47,10 +45,6 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
                 handler.postDelayed(this, 1000)
             }
         })
-    }
-
-    fun saveSeconds() {
-        ClassesItem.save()
     }
 
     // stop tracking

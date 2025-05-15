@@ -51,7 +51,7 @@ class ClassesItemFragment : Fragment() {
 
         // set the label of this fragment
         val thisClass = ClassesItem.get(_classId)
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = thisClass.name
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = thisClass.toString()
 
         // bind all time informations
         bindTimeInformation(binding.timeDailyClassesItem, classesItemViewModel.dailyTime)
@@ -62,7 +62,7 @@ class ClassesItemFragment : Fragment() {
         // sets backgroundcolor of toolbar to color of this class
         val activity = requireActivity() as AppCompatActivity
         activity.supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(thisClass.color)
+            ColorDrawable(thisClass.getColor())
         )
     }
 

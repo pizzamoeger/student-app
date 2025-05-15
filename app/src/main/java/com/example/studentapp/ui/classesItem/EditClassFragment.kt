@@ -75,11 +75,12 @@ class EditClassFragment : Fragment() {
         if (_classId == -1) thisClass = ClassesItem(id=_classId, color = randomColor(), name = "Class ${System.currentTimeMillis() % 1000}")
 
         // set text of textinput to classname
-        binding.eventNameEditText.setText(thisClass.name)
+        binding.eventNameEditText.setText(thisClass.toString())
 
         // set color to color of thisClass
-        binding.classColorInput.setBackgroundColor(thisClass.color)
-        color = thisClass.color
+        color = thisClass.getColor()
+        binding.classColorInput.setBackgroundColor(color)
+
 
         // make text clickable and bind
         binding.classColorInput.apply {
@@ -87,7 +88,7 @@ class EditClassFragment : Fragment() {
             isClickable = true
         }
         binding.classColorInput.setOnClickListener{ v ->
-            pickColor(v, thisClass.color)
+            pickColor(v, thisClass.getColor())
         }
 
         // bind button for saving
@@ -116,13 +117,13 @@ class EditClassFragment : Fragment() {
 
     private fun saveClass() {
         val thisClass = ClassesItem.get(_classId)
+        ClassesItem.delete(_classId)
 
         // get name
-        thisClass.name = binding.eventNameEditText.text.toString()
-        thisClass.color = color
+        thisClass.setName(binding.eventNameEditText.text.toString())
+        thisClass.setColor(color)
 
-        ClassesItem.save()
-        if (_classId == -1) ClassesItem.add(thisClass.name, thisClass.color)
+        ClassesItem.add(thisClass.toString(), thisClass.getColor())
 
         // go back
         val navController = findNavController()

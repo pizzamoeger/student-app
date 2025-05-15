@@ -138,7 +138,7 @@ class EventEditFragment : Fragment() {
 
         var index = 0
         for (option in options) {
-            if (option.id == event!!.classesItemId) break
+            if (option.getId() == event!!.classesItemId) break
             index++
         }
         if (index == options.size) {
@@ -163,7 +163,7 @@ class EventEditFragment : Fragment() {
     private fun saveEvent() {
         // get name
         event!!.name = binding.eventNameEditText.text.toString()
-        if (event!!.name == "") event!!.name = classItem.name // if event has no name we use class name as default
+        if (event!!.name == "") event!!.name = classItem.toString() // if event has no name we use class name as default
 
         // get repeated
         event!!.repeated = binding.checkBox.isChecked
@@ -172,7 +172,7 @@ class EventEditFragment : Fragment() {
 
         event!!.date = date
         event!!.time = time
-        event!!.classesItemId = classItem.id
+        event!!.classesItemId = classItem.getId()
         Event.addEvent(event!!)
 
         // hide keyboard again before heading up
@@ -182,8 +182,6 @@ class EventEditFragment : Fragment() {
         if (view != null) {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
-
-        SharedData.saveEvent()
 
         // navigate back
         val navController = findNavController()
@@ -198,7 +196,6 @@ class EventEditFragment : Fragment() {
     private fun deleteEvent() {
         // create a new event and add it to eventsList
         Event.delete(event!!.id)
-        SharedData.saveEvent()
         val navController = findNavController()
         val action = EventEditFragmentDirections.actionEditEventToWeekly()
 

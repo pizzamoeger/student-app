@@ -1,5 +1,8 @@
 package com.example.studentapp.ui.event
 
+import com.example.studentapp.SharedData.Companion.prefs
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -33,6 +36,7 @@ class Event (
         fun addEvent(event: Event) {
             if (event.repeated) repeatedEventsList.add(event)
             else eventsList.add(event)
+            save()
         }
 
         fun get(id : Int) : Event? {
@@ -48,11 +52,13 @@ class Event (
         fun delete(id : Int) {
             eventsList = eventsList.filterNot { it.id == id }.toMutableList()
             repeatedEventsList = repeatedEventsList.filterNot { it.id == id }.toMutableList()
+            save()
         }
 
         fun removeAllOfClass(id : Int) {
             eventsList = eventsList.filterNot { it.classesItemId == id }.toMutableList()
             repeatedEventsList = repeatedEventsList.filterNot { it.classesItemId == id }.toMutableList()
+            save()
         }
 
         // get all events (repeated and non repeated)
@@ -61,6 +67,35 @@ class Event (
             for (event in eventsList) events.add(event)
             for (event in repeatedEventsList) events.add(event)
             return events
+        }
+
+        private fun save() {
+            val gson = Gson()
+
+            val serializableEvents = eventsList.map {
+                SerializableEvent(it.id, it.name, it.date.toString(), it.time.toString(), it.classesItemId, it.repeated)
+            }
+
+            val json: String = gson.toJson(serializableEvents)
+            prefs.edit().putString("events_list", json).apply()
+        }
+
+        fun load() {
+            val gson = Gson()
+            val json = prefs.getString("events_list", null)
+
+            if (json != null) {
+                // load list of serializableClass
+                val type = object : TypeToken<List<SerializableEvent>>() {}.type
+                val list: List<SerializableEvent> = gson.fromJson(json, type)
+
+                // create list of ClassesItem from this
+                for (e in list) {
+                    addEvent(Event(id=e.id, name=e.name, date=LocalDate.parse(e.date), time=LocalTime.parse(e.time), classesItemId = e.classesItemId, repeated = e.repeated))
+                }
+
+                nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
+            }
         }
 
         // get all events at date and time

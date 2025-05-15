@@ -39,17 +39,17 @@ class InsightsViewModel(app : Application) : AndroidViewModel(app) {
 
                 // day
                 _entriesDay.value = ClassesItem.getList().map { classItem ->
-                    PieEntry(classItem.getSeconds(TimeInterval.DAY).toFloat(), classItem.name)
+                    PieEntry(classItem.getSeconds(TimeInterval.DAY).toFloat(), classItem.toString())
                 }
 
                 // month
                 _entriesWeek.value = ClassesItem.getList().map { classItem ->
-                    PieEntry(classItem.getSeconds(TimeInterval.WEEK).toFloat(), classItem.name)
+                    PieEntry(classItem.getSeconds(TimeInterval.WEEK).toFloat(), classItem.toString())
                 }
 
                 // week
                 _entriesMonth.value = ClassesItem.getList().map { classItem ->
-                    PieEntry(classItem.getSeconds(TimeInterval.MONTH).toFloat(), classItem.name)
+                    PieEntry(classItem.getSeconds(TimeInterval.MONTH).toFloat(), classItem.toString())
                 }
 
                 // execute this every second

@@ -68,7 +68,7 @@ class DayHourAdapter (
                         .apply { context.theme.resolveAttribute(android.R.attr.textColorPrimary, this, true) }
                         .data
                 )
-                setBackgroundColor(classItem.color)
+                setBackgroundColor(classItem.getColor())
 
                 layoutParams = LinearLayout.LayoutParams(
                     0, // width

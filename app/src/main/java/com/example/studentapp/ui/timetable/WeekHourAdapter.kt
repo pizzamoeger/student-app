@@ -119,18 +119,18 @@ class WeekHourAdapter (
         if (events.size == 1) {
             // if we have one then only first should be visible
             val class1 = ClassesItem.get(events[0].classesItemId)
-            setEventTextVisible(eventTextView1, events[0].name, class1.color)
+            setEventTextVisible(eventTextView1, events[0].name, class1.getColor())
             setEventTextInvisible(eventTextView2)
         } else if (events.size == 2) {
             // if we have two, both should be visible
             val class1 = ClassesItem.get(events[0].classesItemId)
             val class2 = ClassesItem.get(events[1].classesItemId)
-            setEventTextVisible(eventTextView1, events[0].name, class1.color)
-            setEventTextVisible(eventTextView2, events[1].name, class2.color)
+            setEventTextVisible(eventTextView1, events[0].name, class1.getColor())
+            setEventTextVisible(eventTextView2, events[1].name, class2.getColor())
         } else {
             // if we have more, both things should be visible but second should display how many more we have
             val class1 = ClassesItem.get(events[0].classesItemId)
-            setEventTextVisible(eventTextView1, events[0].name, class1.color)
+            setEventTextVisible(eventTextView1, events[0].name, class1.getColor())
             setEventTextVisible(eventTextView2, "+"+(events.size-1), context.getThemeColor(R.color.transparent))
         }
     }

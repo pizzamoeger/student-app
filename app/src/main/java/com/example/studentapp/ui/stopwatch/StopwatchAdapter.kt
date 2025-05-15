@@ -37,7 +37,7 @@ class StopwatchAdapter (
 
         fun bind(item: ClassesItem) {
             // bind name
-            nameText.text = item.name
+            nameText.text = item.toString()
 
             // bind time
             item.text.observe(lifecycleOwner) {
@@ -46,7 +46,7 @@ class StopwatchAdapter (
 
             // get background for buttons
             val drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.circle_background)
-            val colorFilter = PorterDuffColorFilter(item.color, PorterDuff.Mode.SRC_IN)
+            val colorFilter = PorterDuffColorFilter(item.getColor(), PorterDuff.Mode.SRC_IN)
             if (drawable != null) {
                 drawable.colorFilter = colorFilter
             }

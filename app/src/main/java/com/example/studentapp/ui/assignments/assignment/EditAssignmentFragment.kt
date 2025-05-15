@@ -139,7 +139,7 @@ class EditAssignmentFragment : Fragment() {
     private fun save() {
         // get name
         assignment!!.setTitle(binding.nameText.text.toString())
-        if (assignment!!.getTitle() == "") assignment!!.setTitle(classItem.name) // if event has no name we use class name as default
+        if (assignment!!.getTitle() == "") assignment!!.setTitle(classItem.toString()) // if event has no name we use class name as default
 
         // get repeated
         // event!!.repeated = binding.checkBox.isChecked
@@ -147,7 +147,7 @@ class EditAssignmentFragment : Fragment() {
         //Event.delete(event!!.id)
 
         assignment!!.setDueDate(dueDate)
-        assignment!!.setClass(classItem.id)
+        assignment!!.setClass(classItem.getId())
         //Event.addEvent(event!!)
 
         // hide keyboard again before heading up
@@ -173,7 +173,6 @@ class EditAssignmentFragment : Fragment() {
     private fun delete() {
         // create a new event and add it to eventsList
         Assignment.delete(assignment!!.getId())
-        Assignment.save()
         val navController = findNavController()
         val action = EditAssignmentFragmentDirections.actionFragmentEditAssignmentToNavigationAssignments()
 

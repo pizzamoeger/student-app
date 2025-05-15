@@ -51,7 +51,7 @@ class AssignmentsAdapter (
             dueDate.text = item.getDueDate().toString()
 
             // bind delete button
-            colorBlock.setBackgroundColor(item.getClass().color)
+            colorBlock.setBackgroundColor(item.getClass().getColor())
 
             val paramsC = progressComp.layoutParams as LinearLayout.LayoutParams
             paramsC.weight=item.getProgress().toFloat()
@@ -67,7 +67,6 @@ class AssignmentsAdapter (
             }
             itemView.setOnClickListener{
                 item.setProgress(item.getProgress()+0.05) // TODO temp
-                Assignment.save()
                 bind(item)
             }
         }

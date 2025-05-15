@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
+import com.example.studentapp.databinding.ItemClassClassesBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
 
 // bridge between ClassesItem and RecyclerView, which displays each class
@@ -15,18 +16,17 @@ class ClassesAdapter (
     : RecyclerView.Adapter<ClassesAdapter.ClassesViewHolder> () {
 
     // view holder for class item
-    inner class ClassesViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class ClassesViewHolder(binding : ItemClassClassesBinding) : RecyclerView.ViewHolder(binding.root) {
         // each class has a name and a delete button
-        // TODO use binding for this: constructor where we set binding
-        private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
-        private val editButton: ImageButton = itemView.findViewById(R.id.edit_button_classes)
-        private val classColor: View = itemView.findViewById(R.id.classes_class_color)
+        private val nameText: TextView = binding.nameTextClassesItem
+        private val editButton: ImageButton = binding.editButtonClasses
+        private val classColor: View = binding.classesClassColor
 
         fun bind(item: ClassesItem) {
-            classColor.setBackgroundColor(item.color)
+            classColor.setBackgroundColor(item.getColor())
 
             // bind name
-            nameText.text = item.name
+            nameText.text = item.toString()
 
             // bind item click
             editButton.setOnClickListener {
@@ -37,8 +37,8 @@ class ClassesAdapter (
 
     // creates view holder for a classItem
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassesViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_class_classes, parent, false)
-        return ClassesViewHolder(view)
+        val binding = ItemClassClassesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ClassesViewHolder(binding)
     }
 
     // binds each item in list to a viewHolder

@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.classesItem
 
+import android.graphics.Color
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -18,13 +19,17 @@ import java.util.Locale
 import kotlin.random.Random
 
 data class ClassesItem(
-    val id: Int = nextId++,
-    var name: String = "",
-    val studyTime: MutableMap<String, Int> = mutableMapOf(),
-    var color : Int = 0 // TODO this is hacky transparent
+    private val id: Int = nextId++,
+    private var name: String = "",
+    private val studyTime: MutableMap<String, Int> = mutableMapOf(),
+    private var color : Int = 0 // TODO this is hacky transparent
 ) {
     override fun toString(): String {
         return name
+    }
+    fun setName(newName : String) {
+        name = newName
+        save()
     }
 
     // get seconds spent in timeframe
@@ -38,6 +43,13 @@ data class ClassesItem(
         return seconds
     }
 
+    fun getId() = id
+    fun getColor() = color
+    fun setColor(newColor : Int) {
+        color = newColor
+        save()
+    }
+
     // returns seconds in timespan depending on type
     fun getSeconds(type : TimeInterval = TimeInterval.DEFAULT, from: String = "", to: String = "") : Int{
         if (type == TimeInterval.DAY) return secondsToday()
@@ -49,6 +61,12 @@ data class ClassesItem(
             return 0
         }
         return secondsInInterval(from, to)
+    }
+
+    fun addSecond() {
+        val today = LocalDate.now().toString()
+        studyTime[today] = studyTime.getOrDefault(today, 0)+1
+        save()
     }
 
     // get seconds spent studying today
@@ -97,11 +115,6 @@ data class ClassesItem(
     // update if this class is being tracked
     fun updateTracking(to : Boolean) {
         _tracking.value = to
-    }
-
-    // reset secondsToday
-    fun reset() {
-        updateText()
     }
 
     // static
@@ -173,7 +186,7 @@ data class ClassesItem(
             save()
         }
 
-        fun save() {
+         fun save() { // TODO make private and make everything private from classitem
             val gson = Gson()
 
             // create a serializable list from classeslist

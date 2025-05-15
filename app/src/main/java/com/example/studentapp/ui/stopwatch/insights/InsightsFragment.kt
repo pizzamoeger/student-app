@@ -81,7 +81,7 @@ class InsightsFragment : Fragment() {
         val entries = ClassesItem.getList().filter { classItem ->
             classItem.getSeconds(type, from, to) != 0 // skip entry if it has not been studied
         }.map { classItem ->
-            PieEntry(classItem.getSeconds(type, from, to).toFloat(), classItem.name) // Use actual values instead of 1f if you have them
+            PieEntry(classItem.getSeconds(type, from, to).toFloat(), classItem.toString()) // Use actual values instead of 1f if you have them
         }
 
         val dataSet = PieDataSet(entries, "Subjects")
@@ -90,7 +90,7 @@ class InsightsFragment : Fragment() {
         dataSet.colors = ClassesItem.getList().filter { classItem ->
             classItem.getSeconds(type, from, to) != 0 // skip class if in has not been studied
         }.map { classItem ->
-            classItem.color
+            classItem.getColor()
         }
 
         dataSet.valueTextSize = 14f

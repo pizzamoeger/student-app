@@ -23,6 +23,7 @@ class ClassesAdapter (
         // TODO use binding for this: constructor where we set binding
         private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
         private val deleteButton: ImageButton = itemView.findViewById(R.id.delete_button_classes_item)
+        private val editButton: ImageButton = itemView.findViewById(R.id.edit_button_classes)
 
         fun bind(item: ClassesItem) {
             // bind name
@@ -35,7 +36,8 @@ class ClassesAdapter (
             }
 
             // bind item click
-            itemView.setOnClickListener {
+            editButton.visibility = View.VISIBLE
+            editButton.setOnClickListener {
                 onClassesItemClick(item)
             }
         }

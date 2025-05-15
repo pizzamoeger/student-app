@@ -2,7 +2,17 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="horizontal" android:padding="8dp" android:gravity="center_vertical">
 
+    <ImageButton
+        android:id="@+id/edit_button_classes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pen"
+        android:background="@color/transparent"
+        android:text="@string/delete_class"
+        android:visibility="gone" />
+
     <TextView
+        android:layout_marginStart="10dp"
         android:id="@+id/name_text_classes_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

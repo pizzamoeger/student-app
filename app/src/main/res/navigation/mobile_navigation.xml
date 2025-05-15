@@ -55,7 +55,7 @@
     <fragment
         android:id="@+id/navigation_assignments"
         android:name="com.example.studentapp.ui.assignments.AssignmentsFragment"
-        android:label="@string/title_notifications"
+        android:label="Assignments"
         tools:layout="@layout/fragment_assignments">
 
         <action
@@ -90,7 +90,7 @@
 
     <fragment android:id="@+id/fragment_edit_assignment"
         android:name="com.example.studentapp.ui.assignments.assignment.EditAssignmentFragment"
-        android:label="Class Edit"
+        android:label="Assignment Edit"
         tools:layout="@layout/fragment_assignment_edit">
         <argument
             android:name="classId"

@@ -37,7 +37,15 @@ class AssignmentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
-        adapter = AssignmentsAdapter ()
+        adapter = AssignmentsAdapter {
+            item ->
+            val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentEditAssignment(item.getClass().id.toString())
+            // if we move back to classes using the bottomnav, we want to go to classes
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
+                .build()
+            findNavController().navigate(action, navOptions)
+        }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter

@@ -1,26 +1,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="horizontal" android:padding="8dp" android:gravity="center_vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center_vertical">
 
     <View
         android:id="@+id/assignment_class_color"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="5dp"
         android:layout_height="match_parent"
         android:background="#FF0000" />
 
     <TextView
-        android:id="@+id/assignment_text"
-        android:layout_width="0dp"
-        android:layout_marginStart="10dp"
+        android:id="@+id/due_date"
+        android:layout_width="71.5dp"
         android:layout_height="wrap_content"
-        android:layout_weight="30" />
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:text="2020-20-20" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider" />
 
     <TextView
-        android:id="@+id/due_date"
+        android:id="@+id/assignment_text"
+        android:layout_width="wrap_content"
+        android:layout_margin="8dp"
+        android:text="exam"
+        android:layout_height="wrap_content" />
+
+    <View
         android:layout_width="0dp"
-        android:layout_marginStart="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/edit_button_assignment"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="30" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        android:background="@color/transparent"
+        android:src="@drawable/pen" />
 
 </LinearLayout>

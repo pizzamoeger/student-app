@@ -14,13 +14,16 @@ import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import java.time.LocalDate
 
-class AssignmentsAdapter : RecyclerView.Adapter<AssignmentsAdapter.AssignmentsViewHolder> ()  {
+class AssignmentsAdapter (
+    private val onItemClick: (Assignment) -> Unit,
+): RecyclerView.Adapter<AssignmentsAdapter.AssignmentsViewHolder> ()  {
     inner class AssignmentsViewHolder(
         private val binding: AssignmentBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         private val text: TextView = binding.assignmentText
         private val colorBlock: View = binding.assignmentClassColor
         private val dueDate: TextView = binding.dueDate
+        private val edit: ImageButton = binding.editButtonAssignment
 
         fun bind(item: Assignment) {
             // bind name
@@ -36,8 +39,8 @@ class AssignmentsAdapter : RecyclerView.Adapter<AssignmentsAdapter.AssignmentsVi
             colorBlock.setBackgroundColor(item.getClass().color)
 
             // bind item click
-            itemView.setOnClickListener {
-                // TODO
+            edit.setOnClickListener {
+                onItemClick(item)
             }
         }
     }

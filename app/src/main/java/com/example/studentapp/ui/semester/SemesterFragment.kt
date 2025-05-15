@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -134,6 +135,7 @@ class SemesterFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 // we set the class for this event to the selected
                 semester = options[position]
+                bind()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -174,6 +176,11 @@ class SemesterFragment : Fragment() {
 
     private fun deleteSemester() {
         // create a new event and add it to eventsList
+        if (Semester.getList().size == 1) {
+            val message = "Can't delete only semester!"
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            return
+        }
         Semester.delete(semester.getId())
         val navController = findNavController()
         navController.navigateUp()

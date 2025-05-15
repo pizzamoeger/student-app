@@ -151,8 +151,6 @@ data class ClassesItem(
             return time
         }
 
-        fun getCount() : Int = classesList.size
-
         fun getList() : List<ClassesItem> {
             return classesList.filter { Semester.getCurrent().getClasses().contains(it.id) }
         }
@@ -168,7 +166,7 @@ data class ClassesItem(
 
         // get the class with this id or default
         fun get(id : Int) : ClassesItem {
-            for (item in classesList) {
+            for (item in getList()) {
                 if (item.id == id) return item
             }
             Log.e("ClassesItem", "Tried to get a class with id not in classList")
@@ -176,11 +174,11 @@ data class ClassesItem(
         }
 
         fun getByIndex(index : Int) : ClassesItem {
-            if (index >= classesList.size) {
+            if (index >= getList().size) {
                 Log.e("ClassesItem", "Tried to get a class with index bigger than size")
                 return ClassesItem()
             }
-            return classesList[index]
+            return getList()[index]
         }
 
         // delete class by id from classList

@@ -155,13 +155,8 @@ class SemesterFragment : Fragment() {
 
     private fun deleteSemester() {
         // create a new event and add it to eventsList
-        /*Event.delete(event!!.id)
+        Semester.delete(semester.getId())
         val navController = findNavController()
-        val action = EventEditFragmentDirections.actionEditEventToWeekly()
-
-        val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.navigation_classes, true)
-            .build()
-        navController.navigate(action, navOptions)*/
+        navController.navigateUp()
     }
 }

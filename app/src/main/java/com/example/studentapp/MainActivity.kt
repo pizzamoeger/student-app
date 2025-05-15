@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToFragment(destinationId: Int) {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        navController.popBackStack()
+        //navController.popBackStack()
         navController.navigate(destinationId)
         binding.popupMenu.popupMenu.visibility = View.GONE
     }

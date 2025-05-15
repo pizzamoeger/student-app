@@ -32,7 +32,7 @@ class SharedData  {
         // is called once when app is created
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
-            //prefs.edit().clear().apply()
+            // prefs.edit().clear().apply()
             load()
         }
 
@@ -41,26 +41,7 @@ class SharedData  {
             ClassesItem.load()
             Event.load()
             Assignment.load()
-            //Semester.load()
-        }
-
-        fun loadSemester() {
-            val gson = Gson()
-            val json = prefs.getString("semester_list", null)
-
-            if (json != null) {
-                // load list of serializableClass
-                val type = object : TypeToken<List<SerializableSemester>>() {}.type
-                val list: List<SerializableSemester> = gson.fromJson(json, type)
-
-                // create list of ClassesItem from this
-                val restored = list.map {
-                    Semester(it.start, it.end, it.classesInSemester, name="HS")
-                }
-
-                //Semester.semesterList = restored.toMutableList()
-                // TODO                 currentClass.setNextId((list.maxOfOrNull { it.id } ?: 0) + 1)
-            }
+            Semester.load()
         }
     }
 }

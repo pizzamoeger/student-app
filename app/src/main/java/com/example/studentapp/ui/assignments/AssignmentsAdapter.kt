@@ -17,9 +17,15 @@ import java.time.LocalDate
 
 class AssignmentsAdapter (
     private val onItemClick: (Assignment) -> Unit,
+    private val listener: AssignmentAdapterListener
 ): RecyclerView.Adapter<AssignmentsAdapter.AssignmentsViewHolder> ()  {
+
+    interface AssignmentAdapterListener {
+        fun onRequestAdapterRefresh()
+    }
+
     inner class AssignmentsViewHolder(
-        private val binding: AssignmentBinding,
+        private val binding: AssignmentBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         private val text: TextView = binding.assignmentText
         private val colorBlock: View = binding.assignmentClassColor
@@ -29,11 +35,18 @@ class AssignmentsAdapter (
         private val progressUncomp : View = binding.progressUncompleted
 
         fun bind(item: Assignment) {
+            if (item.isCompleted()) {
+                listener.onRequestAdapterRefresh()
+                return
+            }
             // bind name
             text.text = item.getTitle()
             if (item.getDueDate() < LocalDate.now()) {
                 text.setTextColor(binding.root.context.getColor(R.color.red))
                 dueDate.setTextColor(binding.root.context.getColor(R.color.red))
+            } else {
+                text.setTextColor(binding.root.context.getThemeColor(android.R.attr.textColor))
+                dueDate.setTextColor(binding.root.context.getThemeColor(android.R.attr.textColor))
             }
 
             dueDate.text = item.getDueDate().toString()
@@ -55,6 +68,7 @@ class AssignmentsAdapter (
             }
             itemView.setOnClickListener{
                 item.setProgress(item.getProgress()+0.05) // TODO temp
+                Assignment.save()
                 bind(item)
             }
         }
@@ -62,14 +76,21 @@ class AssignmentsAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AssignmentsViewHolder {
         val binding = AssignmentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return AssignmentsViewHolder(binding)
     }
 
-    override fun getItemCount() = Assignment.getList().size
+    override fun getItemCount() : Int {
+        val list = Assignment.getList()
+        var count = 0
+        for (assignment in list) {
+            if (assignment.isCompleted()) continue
+            count++
+        }
+        return count
+    }
 
     override fun onBindViewHolder(holder: AssignmentsViewHolder, position: Int) {
-        holder.bind(Assignment.getByIndex(position))
+        holder.bind(Assignment.getUncompletedByIndex(position)!!)
 
     }
 }

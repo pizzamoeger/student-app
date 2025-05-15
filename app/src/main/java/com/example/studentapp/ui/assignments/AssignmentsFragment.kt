@@ -15,7 +15,7 @@ import com.example.studentapp.databinding.FragmentClassesBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
 import kotlin.random.Random
 
-class AssignmentsFragment : Fragment() {
+class AssignmentsFragment : Fragment(), AssignmentsAdapter.AssignmentAdapterListener {
 
     private var _binding: FragmentAssignmentsBinding? = null
     private lateinit var adapter: AssignmentsAdapter
@@ -37,15 +37,16 @@ class AssignmentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // gets adapter
-        adapter = AssignmentsAdapter {
-            item ->
+        adapter = AssignmentsAdapter ({
+                item ->
             val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentEditAssignment(item.getClass().id.toString())
             // if we move back to classes using the bottomnav, we want to go to classes
             val navOptions = androidx.navigation.NavOptions.Builder()
                 .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
                 .build()
             findNavController().navigate(action, navOptions)
-        }
+        }, listener = this)
+
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
@@ -77,5 +78,9 @@ class AssignmentsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onRequestAdapterRefresh() {
+        adapter.notifyDataSetChanged()
     }
 }

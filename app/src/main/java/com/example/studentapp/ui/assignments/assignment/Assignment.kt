@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.assignments.assignment
 
+import android.util.Log
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.ui.assignments.assignment.Assignment.Companion.nextId
 import com.example.studentapp.ui.classesItem.ClassesItem
@@ -47,7 +48,7 @@ class Assignment (
     fun getProgress() = progress
     fun setProgress(p : Double) {
         progress = p
-        if (p == 1.0) setCompleted()
+        if (p >= 1.0) setCompleted()
     }
 
     fun getTitle() = title
@@ -71,6 +72,16 @@ class Assignment (
 
         fun getByIndex(index : Int) = assignmentsList[index]
         fun get(id : Int) = assignmentsList.find{it.id == id}
+        fun getUncompletedByIndex(index : Int) : Assignment? {
+            var count = 0
+            for (assignment in assignmentsList) {
+                if (assignment.isCompleted()) continue
+                if (count == index) return assignment
+                count++
+            }
+            Log.d("AssignmentUncompletedByIndex", "There are not that many uncompleted assignmetns")
+            return null
+        }
 
         fun getList() = assignmentsList
 

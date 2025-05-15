@@ -49,5 +49,5 @@ class ClassesAdapter (
     }
 
     // how many items to display
-    override fun getItemCount(): Int = ClassesItem.getCount()
+    override fun getItemCount(): Int = ClassesItem.getList().size
 }

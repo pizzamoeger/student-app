@@ -46,8 +46,7 @@ class SemesterFragment : Fragment() {
     ): View {
         _binding = FragmentSemesterBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        if (Semester.getList().isEmpty()) Semester.add()
-        semester = Semester.getList()[0]
+        semester = Semester.getCurrent()
         return root
     }
 
@@ -156,7 +155,7 @@ class SemesterFragment : Fragment() {
 
         Semester.delete(semester.getId())
 
-        Semester.add(from, to, binding.nameEditText.text.toString())
+        Semester.add(semester)
 
         // hide keyboard again before heading up
         // so that layout is calculated correctly
@@ -165,6 +164,8 @@ class SemesterFragment : Fragment() {
         if (view != null) {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
+
+        Semester.setCurrent(semester)
 
         // navigate back
         val navController = findNavController()

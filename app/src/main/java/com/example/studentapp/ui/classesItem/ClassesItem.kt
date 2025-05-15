@@ -10,6 +10,7 @@ import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.semester.Semester
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.DayOfWeek
@@ -137,7 +138,7 @@ data class ClassesItem(
             return true
         }
 
-        fun getCurrent() : ClassesItem = currentClass;
+        fun getCurrent() : ClassesItem = currentClass
 
         // TODO makes no sense here
         fun getTimeStringFromSeconds(secs: Int): String {
@@ -152,12 +153,15 @@ data class ClassesItem(
 
         fun getCount() : Int = classesList.size
 
-        fun getList() : List<ClassesItem> = classesList
+        fun getList() : List<ClassesItem> {
+            return classesList.filter { Semester.getCurrent().getClasses().contains(it.id) }
+        }
 
         // add class to classList
         fun add(name: String, color : Int) : ClassesItem {
             val newClass = ClassesItem(name=name, studyTime = mutableMapOf(), color = color)
             classesList.add(newClass)
+            Semester.getCurrent().addClass(newClass.id)
             save()
             return newClass
         }
@@ -182,6 +186,7 @@ data class ClassesItem(
         // delete class by id from classList
         fun delete(id: Int) {
             classesList.removeAll{it.id == id}
+            Semester.getCurrent().removeClass(id)
             Event.removeAllOfClass(id)
             save()
         }

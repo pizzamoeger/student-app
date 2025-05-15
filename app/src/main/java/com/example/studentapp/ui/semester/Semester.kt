@@ -31,6 +31,16 @@ class Semester (
         name=newName
     }
 
+    fun getClasses() = classesInSemester
+    fun addClass(id: Int) {
+        classesInSemester.add(id)
+        save()
+    }
+    fun removeClass(id: Int) {
+        classesInSemester.removeIf{it == id}
+        save()
+    }
+
     fun getId() = id
     fun getStart() = start
     fun getEnd() = end
@@ -41,6 +51,11 @@ class Semester (
         private var nextId = 0
         fun getList() = semesterList
 
+        fun add(semester: Semester) {
+            semesterList.add(semester)
+            save()
+        }
+
         fun add(from : LocalDate = LocalDate.now(), to : LocalDate = LocalDate.now().plusMonths(6), name : String = "Semester $nextId") {
             semesterList.add(Semester(from, to, name=name))
             save()
@@ -49,6 +64,11 @@ class Semester (
         fun delete(id : Int) {
             semesterList.removeIf{it.getId() == id}
             save()
+        }
+
+        fun getCurrent() = current
+        fun setCurrent(newC : Semester) {
+            current = newC
         }
 
         private fun save() {
@@ -76,7 +96,15 @@ class Semester (
                     semesterList.add(Semester(id=s.id, name=s.name, start=LocalDate.parse(s.start), end=LocalDate.parse(s.end), classesInSemester = s.classesInSemester))
                 }
 
+                if (semesterList.size == 0) {
+                    semesterList.add(Semester())
+                }
+                current = semesterList[0] // TODO temp
+
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
+            } else {
+                semesterList.add(Semester())
+                current = semesterList[0]
             }
         }
     }

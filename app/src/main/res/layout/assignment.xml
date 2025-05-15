@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/due_date"
-        android:layout_width="71.5dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp"
@@ -25,25 +25,53 @@
         android:layout_height="match_parent"
         android:background="?android:attr/listDivider" />
 
-    <TextView
-        android:id="@+id/assignment_text"
-        android:layout_width="wrap_content"
-        android:layout_margin="8dp"
-        android:text="exam"
-        android:layout_height="wrap_content" />
-
-    <View
+    <!-- Text with background bar -->
+    <FrameLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <!-- Background color strip with weights -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:alpha="0.3">
+
+            <View
+                android:id="@+id/progress_completed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:background="?android:attr/textColorPrimary" />
+
+            <View
+                android:id="@+id/progress_uncompleted"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:background="@color/transparent" />
+        </LinearLayout>
+
+        <!-- Text on top of background -->
+        <TextView
+            android:id="@+id/assignment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="exam"
+            android:layout_gravity="center_vertical|start"
+            android:padding="4dp" />
+    </FrameLayout>
 
     <ImageButton
         android:id="@+id/edit_button_assignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center_vertical|end"
         android:layout_marginStart="10dp"
-        android:background="@color/transparent"
+        android:background="@android:color/transparent"
         android:src="@drawable/pen" />
 
 </LinearLayout>

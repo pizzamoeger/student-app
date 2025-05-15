@@ -32,6 +32,8 @@ class Assignment (
         dueDate = due
     }
 
+    fun getId() = id
+
     fun getClass() : ClassesItem {
         return ClassesItem.get(classId)
     }

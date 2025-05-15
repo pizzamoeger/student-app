@@ -56,7 +56,7 @@ class EditAssignmentFragment : Fragment() {
         _binding = FragmentAssignmentEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
         //event = Event.get(args.eventId.toInt())
-        assignment = Assignment(LocalDate.now(), 0, "") // TODO temp
+        assignment = Assignment.get(args.assignmentId.toInt())
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         return root
     }
@@ -173,8 +173,8 @@ class EditAssignmentFragment : Fragment() {
 
     private fun delete() {
         // create a new event and add it to eventsList
-        //Event.delete(assignment!!.id)
-        //SharedData.saveEvent()
+        Assignment.delete(assignment!!.getId())
+        Assignment.save()
         val navController = findNavController()
         val action = EditAssignmentFragmentDirections.actionFragmentEditAssignmentToNavigationAssignments()
 

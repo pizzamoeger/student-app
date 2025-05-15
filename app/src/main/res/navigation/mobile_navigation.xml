@@ -93,7 +93,7 @@
         android:label="Assignment Edit"
         tools:layout="@layout/fragment_assignment_edit">
         <argument
-            android:name="classId"
+            android:name="assignmentId"
             app:argType="string" />
         <action
             android:id="@+id/action_fragment_edit_assignment_to_navigation_assignments"

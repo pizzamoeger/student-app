@@ -13,7 +13,6 @@ import com.example.studentapp.ui.classesItem.ClassesItem
 
 // bridge between ClassesItem and RecyclerView, which displays each class
 class ClassesAdapter (
-    private val onDeleteClick: (Int) -> Unit,
     private val onClassesItemClick: (ClassesItem) -> Unit)
     : RecyclerView.Adapter<ClassesAdapter.ClassesViewHolder> () {
 
@@ -22,18 +21,11 @@ class ClassesAdapter (
         // each class has a name and a delete button
         // TODO use binding for this: constructor where we set binding
         private val nameText: TextView = itemView.findViewById(R.id.name_text_classes_item)
-        private val deleteButton: ImageButton = itemView.findViewById(R.id.delete_button_classes_item)
         private val editButton: ImageButton = itemView.findViewById(R.id.edit_button_classes)
 
         fun bind(item: ClassesItem) {
             // bind name
             nameText.text = item.name
-
-            // bind delete button
-            deleteButton.visibility = View.VISIBLE
-            deleteButton.setOnClickListener {
-                onDeleteClick(item.id)
-            }
 
             // bind item click
             editButton.visibility = View.VISIBLE

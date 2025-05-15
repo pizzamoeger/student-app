@@ -91,9 +91,27 @@ class EditClassFragment : Fragment() {
         }
 
         // bind button for saving
-        binding.saveButtonClass.setOnClickListener { _ ->
+        binding.saveButton.setOnClickListener { _ ->
             saveClass()
         }
+
+
+        // bind delete button
+        binding.deleteButton.setOnClickListener {
+            deleteClass()
+        }
+    }
+
+    private fun deleteClass() {
+        ClassesItem.delete(_classId)
+
+        val navController = findNavController()
+        val action = EditClassFragmentDirections.actionEditClassToClasses()
+
+        val navOptions = androidx.navigation.NavOptions.Builder()
+            .setPopUpTo(R.id.navigation_classes, false)
+            .build()
+        navController.navigate(action, navOptions)
     }
 
     private fun saveClass() {

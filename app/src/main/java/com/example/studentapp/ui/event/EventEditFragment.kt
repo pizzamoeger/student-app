@@ -115,12 +115,12 @@ class EventEditFragment : Fragment() {
         }
 
         // bind button for saving
-        binding.saveButtonEvent.setOnClickListener { _ ->
+        binding.saveButton.setOnClickListener { _ ->
             saveEvent()
         }
 
         // bind button for deleting
-        binding.deleteButtonEvent.setOnClickListener { _ ->
+        binding.deleteButton.setOnClickListener { _ ->
             deleteEvent()
         }
 

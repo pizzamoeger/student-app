@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/fragment_calendar_day"
         android:name="com.example.studentapp.ui.calendar.DailyCalendarFragment"
-        android:label="Day"
+        android:label="@string/day"
         tools:layout="@layout/fragment_calendar_daily">
         <action
             android:id="@+id/action_day_to_event_edit"
@@ -55,7 +55,7 @@
     <fragment
         android:id="@+id/navigation_assignments"
         android:name="com.example.studentapp.ui.assignments.AssignmentsFragment"
-        android:label="Assignments"
+        android:label="@string/assignments"
         tools:layout="@layout/fragment_assignments">
 
         <action
@@ -65,7 +65,7 @@
 
     <fragment android:id="@+id/fragment_event_edit"
         android:name="com.example.studentapp.ui.event.EventEditFragment"
-        android:label="Event Edit"
+        android:label="@string/event_edit"
         tools:layout="@layout/fragment_event_edit">
         <action
             android:id="@+id/action_edit_event_to_weekly"
@@ -78,7 +78,7 @@
 
     <fragment android:id="@+id/fragment_edit_class"
         android:name="com.example.studentapp.ui.classesItem.EditClassFragment"
-        android:label="Class Edit"
+        android:label="@string/class_edit"
         tools:layout="@layout/fragment_edit_class">
         <action
             android:id="@+id/action_edit_class_to_classes"
@@ -90,7 +90,7 @@
 
     <fragment android:id="@+id/fragment_edit_assignment"
         android:name="com.example.studentapp.ui.assignments.assignment.EditAssignmentFragment"
-        android:label="Assignment Edit"
+        android:label="@string/assignment_edit"
         tools:layout="@layout/fragment_assignment_edit">
         <argument
             android:name="assignmentId"
@@ -114,6 +114,7 @@
         android:id="@+id/navigation_classes_item"
         android:name="com.example.studentapp.ui.classesItem.ClassesItemFragment"
         tools:layout="@layout/fragment_classes_item">
+        <!--TODO name -->
         <argument
             android:name="classId"
             app:argType="string" />
@@ -121,7 +122,7 @@
 
     <fragment android:id="@+id/fragment_semester"
         android:name="com.example.studentapp.ui.semester.SemesterFragment"
-        android:label="Manage Semester"
+        android:label="@string/manage_semester"
         tools:layout="@layout/fragment_semester">
     </fragment>
 </navigation>

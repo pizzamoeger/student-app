@@ -42,5 +42,9 @@
     <string name="color">Color:</string>
     <string name="assignments">Assignments</string>
     <string name="week">Week</string>
+    <string name="assignment_edit">Assignment Edit</string>
+    <string name="class_edit">Class Edit</string>
+    <string name="event_edit">Event Edit</string>
+    <string name="day">Day</string>
     <string name="go_to_fragment">Go to Fragment</string>
 </resources>

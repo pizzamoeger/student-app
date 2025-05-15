@@ -71,9 +71,7 @@ class SemesterFragment : Fragment() {
         picker.show(parentFragmentManager, picker.toString())
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    fun bind() {
         from = semester.getStart()
         to = semester.getEnd()
 
@@ -102,6 +100,11 @@ class SemesterFragment : Fragment() {
             deleteSemester()
         }
 
+        // bind button for adding semester
+        binding.addButton.setOnClickListener { _ ->
+            addSemester()
+        }
+
         // select the class the event corresponds to
         // TODO organize this better
         val spinner: Spinner = binding.semesterSpinner
@@ -116,7 +119,16 @@ class SemesterFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // it uses this as layout
         spinner.adapter = adapter
 
-        spinner.setSelection(0)
+        var index = 0
+        for (sem in options) {
+            if (sem == semester) break
+            index++
+        }
+        if (index == options.size) {
+            Log.e("SemesterFragment", "A semester that is not in list is selected")
+        }
+
+        spinner.setSelection(index)
 
         // when item is selected
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -129,6 +141,12 @@ class SemesterFragment : Fragment() {
                 //classItem = SharedData.get(event!!.classesItemId)
             }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        bind()
     }
 
     private fun saveSemester() {
@@ -158,5 +176,11 @@ class SemesterFragment : Fragment() {
         Semester.delete(semester.getId())
         val navController = findNavController()
         navController.navigateUp()
+    }
+
+    private fun addSemester() {
+        Semester.add()
+        semester = Semester.getList()[Semester.getList().size-1]
+        bind()
     }
 }

@@ -27,7 +27,7 @@ class Semester (
         private var nextId = 0
         fun getList() = semesterList
 
-        fun add(from : LocalDate = LocalDate.now(), to : LocalDate = LocalDate.now().plusMonths(6), name : String = "HS") {
+        fun add(from : LocalDate = LocalDate.now(), to : LocalDate = LocalDate.now().plusMonths(6), name : String = "Semester $nextId") {
             semesterList.add(Semester(from, to, name=name))
         }
 

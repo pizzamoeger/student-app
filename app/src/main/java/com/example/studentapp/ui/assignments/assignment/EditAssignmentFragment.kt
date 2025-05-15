@@ -24,8 +24,11 @@ import com.example.studentapp.databinding.FragmentAssignmentEditBinding
 import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.ZoneId
 
 class EditAssignmentFragment : Fragment() {
     private var _binding: FragmentAssignmentEditBinding? = null
@@ -35,18 +38,6 @@ class EditAssignmentFragment : Fragment() {
     var dueDate: LocalDate = CalendarUtils.selectedDate
     var classItem: ClassesItem = ClassesItem()
     var assignment: Assignment? = null
-
-    // date picker
-    private val datePickerDialogListener: DatePickerDialog.OnDateSetListener =
-        object : DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-                // set attribute to selected date
-                dueDate = LocalDate.of(year, month+1, dayOfMonth) // selected date is 0 indexed bruh
-                // set text
-                val formattedDate: String = CalendarUtils.formattedDate(dueDate)
-                binding.pickDate.text = formattedDate
-            }
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,8 +53,22 @@ class EditAssignmentFragment : Fragment() {
 
     // create and show datepicker
     private fun pickDate() {
-        val datePicker = DatePickerDialog(requireContext(), datePickerDialogListener, dueDate.year, dueDate.monthValue-1, dueDate.dayOfMonth)
-        datePicker.show()
+        val picker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select due date")
+            .setSelection(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()) // pre-select current value
+            .setTheme(R.style.CustomDatePickerTheme) // optional custom theme
+            .build()
+
+        picker.addOnPositiveButtonClickListener { selection ->
+            val instant = Instant.ofEpochMilli(selection)
+            val selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate()
+            dueDate = selectedDate
+
+            val formattedDate = CalendarUtils.formattedDate(dueDate)
+            binding.pickDate.text = formattedDate
+        }
+
+        picker.show(parentFragmentManager, picker.toString())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -118,7 +123,7 @@ class EditAssignmentFragment : Fragment() {
             index++
         }
         if (index == options.size) {
-            Log.e("Event edit", "Invalid class id (class not in classlist)")
+            Log.e("Assignment edit", "Invalid class id (class not in classlist)")
             index = 0
         }
         spinner.setSelection(index)
@@ -141,14 +146,10 @@ class EditAssignmentFragment : Fragment() {
         assignment!!.setTitle(binding.nameText.text.toString())
         if (assignment!!.getTitle() == "") assignment!!.setTitle(classItem.toString()) // if event has no name we use class name as default
 
-        // get repeated
-        // event!!.repeated = binding.checkBox.isChecked
-
-        //Event.delete(event!!.id)
+        Assignment.delete(assignment!!.getId())
 
         assignment!!.setDueDate(dueDate)
         assignment!!.setClass(classItem.getId())
-        //Event.addEvent(event!!)
 
         // hide keyboard again before heading up
         // so that layout is calculated correctly

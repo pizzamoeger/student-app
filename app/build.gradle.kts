@@ -44,6 +44,7 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("com.github.Dhaval2404:ColorPicker:2.3")
     implementation ("com.jaredrummler:colorpicker:1.1.0")
+    implementation ("com.google.android.material:material:1.11.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

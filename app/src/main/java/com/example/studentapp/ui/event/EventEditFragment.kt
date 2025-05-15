@@ -26,8 +26,11 @@ import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.ClassesItemFragmentArgs
 import com.example.studentapp.ui.classesItem.EditClassFragmentDirections
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.ZoneId
 import kotlin.properties.Delegates
 
 class EventEditFragment : Fragment() {
@@ -53,18 +56,6 @@ class EventEditFragment : Fragment() {
             }
         }
 
-    // date picker
-    private val datePickerDialogListener: DatePickerDialog.OnDateSetListener =
-        object : DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-                // set attribute to selected date
-                date = LocalDate.of(year, month+1, dayOfMonth) // selected date is 0 indexed bruh
-                // set text
-                val formattedDate: String = CalendarUtils.formattedDate(date)
-                binding.pickDate.text = formattedDate
-            }
-        }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -85,8 +76,22 @@ class EventEditFragment : Fragment() {
 
     // create and show datepicker
     private fun pickDate() {
-        val datePicker = DatePickerDialog(requireContext(), datePickerDialogListener, date.year, date.monthValue-1, date.dayOfMonth)
-        datePicker.show()
+        val picker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select date")
+            .setSelection(date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()) // pre-select current value
+            .setTheme(R.style.CustomDatePickerTheme) // optional custom theme
+            .build()
+
+        picker.addOnPositiveButtonClickListener { selection ->
+            val instant = Instant.ofEpochMilli(selection)
+            val selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate()
+            date = selectedDate
+
+            val formattedDate = CalendarUtils.formattedDate(date)
+            binding.pickDate.text = formattedDate
+        }
+
+        picker.show(parentFragmentManager, picker.toString())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

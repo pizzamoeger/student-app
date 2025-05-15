@@ -20,12 +20,12 @@ class CalendarUtils {
 
         // returns week, month and year from date
         fun weekMonthYearFromDate(date: LocalDate) : String {
-            val formatter = DateTimeFormatter.ofPattern("'Week' w',' MMMM yyyy")
+            val formatter = DateTimeFormatter.ofPattern(" w',' MMMM yyyy")
             return date.format(formatter)
         }
 
         fun weekFromDate(date: LocalDate) : String {
-            val formatter = DateTimeFormatter.ofPattern("'Week' w")
+            val formatter = DateTimeFormatter.ofPattern(" w")
             return date.format(formatter)
         }
 

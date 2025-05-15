@@ -4,18 +4,42 @@
     <!--CLASSES STRINGS-->
     <string name="title_classes">Classes</string>
     <string name="add_class">Add Class</string>
-    <string name="delete_class">Delete</string>
 
     <!--STOPWATCH STRINGS-->
     <string name="title_stopwatch">Stopwatch</string>
     <string name="start_watch">Start</string>
     <string name="stop_watch">Stop</string>
-    <string name="reset_watch">Reset</string>
 
     <string name="title_insights">Insights</string>
 
-    <string name="title_notifications">Notifications</string>
 
     <!--TIMETABLE STRINGS-->
     <string name="title_timetable">Timetable</string>
+
+
+    <string name="app_title">App Title</string>
+    <string name="title">Title:</string>
+    <string name="due">Due:</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="add_assignment">Add Assignment</string>
+    <string name="new_event">New Event</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thur">THUR</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
+    <string name="sun">SUN</string>
+    <string name="name">Name:</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="clazz">Class:</string>
+    <string name="weekly">weekly</string>
+    <string name="current_semester">Current Semester:</string>
+    <string name="add_new_semester">Add new Semester</string>
+    <string name="manage_semester">Manage Semester</string>
+    <string name="color">Color:</string>
+    <string name="assignments">Assignments</string>
+    <string name="week">Week</string>
 </resources>

@@ -186,7 +186,7 @@ data class ClassesItem(
             save()
         }
 
-         fun save() { // TODO make private and make everything private from classitem
+         private fun save() {
             val gson = Gson()
 
             // create a serializable list from classeslist

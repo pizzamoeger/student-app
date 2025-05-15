@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/pen"
         android:background="@color/transparent"
-        android:text="@string/delete_class" />
+        android:text="@string/delete" />
 
 </LinearLayout>

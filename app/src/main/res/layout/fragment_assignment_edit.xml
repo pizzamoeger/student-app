@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Name:"
+        android:text="@string/title"
         android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"/>
@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:text="Due: "
+            android:text="@string/due"
             android:textAlignment="textStart"
             android:textSize="20sp"
             android:textColor="?android:attr/textColorPrimary"/>
@@ -90,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:text="Class: "
+            android:text="@string/clazz"
             android:textSize="20sp"
             android:textAlignment="textStart"
             android:textColor="?android:attr/textColorPrimary"/>
@@ -108,30 +108,6 @@
             android:layout_weight="0.5"/>
     </LinearLayout>
 
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20sp">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="weekly"
-            android:textSize="20sp"
-            android:textAlignment="textStart"
-            android:textColor="?android:attr/textColorPrimary"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
-    </LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -146,7 +122,7 @@
             app:iconTint="?android:attr/textColorPrimary"
             app:icon="@drawable/trash"
             android:background="@color/transparent"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"
             android:layout_gravity="center"
@@ -165,7 +141,7 @@
             app:iconTint="?android:attr/textColorPrimary"
             app:icon="@drawable/save"
             android:background="@color/transparent"
-            android:text="Save"
+            android:text="@string/save"
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"
             android:layout_gravity="center"

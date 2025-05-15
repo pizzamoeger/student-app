@@ -52,7 +52,7 @@ class WeeklyCalendarFragment : Fragment() {
 
     private fun setWeekView() {
         // text that is displayed at top
-        binding.monthYearTextViewWeek.text = CalendarUtils.weekMonthYearFromDate(selectedDate)
+        binding.monthYearTextViewWeek.text = (context?.getString(R.string.week) ?: "Week") +CalendarUtils.weekMonthYearFromDate(selectedDate)
 
         // adapter that displays hours and events in that hour
         setHourAdapter()

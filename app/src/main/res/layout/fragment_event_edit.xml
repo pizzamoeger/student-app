@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:text="Date: "
+            android:text="@string/date"
             android:textAlignment="textStart"
             android:textSize="20sp"
             android:textColor="?android:attr/textColorPrimary"/>
@@ -91,7 +91,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:text="Time: "
+            android:text="@string/time"
             android:textSize="20sp"
             android:textAlignment="textStart"
             android:textColor="?android:attr/textColorPrimary"/>
@@ -125,7 +125,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:text="Class: "
+            android:text="@string/clazz"
             android:textSize="20sp"
             android:textAlignment="textStart"
             android:textColor="?android:attr/textColorPrimary"/>
@@ -157,7 +157,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="weekly"
+            android:text="@string/weekly"
             android:textSize="20sp"
             android:textAlignment="textStart"
             android:textColor="?android:attr/textColorPrimary"/>
@@ -182,7 +182,7 @@
             app:iconTint="?android:attr/textColorPrimary"
             app:icon="@drawable/trash"
             android:background="@color/transparent"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"
             android:layout_gravity="center"
@@ -201,7 +201,7 @@
             app:iconTint="?android:attr/textColorPrimary"
             app:icon="@drawable/save"
             android:background="@color/transparent"
-            android:text="Save"
+            android:text="@string/save"
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"
             android:layout_gravity="center"

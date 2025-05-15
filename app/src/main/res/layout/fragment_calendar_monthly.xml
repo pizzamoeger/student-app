@@ -13,7 +13,7 @@
         android:id="@+id/new_event_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Event"
+        android:text="@string/new_event"
         android:textColor="?android:attr/textColorPrimary"
         android:background="@color/transparent"
         android:textStyle="bold"
@@ -76,49 +76,49 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="MON"
+            android:text="@string/mon"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="TUE"
+            android:text="@string/tue"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="WED"
+            android:text="@string/wed"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="THUR"
+            android:text="@string/thur"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="FRI"
+            android:text="@string/fri"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="SAT"
+            android:text="@string/sat"
             android:textAlignment="center"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="SUN"
+            android:text="@string/sun"
             android:textAlignment="center"
             android:textSize="16sp"/> <!--todo choose start day of week-->
     </LinearLayout>

@@ -110,7 +110,8 @@ class InsightsFragment : Fragment() {
         // center text
         when {type == TimeInterval.TOTAL -> pieChart.centerText = "Total" }
         when {type == TimeInterval.MONTH -> pieChart.centerText = CalendarUtils.monthYearFromDate(LocalDate.now())}
-        when {type == TimeInterval.WEEK -> pieChart.centerText = CalendarUtils.weekFromDate(LocalDate.now())}
+        when {type == TimeInterval.WEEK -> pieChart.centerText = (context?.getString(R.string.week)
+            ?: "Week") +CalendarUtils.weekFromDate(LocalDate.now())}
         when {type == TimeInterval.DAY -> pieChart.centerText = "Today"}
         when {type == TimeInterval.DEFAULT -> pieChart.centerText = "Custom Interval"}
 

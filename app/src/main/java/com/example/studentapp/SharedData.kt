@@ -36,10 +36,6 @@ class SharedData  {
             load()
         }
 
-        fun save() {
-            //Semester.save()
-        }
-
         // load from sharedPreferences
         fun load() {
             ClassesItem.load()

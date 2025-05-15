@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="?android:attr/textColorPrimary"
-            android:text="Current Semester: "
+            android:text="@string/current_semester"
             android:textAlignment="textEnd" />
 
         <Spinner
@@ -74,7 +74,7 @@
         app:iconTint="?android:attr/textColor"
         app:icon="@drawable/trash"
         android:background="@color/transparent"
-        android:text="Delete" />
+        android:text="@string/delete" />
 
     <View
         android:layout_width="match_parent"
@@ -93,6 +93,6 @@
         app:iconTint="?android:attr/textColorPrimary"
         app:icon="@drawable/plus"
         android:background="@color/transparent"
-        android:text="Add new Semester" />
+        android:text="@string/add_new_semester" />
 
 </LinearLayout>

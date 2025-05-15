@@ -17,7 +17,7 @@
         app:iconTint="?android:attr/textColorPrimary"
         app:icon="@drawable/plus"
         android:background="@color/transparent"
-        android:text="Add Assignment" />
+        android:text="@string/add_assignment" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

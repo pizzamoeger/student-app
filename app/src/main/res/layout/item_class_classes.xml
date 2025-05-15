@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:padding="8dp" android:gravity="center_vertical">
+
+    <View
+        android:id="@+id/classes_class_color"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="#FF0000" />
+
+    <TextView
+        android:layout_marginStart="10dp"
+        android:id="@+id/name_text_classes_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/edit_button_classes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pen"
+        android:background="@color/transparent"
+        android:text="@string/delete_class" />
+
+</LinearLayout>

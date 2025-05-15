@@ -55,7 +55,6 @@ class EditAssignmentFragment : Fragment() {
     ): View {
         _binding = FragmentAssignmentEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        //event = Event.get(args.eventId.toInt())
         assignment = Assignment.get(args.assignmentId.toInt())
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         return root

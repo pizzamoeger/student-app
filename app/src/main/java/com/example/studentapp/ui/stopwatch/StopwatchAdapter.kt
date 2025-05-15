@@ -14,7 +14,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
-import com.example.studentapp.databinding.ItemClassBinding
+import com.example.studentapp.databinding.ItemClassStopwatchBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
 
 // bridge between ClassesItem and RecyclerView, which displays each class
@@ -26,7 +26,7 @@ class StopwatchAdapter (
 
     // view holder for class item
     inner class StopwatchViewHolder(
-        private val binding: ItemClassBinding,
+        private val binding: ItemClassStopwatchBinding,
         private val lifecycleOwner: LifecycleOwner,
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -51,7 +51,6 @@ class StopwatchAdapter (
                 drawable.colorFilter = colorFilter
             }
             startButton.background = drawable
-            startButton.visibility = View.VISIBLE
 
             // set the icons for buttons
             item.tracking.observe(lifecycleOwner) {
@@ -76,7 +75,7 @@ class StopwatchAdapter (
 
     // creates view holder for a classItem
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopwatchViewHolder {
-        val binding = ItemClassBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemClassStopwatchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StopwatchViewHolder(binding, lifecycleOwner)
     }
 

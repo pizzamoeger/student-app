@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 import com.example.studentapp.databinding.AssignmentBinding
-import com.example.studentapp.databinding.ItemClassBinding
 import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor

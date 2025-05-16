@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.assignments.assignment
 
+import CheckboxAdapter
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -18,10 +19,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.FragmentAssignmentEditBinding
 import com.example.studentapp.ui.assignments.assignment.Assignment
+import com.example.studentapp.ui.assignments.checkbox.CheckboxItem
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -34,6 +37,9 @@ class EditAssignmentFragment : Fragment() {
     private var _binding: FragmentAssignmentEditBinding? = null
     private val binding get() = _binding!!
     private val args: EditAssignmentFragmentArgs by navArgs()
+
+    private val items = mutableListOf<CheckboxItem>()
+    private lateinit var adapter: CheckboxAdapter
 
     var dueDate: LocalDate = CalendarUtils.selectedDate
     var classItem: ClassesItem = ClassesItem()
@@ -77,6 +83,18 @@ class EditAssignmentFragment : Fragment() {
         if (assignment == null) {
             assignment = Assignment(LocalDate.now(), 0, "", 0) // TODO temp
         }
+
+        items.add(CheckboxItem.InputBox)
+
+        adapter = CheckboxAdapter(items) { text ->
+            // Insert before the last InputBox
+            items.add(items.size - 1, CheckboxItem.Checkbox(text))
+            adapter.notifyItemInserted(items.size - 2)
+            binding.recyclerView.scrollToPosition(items.size - 1)
+        }
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
 
         // set repeated
         // binding.checkBox.isChecked = event!!.repeated

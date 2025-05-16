@@ -4,7 +4,9 @@ import android.util.Log
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.ui.assignments.assignment.Assignment.Companion.nextId
 import com.example.studentapp.ui.classesItem.ClassesItem
+import com.example.studentapp.ui.classesItem.ClassesItem.Companion
 import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.semester.Semester
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
@@ -74,8 +76,22 @@ class Assignment (
             save()
         }
 
-        fun getByIndex(index : Int) = assignmentsList[index]
-        fun get(id : Int) = assignmentsList.find{it.id == id}
+        fun get(id : Int) : Assignment {
+            for (item in getList()) {
+                if (item.id == id) return item
+            }
+            Log.e("Assignment", "Tried to get an assignment with id not in classList")
+            return Assignment(LocalDate.now(), -1, "")
+        }
+
+        fun getByIndex(index : Int) : Assignment {
+            if (index >= getList().size) {
+                Log.e("Assignment", "Tried to get an assignment with index bigger than size")
+                return Assignment(LocalDate.now(), -1, "")
+            }
+            return Assignment.getList()[index]
+        }
+
         fun getUncompletedByIndex(index : Int) : Assignment? {
             var count = 0
             for (assignment in assignmentsList) {
@@ -87,7 +103,9 @@ class Assignment (
             return null
         }
 
-        fun getList() = assignmentsList
+        fun getList() : List<Assignment> {
+            return assignmentsList.filter { Semester.getCurrent().getClasses().contains(it.classId) }
+        }
 
         private fun save() {
             val gson = Gson()

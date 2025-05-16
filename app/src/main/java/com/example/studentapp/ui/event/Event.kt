@@ -19,13 +19,40 @@ data class SerializableEvent(
 )
 
 class Event ( // TODO make all of this private
-    var id : Int = nextId++,
-    var name : String = "",
-    var date : LocalDate = LocalDate.now(),
-    var time : LocalTime = LocalTime.now(),
-    var classesItemId : Int = -1,
-    var repeated : Boolean = false // todo make this yearly/weekly/biweekly/...
+    private var id : Int = nextId++,
+    private var name : String = "",
+    private var date : LocalDate = LocalDate.now(),
+    private var time : LocalTime = LocalTime.now(),
+    private var classesItemId : Int = -1,
+    private var repeated : Boolean = false // todo make this yearly/weekly/biweekly/...
 ) {
+
+    fun isRepeated() = repeated
+    fun setRepeated(newR : Boolean) {
+        repeated = newR
+    }
+
+    fun getName() = name
+    fun setName(newN : String) {
+        name= newN
+    }
+
+    fun getClassId() = classesItemId
+    fun setClassId(newI : Int) {
+        classesItemId = newI
+    }
+
+    fun getId() = id
+
+    fun setDate(newD : LocalDate) {
+        date = newD
+    }
+    fun getDate() = date
+
+    fun setTime(newT : LocalTime) {
+        time = newT
+    }
+    fun getTime() = time
 
     companion object {
         // all events

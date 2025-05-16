@@ -89,7 +89,7 @@ class Assignment (
                 Log.e("Assignment", "Tried to get an assignment with index bigger than size")
                 return Assignment(LocalDate.now(), -1, "")
             }
-            return Assignment.getList()[index]
+            return getList()[index]
         }
 
         fun getUncompletedByIndex(index : Int) : Assignment? {

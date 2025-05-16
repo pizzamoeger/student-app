@@ -108,10 +108,10 @@ class EventEditFragment : Fragment() {
         }
 
         // set repeated
-        binding.checkBox.isChecked = event!!.repeated
+        binding.checkBox.isChecked = event!!.isRepeated()
 
         // get event name
-        binding.eventNameEditText.setText(event!!.name)
+        binding.eventNameEditText.setText(event!!.getName())
 
         // assign text for date and time
         binding.pickDate.text = CalendarUtils.formattedDate(date)
@@ -149,7 +149,7 @@ class EventEditFragment : Fragment() {
 
         var index = 0
         for (option in options) {
-            if (option.getId() == event!!.classesItemId) break
+            if (option.getId() == event!!.getClassId()) break
             index++
         }
         if (index == options.size) {
@@ -173,17 +173,17 @@ class EventEditFragment : Fragment() {
 
     private fun saveEvent() {
         // get name
-        event!!.name = binding.eventNameEditText.text.toString()
-        if (event!!.name == "") event!!.name = classItem.toString() // if event has no name we use class name as default
+        event!!.setName(binding.eventNameEditText.text.toString())
+        if (event!!.getName() == "") event!!.setName(classItem.toString()) // if event has no name we use class name as default
 
         // get repeated
-        event!!.repeated = binding.checkBox.isChecked
+        event!!.setRepeated(binding.checkBox.isChecked)
 
-        Event.delete(event!!.id)
+        Event.delete(event!!.getId())
 
-        event!!.date = date
-        event!!.time = time
-        event!!.classesItemId = classItem.getId()
+        event!!.setDate(date)
+        event!!.setTime(time)
+        event!!.setClassId(classItem.getId())
         Event.addEvent(event!!)
 
         // hide keyboard again before heading up
@@ -206,7 +206,7 @@ class EventEditFragment : Fragment() {
 
     private fun deleteEvent() {
         // create a new event and add it to eventsList
-        Event.delete(event!!.id)
+        Event.delete(event!!.getId())
         val navController = findNavController()
         val action = EventEditFragmentDirections.actionEditEventToWeekly()
 

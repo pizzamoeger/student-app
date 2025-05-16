@@ -56,10 +56,10 @@ class DayHourAdapter (
     private fun setEvents(convertView : View, events : List<Event>) {
         val linearLayout = convertView.findViewById<LinearLayout>(R.id.linear_layout)
         for (event in events) {
-            val classItem = ClassesItem.get(event.classesItemId)
+            val classItem = ClassesItem.get(event.getClassId())
 
             val textView = TextView(context).apply {
-                text = event.name
+                text = event.getName()
                 gravity = Gravity.CENTER
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
                 setLines(2)
@@ -83,7 +83,7 @@ class DayHourAdapter (
             }
 
             textView.setOnClickListener{
-                onCellEventClicked(event.id)
+                onCellEventClicked(event.getId())
             }
 
             linearLayout.addView(textView)

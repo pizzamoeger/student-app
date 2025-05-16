@@ -45,8 +45,10 @@ class AssignmentsFragment : Fragment(), AssignmentsAdapter.AssignmentAdapterList
                 .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
                 .build()
             findNavController().navigate(action, navOptions)
-        }, listener = this)
-
+        }, listener = this,
+            { item ->
+                val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToNavigationAssignment(item.getId().toString())
+                findNavController().navigate(action)})
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter

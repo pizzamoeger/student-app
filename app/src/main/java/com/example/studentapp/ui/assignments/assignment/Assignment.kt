@@ -6,8 +6,6 @@ import com.example.studentapp.ui.assignments.assignment.Assignment.Companion.nex
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.ClassesItem.Companion
 import com.example.studentapp.ui.event.Event
-import com.example.studentapp.ui.event.Event.Companion.eventsList
-import com.example.studentapp.ui.event.Event.Companion.repeatedEventsList
 import com.example.studentapp.ui.semester.Semester
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -19,7 +17,7 @@ data class SerializableAssignment(
     var title : String,
     var id : Int,
     var completed: Boolean,
-    var progress: Double)
+    var progress: Int)
 
 class Assignment (
     private var dueDate : LocalDate,
@@ -27,9 +25,10 @@ class Assignment (
     private var title : String,
     private var id : Int = nextId++,
     private var completed: Boolean = false,
-    private var progress: Double = 0.0
+    private var progress: Int = 0
 ) {
-
+    // TODO you could do subtasks
+    // TODO but for now i will only do slider where you can indicate
 
     fun getDueDate() = dueDate
     fun setDueDate(due : LocalDate) {
@@ -48,19 +47,23 @@ class Assignment (
     fun isCompleted() = completed
     fun setCompleted(c : Boolean = true) {
         completed = c
-        progress = if (c) 1.0 else 0.0
+        progress = if (c) 100 else 0
     }
 
     fun getProgress() = progress
-    fun setProgress(p : Double) {
+    fun setProgress(p : Int) {
         progress = p
-        if (p >= 1.0) setCompleted()
+        if (p >= 100) setCompleted()
         save()
     }
 
     fun getTitle() = title
     fun setTitle(newTitle : String) {
         title = newTitle
+    }
+
+    override fun toString(): String {
+        return getTitle()
     }
 
     companion object {

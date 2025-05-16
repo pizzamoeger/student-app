@@ -61,6 +61,19 @@
         <action
             android:id="@+id/action_navigation_assignments_to_fragment_edit_assignment"
             app:destination="@id/fragment_edit_assignment" />
+        <action
+            android:id="@+id/action_navigation_assignments_to_navigation_assignment"
+            app:destination="@id/navigation_assignment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_assignment"
+        android:name="com.example.studentapp.ui.assignments.assignment.AssignmentFragment"
+        android:label="@string/assignments"
+        tools:layout="@layout/fragment_assignment">
+        <argument
+            android:name="assigntmentId"
+            app:argType="string" />
     </fragment>
 
     <fragment android:id="@+id/fragment_event_edit"
@@ -114,7 +127,6 @@
         android:id="@+id/navigation_classes_item"
         android:name="com.example.studentapp.ui.classesItem.ClassesItemFragment"
         tools:layout="@layout/fragment_classes_item">
-        <!--TODO name -->
         <argument
             android:name="classId"
             app:argType="string" />

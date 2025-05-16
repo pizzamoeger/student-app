@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 import com.example.studentapp.databinding.AssignmentBinding
 import com.example.studentapp.ui.assignments.assignment.Assignment
-import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import java.time.LocalDate
 
 class AssignmentsAdapter (
-    private val onItemClick: (Assignment) -> Unit,
-    private val listener: AssignmentAdapterListener
-): RecyclerView.Adapter<AssignmentsAdapter.AssignmentsViewHolder> ()  {
+    private val onEditClick: (Assignment) -> Unit,
+    private val listener: AssignmentAdapterListener,
+    private val onItemClick: (Assignment) -> Unit
+    ): RecyclerView.Adapter<AssignmentsAdapter.AssignmentsViewHolder> ()  {
 
     interface AssignmentAdapterListener {
         fun onRequestAdapterRefresh()
@@ -58,16 +58,17 @@ class AssignmentsAdapter (
             progressComp.layoutParams = paramsC
 
             val paramsU = progressUncomp.layoutParams as LinearLayout.LayoutParams
-            paramsU.weight=1-item.getProgress().toFloat()
+            paramsU.weight=100-item.getProgress().toFloat()
             progressUncomp.layoutParams = paramsU
 
             // bind item click
             edit.setOnClickListener {
-                onItemClick(item)
+                onEditClick(item)
             }
             itemView.setOnClickListener{
-                item.setProgress(item.getProgress()+0.05) // TODO temp
-                bind(item)
+                //item.setProgress(item.getProgress()+0.05) // TODO temp
+                //bind(item)
+                onItemClick(item)
             }
         }
     }

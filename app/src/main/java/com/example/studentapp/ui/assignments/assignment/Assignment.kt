@@ -6,6 +6,8 @@ import com.example.studentapp.ui.assignments.assignment.Assignment.Companion.nex
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.ClassesItem.Companion
 import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.event.Event.Companion.eventsList
+import com.example.studentapp.ui.event.Event.Companion.repeatedEventsList
 import com.example.studentapp.ui.semester.Semester
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -73,6 +75,11 @@ class Assignment (
 
         fun delete(id : Int) {
             assignmentsList.removeIf{it.id == id}
+            save()
+        }
+
+        fun removeAllOfClass(id : Int) {
+            assignmentsList = assignmentsList.filterNot { it.classId == id }.toMutableList()
             save()
         }
 

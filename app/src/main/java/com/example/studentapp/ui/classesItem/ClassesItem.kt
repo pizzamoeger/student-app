@@ -9,6 +9,7 @@ import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.TimeInterval
+import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.semester.Semester
 import com.google.gson.Gson
@@ -186,6 +187,7 @@ data class ClassesItem(
             classesList.removeAll{it.id == id}
             Semester.getCurrent().removeClass(id)
             Event.removeAllOfClass(id)
+            Assignment.removeAllOfClass(id)
             save()
         }
 

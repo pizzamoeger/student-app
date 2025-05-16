@@ -21,7 +21,7 @@ data class SerializableSemester (
 class Semester (
     private var start : LocalDate = LocalDate.now(),
     private var end : LocalDate = LocalDate.now().plusMonths(6),
-    private var classesInSemester : MutableList<Int> = mutableListOf(),
+    private var classesInSemester : MutableList<Int> = mutableListOf(0),
     private var name : String = "Semester $nextId",
     private var id : Int = nextId++) {
     override fun toString(): String {

@@ -1,6 +1,8 @@
 package com.example.studentapp.ui.event
 
+import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
+import com.example.studentapp.ui.semester.Semester
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.DayOfWeek
@@ -30,27 +32,32 @@ class Event ( // TODO make all of this private
     fun isRepeated() = repeated
     fun setRepeated(newR : Boolean) {
         repeated = newR
+        save()
     }
 
     fun getName() = name
     fun setName(newN : String) {
         name= newN
+        save()
     }
 
     fun getClassId() = classesItemId
     fun setClassId(newI : Int) {
         classesItemId = newI
+        save()
     }
 
     fun getId() = id
 
     fun setDate(newD : LocalDate) {
         date = newD
+        save()
     }
     fun getDate() = date
 
     fun setTime(newT : LocalTime) {
         time = newT
+        save()
     }
     fun getTime() = time
 
@@ -67,11 +74,8 @@ class Event ( // TODO make all of this private
         }
 
         fun get(id : Int) : Event? {
-            for (event in eventsList) {
-                if (event.id == id) return event
-            }
-            for (event in repeatedEventsList) {
-                if (event.id == id) return event
+            for (event in getEvents()) {
+                if (event.id == id ) return event
             }
             return null
         }
@@ -91,8 +95,8 @@ class Event ( // TODO make all of this private
         // get all events (repeated and non repeated)
         fun getEvents() : List<Event> {
             val events : MutableList<Event> = mutableListOf()
-            for (event in eventsList) events.add(event)
-            for (event in repeatedEventsList) events.add(event)
+            for (event in eventsList.filter { Semester.getCurrent().getClasses().contains(it.classesItemId) }) events.add(event)
+            for (event in repeatedEventsList.filter { Semester.getCurrent().getClasses().contains(it.classesItemId) }) events.add(event)
             return events
         }
 
@@ -127,7 +131,7 @@ class Event ( // TODO make all of this private
 
         // get all events at date and time
         fun eventsForDateAndTimeWeek(selectedDate: LocalDate, selectedTime: LocalTime): Map<String,List<Event>> {
-            var events : MutableMap<String,MutableList<Event>> = mutableMapOf()
+            val events : MutableMap<String,MutableList<Event>> = mutableMapOf()
 
             val days = listOf("mon", "tue", "wed", "thur", "fri")
             var dateCounter = selectedDate.with(
@@ -136,16 +140,15 @@ class Event ( // TODO make all of this private
 
             for (day in days) {
                 events[day] = mutableListOf()
-                for (event in eventsList) {
-                    // if date and time matches for events that are not repeated
-                    if (event.date == dateCounter && event.time.hour == selectedTime.hour) {
-                        events[day]!!.add(event)
-                    }
-                }
-                for (event in repeatedEventsList) {
-                    // if weekday and time matches for repeated events
-                    if (event.date.dayOfWeek == dateCounter.dayOfWeek && event.time.hour == selectedTime.hour) {
-                        events[day]!!.add(event)
+                for (event in getEvents()) {
+                    if (event.isRepeated()) {
+                        if (event.date.dayOfWeek == dateCounter.dayOfWeek && event.time.hour == selectedTime.hour) {
+                            events[day]!!.add(event)
+                        }
+                    } else {
+                        if (event.date == dateCounter && event.time.hour == selectedTime.hour) {
+                            events[day]!!.add(event)
+                        }
                     }
                 }
                 // next (week) day
@@ -156,19 +159,21 @@ class Event ( // TODO make all of this private
         }
 
         fun eventsForDateAndTimeDay(selectedDate: LocalDate, selectedTime: LocalTime): List<Event> {
-            var events : MutableList<Event> = mutableListOf()
+            val events : MutableList<Event> = mutableListOf()
 
-            for (event in eventsList) {
-                // if date and time matches for events that are not repeated
-                if (event.date == selectedDate && event.time.hour == selectedTime.hour) {
-                    events.add(event)
+            for (event in getEvents()) {
+                if (event.isRepeated()) {
+                    // if weekday and time matches for repeated events
+                    if (event.date.dayOfWeek == selectedDate.dayOfWeek && event.time.hour == selectedTime.hour) {
+                        events.add(event)
+                    }
+                } else {
+                    // if date and time matches for events that are not repeated
+                    if (event.date == selectedDate && event.time.hour == selectedTime.hour) {
+                        events.add(event)
+                    }
                 }
-            }
-            for (event in repeatedEventsList) {
-                // if weekday and time matches for repeated events
-                if (event.date.dayOfWeek == selectedDate.dayOfWeek && event.time.hour == selectedTime.hour) {
-                    events.add(event)
-                }
+
             }
 
             return events

@@ -49,4 +49,5 @@
     <string name="go_to_fragment">Go to Fragment</string>
     <string name="overview">Overview</string>
     <string name="calendar_view">Calendar View</string>
+    <string name="grades">Grades</string>
 </resources>

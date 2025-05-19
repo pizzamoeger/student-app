@@ -49,4 +49,5 @@
     <string name="overview">Übersicht</string>
     <string name="calendar_view">Kalendersicht</string>
     <string name="add_assignment">Neue Aufgabe</string>
+    <string name="grades">Noten</string>
 </resources>

@@ -1,8 +1,10 @@
 package com.example.studentapp.ui.assignments.assignment
 
 import android.util.Log
+import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.ui.assignments.assignment.Assignment.Companion.nextId
+import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.ClassesItem.Companion
 import com.example.studentapp.ui.event.Event
@@ -116,6 +118,10 @@ class Assignment (
 
         fun getList() : List<Assignment> {
             return assignmentsList.filter { Semester.getCurrent().getClasses().contains(it.classId) }
+        }
+
+        fun getListDay(day : LocalDate) : List<Assignment> {
+            return getList().filter { it.dueDate == day }
         }
 
         private fun save() {

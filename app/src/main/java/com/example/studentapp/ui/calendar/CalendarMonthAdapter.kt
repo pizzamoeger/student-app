@@ -1,13 +1,22 @@
 package com.example.studentapp.ui.calendar
 
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.CalendarDayCellBinding
+import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import java.time.LocalDate
 
@@ -66,6 +75,27 @@ class CalendarMonthAdapter (
         }
         else {
             holder.dayOfMonth.setTextColor(context.getThemeColor(R.attr.textColorPrimaryMuted))
+        }
+
+        // assignments
+        val flexLayout = holder.binding.flexboxLayout
+        for (assignment in Assignment.getListDay(day)) {
+            val classItem = assignment.getClass()
+
+            val drawable = ContextCompat.getDrawable(holder.binding.root.context, R.drawable.circle_background)
+            val colorFilter = PorterDuffColorFilter(classItem.getColor(), PorterDuff.Mode.SRC_IN)
+            if (drawable != null) {
+                drawable.colorFilter = colorFilter
+            }
+
+            val view = View(context).apply {
+                layoutParams = ViewGroup.MarginLayoutParams(10, 10).apply {
+                    setMargins(7, 7, 7, 7)
+                }
+                background = drawable
+            }
+
+            flexLayout.addView(view)
         }
     }
 }

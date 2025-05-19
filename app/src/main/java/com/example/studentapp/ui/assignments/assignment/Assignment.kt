@@ -106,6 +106,7 @@ class Assignment (
             var count = 0
             for (assignment in assignmentsList) {
                 if (assignment.isCompleted()) continue
+                if (!Semester.getCurrent().getClasses().contains(assignment.getClass().getId())) continue;
                 if (count == index) return assignment
                 count++
             }

@@ -95,13 +95,7 @@ class AssignmentsFragment : Fragment(), AssignmentsAdapter.AssignmentAdapterList
         toolbar.selectionRight.setOnClickListener {
             val navController = findNavController()
             val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentMonthView()
-
-            val navOptions = androidx.navigation.NavOptions.Builder()
-                .setPopUpTo(R.id.navigation_stopwatch, true) // keeps StopwatchFragment in back stack
-                .build()
-            navController.navigate(action, navOptions)
-            // remove for live updates
-            // stopwatchViewModel.stop()
+            navController.navigate(action)
         }
     }
 

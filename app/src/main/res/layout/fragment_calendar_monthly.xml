@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".ui.calendar.MonthlyCalendarFragment">
 
     <include
@@ -16,18 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <!--TODO temp
-    <Button
-        android:id="@+id/new_event_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/new_event"
-        android:textColor="?android:attr/textColorPrimary"
-        android:background="@color/transparent"
-        android:textStyle="bold"
-        android:backgroundTint="@color/transparent"
-        android:textSize="20sp"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -134,6 +123,18 @@
     
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/calendar_day_recycler_view"/>
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textColor="?android:attr/textColorPrimary"
+        app:iconTint="?android:attr/textColorPrimary"
+        app:icon="@drawable/plus"
+        android:background="@color/transparent"
+        android:text="@string/add_assignment" />
 </LinearLayout>

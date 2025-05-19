@@ -22,7 +22,6 @@
     <string name="due">Bis:</string>
     <string name="delete">Löschen</string>
     <string name="save">Speichern</string>
-    <string name="add_assignment">Neue Aufgabe</string>
     <string name="new_event">Neuer Event</string>
     <string name="mon">MO</string>
     <string name="tue">DI</string>
@@ -47,6 +46,7 @@
     <string name="event_edit">Event bearbeiten</string>
     <string name="day">Tag</string>
     <string name="go_to_fragment">Go to Fragment</string>
-    <string name="overview">Overview</string>
-    <string name="calendar_view">Calendar View</string>
+    <string name="overview">Übersicht</string>
+    <string name="calendar_view">Kalendersicht</string>
+    <string name="add_assignment">Neue Aufgabe</string>
 </resources>

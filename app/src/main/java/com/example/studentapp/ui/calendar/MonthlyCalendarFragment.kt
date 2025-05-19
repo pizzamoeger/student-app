@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +31,7 @@ class MonthlyCalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCalendarMonthlyBinding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         val root: View = binding.root
         return root
     }
@@ -49,9 +51,9 @@ class MonthlyCalendarFragment : Fragment() {
 
         // TEMP
         // bind button for creating a new event
-        /*binding.newEventButton.setOnClickListener {
-            newEvent()
-        }*/
+        binding.addButton.setOnClickListener {
+            newAssignment()
+        }
 
         // visual divider between the day cells
         divider()
@@ -92,13 +94,7 @@ class MonthlyCalendarFragment : Fragment() {
         toolbar.selectionLeft.setOnClickListener {
             val navController = findNavController()
             val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToNavigationAssignments()
-
-            val navOptions = androidx.navigation.NavOptions.Builder()
-                .setPopUpTo(R.id.navigation_stopwatch, true) // keeps StopwatchFragment in back stack
-                .build()
-            navController.navigate(action, navOptions)
-            // remove for live updates
-            // stopwatchViewModel.stop()
+            navController.navigate(action)
         }
 
         // right selection links to insight
@@ -134,15 +130,14 @@ class MonthlyCalendarFragment : Fragment() {
     }
 
     // is called on button press of create event
-    private fun newEvent() {
+    private fun newAssignment() {
         // navigate to event edit fragment
-        val navController = findNavController()
-        val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToFragmentEditAssignment(id.toString())
-
+        val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToFragmentEditAssignment("-1")
+        // if we move back to classes using the bottomnav, we want to go to classes
         val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.navigation_assignments, false) // keeps StopwatchFragment in back stack
+            .setPopUpTo(R.id.monthly_calendar_view, true) // keeps StopwatchFragment in back stack
             .build()
-        navController.navigate(action, navOptions)
+        findNavController().navigate(action, navOptions)
     }
 
     // what should happen when button for previous month is pressed

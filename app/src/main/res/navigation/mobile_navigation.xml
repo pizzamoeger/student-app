@@ -170,6 +170,9 @@
         <action
             android:id="@+id/action_fragment_grades_to_add_grade_fragment"
             app:destination="@id/add_grade_fragment" />
+        <action
+            android:id="@+id/action_fragment_grades_to_grades_for_class_fragment"
+            app:destination="@id/grades_for_class_fragment" />
     </fragment>
 
     <fragment android:id="@+id/add_grade_fragment"
@@ -179,5 +182,17 @@
         <argument
             android:name="classId"
             app:argType="integer" />
+    </fragment>
+
+    <fragment android:id="@+id/grades_for_class_fragment"
+        android:name="com.example.studentapp.ui.grades.GradesForClassFragment"
+        android:label="@string/grades"
+        tools:layout="@layout/grades">
+        <argument
+            android:name="classId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_grades_for_class_fragment_to_add_grade_fragment"
+            app:destination="@id/add_grade_fragment" />
     </fragment>
 </navigation>

@@ -1,14 +1,13 @@
 package com.example.studentapp.ui.grades
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.databinding.ClassItemGradesBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
-import kotlin.math.roundToLong
 
 class GradesClassesAdapter (
+    private val onAddClick: (ClassesItem) -> Unit,
     private val onClassesItemClick: (ClassesItem) -> Unit)
 : RecyclerView.Adapter<GradesClassesAdapter.ClassesViewHolder> () {
 
@@ -30,6 +29,10 @@ class GradesClassesAdapter (
 
             // bind item click
             add.setOnClickListener {
+                onAddClick(item)
+            }
+
+            itemView.setOnClickListener {
                 onClassesItemClick(item)
             }
         }

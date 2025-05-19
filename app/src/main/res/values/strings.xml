@@ -52,5 +52,6 @@
     <string name="grades">Grades</string>
     <string name="grade">Grade:</string>
     <string name="weight">Weight:</string>
+    <string name="add_grade">Add Grade</string>
 
 </resources>

@@ -22,12 +22,17 @@ class GradesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentGradesBinding.inflate(inflater, container, false)
-        adapter = GradesClassesAdapter{ item ->
+        adapter = GradesClassesAdapter({ item ->
             val navController = findNavController()
             val action = GradesFragmentDirections.actionFragmentGradesToAddGradeFragment(item.getId())
 
             navController.navigate(action)
-        }
+        }, {
+                item ->
+            val navController = findNavController()
+            val action = GradesFragmentDirections.actionFragmentGradesToGradesForClassFragment(item.getId())
+            navController.navigate(action)
+        })
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewClasses.adapter = adapter
         val root: View = binding.root

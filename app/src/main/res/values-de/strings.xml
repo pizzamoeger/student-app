@@ -52,4 +52,5 @@
     <string name="grades">Noten</string>
     <string name="grade">Note:</string>
     <string name="weight">Gewichtung:</string>
+    <string name="add_grade">Neue Note</string>
 </resources>

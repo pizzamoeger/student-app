@@ -50,4 +50,7 @@
     <string name="overview">Overview</string>
     <string name="calendar_view">Calendar View</string>
     <string name="grades">Grades</string>
+    <string name="grade">Grade:</string>
+    <string name="weight">Weight:</string>
+
 </resources>

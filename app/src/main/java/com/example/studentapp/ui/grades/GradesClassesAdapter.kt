@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.databinding.ClassItemGradesBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
+import kotlin.math.roundToLong
 
-class GradesClassesAdapter : RecyclerView.Adapter<GradesClassesAdapter.ClassesViewHolder> () {
+class GradesClassesAdapter (
+    private val onClassesItemClick: (ClassesItem) -> Unit)
+: RecyclerView.Adapter<GradesClassesAdapter.ClassesViewHolder> () {
 
     inner class ClassesViewHolder(binding : ClassItemGradesBinding) : RecyclerView.ViewHolder(binding.root) {
         val classColor = binding.classesClassColor
@@ -22,10 +25,12 @@ class GradesClassesAdapter : RecyclerView.Adapter<GradesClassesAdapter.ClassesVi
 
             // bind average
             average.text = "ø --"
+            val av = String.format("%.2f", item.getAverage())
+            if (item.getAverage() >= 0) average.text = "ø ${av}"
 
             // bind item click
             add.setOnClickListener {
-                //onClassesItemClick(item)
+                onClassesItemClick(item)
             }
         }
     }

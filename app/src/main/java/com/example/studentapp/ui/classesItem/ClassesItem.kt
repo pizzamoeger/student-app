@@ -24,6 +24,7 @@ data class ClassesItem(
     private val id: Int = nextId++,
     private var name: String = "",
     private val studyTime: MutableMap<String, Int> = mutableMapOf(),
+    private val grades: MutableList<Pair<Float, Float>> = mutableListOf(),
     private var color : Int = 0 // TODO this is hacky transparent
 ) {
     override fun toString(): String {
@@ -32,6 +33,19 @@ data class ClassesItem(
     fun setName(newName : String) {
         name = newName
         save()
+    }
+
+    fun getAverage() : Float {
+
+        val weightedSum = grades.sumOf { (grade, weight) -> (grade * weight).toDouble() }
+        val totalWeight = grades.sumOf { it.second.toDouble() }
+
+        if (totalWeight == 0.0) return -1f
+
+        return (weightedSum/totalWeight).toFloat()
+    }
+    fun addGrade(grade : Float, weight : Float) {
+        grades.add(Pair(grade, weight))
     }
 
     // get seconds spent in timeframe
@@ -196,7 +210,7 @@ data class ClassesItem(
 
             // create a serializable list from classeslist
             val serializableList = classesList.map {
-                SerializableClassesItem(it.id, it.name, it.studyTime, it.color)
+                SerializableClassesItem(it.id, it.name, it.studyTime, it.grades, it.color)
             }
 
             val json: String = gson.toJson(serializableList)
@@ -214,7 +228,7 @@ data class ClassesItem(
 
                 // create list of ClassesItem from this
                 val restored = list.map {
-                    ClassesItem(it.id, it.name, it.studyTime, it.color)
+                    ClassesItem(it.id, it.name, it.studyTime, it.grades, it.color)
                 }
 
                 classesList = restored.toMutableList()

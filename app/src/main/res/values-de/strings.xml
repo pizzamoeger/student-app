@@ -50,4 +50,6 @@
     <string name="calendar_view">Kalendersicht</string>
     <string name="add_assignment">Neue Aufgabe</string>
     <string name="grades">Noten</string>
+    <string name="grade">Note:</string>
+    <string name="weight">Gewichtung:</string>
 </resources>

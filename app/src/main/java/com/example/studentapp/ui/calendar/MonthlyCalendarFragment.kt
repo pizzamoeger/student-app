@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
-import com.example.studentapp.ui.assignments.AssignmentsFragmentDirections
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.daysForCalendarView
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.monthYearFromDate
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
@@ -113,7 +111,7 @@ class MonthlyCalendarFragment : Fragment() {
             onItemClick = {
                 day ->
                 selectedDate = day
-                newAssignment()
+                goToDay()
             })
         binding.calendarDayRecyclerView.adapter = calendarMonthAdapter
 
@@ -123,9 +121,9 @@ class MonthlyCalendarFragment : Fragment() {
     }
 
     // is called on button press of create event
-    private fun newAssignment() {
-        // navigate to event edit fragment
-        val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToFragmentEditAssignment("-1")
+    private fun goToDay() {
+        // navigate to day view
+        val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToFragmentCalendarDay()
         // if we move back to classes using the bottomnav, we want to go to classes
         val navOptions = androidx.navigation.NavOptions.Builder()
             .setPopUpTo(R.id.monthly_calendar_view, false) // keeps StopwatchFragment in back stack

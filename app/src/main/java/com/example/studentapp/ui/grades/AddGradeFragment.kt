@@ -26,7 +26,6 @@ class AddGradeFragment : Fragment() {
         _binding = AddGradesFragmentBinding.inflate(inflater, container, false)
         classItem = ClassesItem.get(args.classId)
         val root: View = binding.root
-        //(requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         return root
     }
 

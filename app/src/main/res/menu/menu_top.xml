@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_navigation"
-        android:icon="@drawable/ic_menu"
+        android:icon="@drawable/menu_icon"
         android:title="@string/go_to_fragment"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />

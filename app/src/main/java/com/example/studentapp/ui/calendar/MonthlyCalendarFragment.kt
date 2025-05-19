@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarMonthlyBinding
+import com.example.studentapp.ui.assignments.AssignmentsFragmentDirections
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.daysForCalendarView
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.monthYearFromDate
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
+import com.example.studentapp.ui.getThemeColor
 
 
 class MonthlyCalendarFragment : Fragment() {
 
-    /*private var _binding: FragmentCalendarMonthlyBinding? = null
+    private var _binding: FragmentCalendarMonthlyBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -47,9 +49,9 @@ class MonthlyCalendarFragment : Fragment() {
 
         // TEMP
         // bind button for creating a new event
-        binding.newEventButton.setOnClickListener {
+        /*binding.newEventButton.setOnClickListener {
             newEvent()
-        }
+        }*/
 
         // visual divider between the day cells
         divider()
@@ -81,6 +83,29 @@ class MonthlyCalendarFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // display top navigation
+        val toolbar = binding.includedToolbar
+
+        // left selection links to nothing (is current)
+        context?.let { toolbar.textLeft.setTextColor(it.getThemeColor(com.google.android.material.R.attr.colorOnSurface)) }
+        context?.let { toolbar.lineLeft.setBackgroundColor(it.getThemeColor(com.google.android.material.R.attr.colorOnSurface)) }
+        toolbar.selectionLeft.setOnClickListener {
+            val navController = findNavController()
+            val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToNavigationAssignments()
+
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(R.id.navigation_stopwatch, true) // keeps StopwatchFragment in back stack
+                .build()
+            navController.navigate(action, navOptions)
+            // remove for live updates
+            // stopwatchViewModel.stop()
+        }
+
+        // right selection links to insight
+        context?.let { toolbar.textRight.setTextColor(it.getThemeColor(androidx.appcompat.R.attr.colorPrimary)) }
+        context?.let { toolbar.lineRight.setBackgroundColor(it.getThemeColor(androidx.appcompat.R.attr.colorPrimary)) }
+        toolbar.selectionRight.setOnClickListener {}
+
         setMonthView()
     }
 
@@ -112,7 +137,7 @@ class MonthlyCalendarFragment : Fragment() {
     private fun newEvent() {
         // navigate to event edit fragment
         val navController = findNavController()
-        val action = MonthlyCalendarFragmentDirections.actionMonthToEventEdit(id.toString())
+        val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToFragmentEditAssignment(id.toString())
 
         val navOptions = androidx.navigation.NavOptions.Builder()
             .setPopUpTo(R.id.navigation_assignments, false) // keeps StopwatchFragment in back stack
@@ -135,5 +160,5 @@ class MonthlyCalendarFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }*/
+    }
 }

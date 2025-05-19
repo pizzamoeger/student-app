@@ -8,6 +8,15 @@
     android:padding="16dp"
     tools:context=".ui.assignments.AssignmentsFragment">
 
+    <include
+    android:id="@+id/included_toolbar"
+    layout="@layout/assignments_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
     <Button
         android:id="@+id/add_button"
         android:layout_width="wrap_content"

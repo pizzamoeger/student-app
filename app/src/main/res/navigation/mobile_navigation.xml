@@ -64,6 +64,9 @@
         <action
             android:id="@+id/action_navigation_assignments_to_navigation_assignment"
             app:destination="@id/navigation_assignment" />
+        <action
+            android:id="@+id/action_navigation_assignments_to_fragment_month_view"
+            app:destination="@id/fragment_month_view" />
     </fragment>
 
     <fragment
@@ -136,5 +139,18 @@
         android:name="com.example.studentapp.ui.semester.SemesterFragment"
         android:label="@string/manage_semester"
         tools:layout="@layout/fragment_semester">
+    </fragment>
+
+    <fragment android:id="@+id/fragment_month_view"
+        android:name="com.example.studentapp.ui.calendar.MonthlyCalendarFragment"
+        android:label="@string/assignments"
+        tools:layout="@layout/fragment_calendar_monthly">
+
+        <action
+            android:id="@+id/action_fragment_month_view_to_navigation_assignments"
+            app:destination="@id/navigation_assignments" />
+        <action
+            android:id="@+id/action_fragment_month_view_to_fragment_edit_assignment"
+            app:destination="@id/fragment_edit_assignment" />
     </fragment>
 </navigation>

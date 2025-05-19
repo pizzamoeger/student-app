@@ -101,12 +101,12 @@ class DailyCalendarFragment : Fragment() {
     private fun setAssignmentsAdapter() {
         assignmentAdapter = AssignmentsAdapter ({
                 item ->
-            /*val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId().toString())
+            val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToFragmentEditAssignment(item.getId().toString())
             // if we move back to classes using the bottomnav, we want to go to classes
             val navOptions = androidx.navigation.NavOptions.Builder()
                 .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
                 .build()
-            findNavController().navigate(action, navOptions)*/
+            findNavController().navigate(action, navOptions)
         },
             { item ->
                 val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId().toString())

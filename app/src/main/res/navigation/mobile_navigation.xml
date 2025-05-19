@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_fragment_calendar_day_to_navigation_assignment"
             app:destination="@id/navigation_assignment" />
+        <action
+            android:id="@+id/action_fragment_calendar_day_to_fragment_edit_assignment"
+            app:destination="@id/fragment_edit_assignment" />
     </fragment>
 
     <fragment

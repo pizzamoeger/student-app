@@ -7,8 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentCalendarDailyBinding
+import com.example.studentapp.ui.assignments.AssignmentsAdapter
+import com.example.studentapp.ui.assignments.AssignmentsFragmentDirections
+import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.timetable.DayHourAdapter
@@ -20,6 +25,7 @@ class DailyCalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarDailyBinding? = null
     private val binding get() = _binding!!
+    private lateinit var assignmentAdapter: AssignmentsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,6 +79,8 @@ class DailyCalendarFragment : Fragment() {
 
         // adapter that displays hours and events in that hour
         setHourAdapter()
+
+        setAssignmentsAdapter()
     }
 
     private fun setHourAdapter() {
@@ -88,6 +96,33 @@ class DailyCalendarFragment : Fragment() {
                 navController.navigate(action, navOptions)}
         )
         binding.hourListView.adapter = hourAdapter
+    }
+
+    private fun setAssignmentsAdapter() {
+        assignmentAdapter = AssignmentsAdapter ({
+                item ->
+            /*val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId().toString())
+            // if we move back to classes using the bottomnav, we want to go to classes
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
+                .build()
+            findNavController().navigate(action, navOptions)*/
+        },
+            { item ->
+                val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId().toString())
+                findNavController().navigate(action)},
+            Assignment.getUncompletedDay(selectedDate))
+
+        binding.assignmentsListView.layoutManager = LinearLayoutManager(requireContext())
+        binding.assignmentsListView.adapter = assignmentAdapter
+
+        // visually divide classes with a vertical line
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.assignmentsListView.context,
+            DividerItemDecoration.VERTICAL
+        )
+
+        binding.assignmentsListView.addItemDecoration(dividerItemDecoration)
     }
 
     // returns list of events for each hour in 0..23

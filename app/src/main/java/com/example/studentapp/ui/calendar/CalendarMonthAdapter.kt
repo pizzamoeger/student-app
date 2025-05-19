@@ -79,7 +79,7 @@ class CalendarMonthAdapter (
 
         // assignments
         val flexLayout = holder.binding.flexboxLayout
-        for (assignment in Assignment.getListDay(day)) {
+        for (assignment in Assignment.getUncompletedDay(day)) {
             val classItem = assignment.getClass()
 
             val drawable = ContextCompat.getDrawable(holder.binding.root.context, R.drawable.circle_background)

@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentAssignmentsBinding
 import com.example.studentapp.databinding.FragmentClassesBinding
+import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.getThemeColor
 import com.example.studentapp.ui.stopwatch.StopwatchFragmentDirections
 import kotlin.random.Random
 
-class AssignmentsFragment : Fragment(), AssignmentsAdapter.AssignmentAdapterListener {
+class AssignmentsFragment : Fragment() {
 
     private var _binding: FragmentAssignmentsBinding? = null
     private lateinit var adapter: AssignmentsAdapter
@@ -47,10 +48,11 @@ class AssignmentsFragment : Fragment(), AssignmentsAdapter.AssignmentAdapterList
                 .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
                 .build()
             findNavController().navigate(action, navOptions)
-        }, listener = this,
+        },
             { item ->
                 val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToNavigationAssignment(item.getId().toString())
-                findNavController().navigate(action)})
+                findNavController().navigate(action)},
+            Assignment.getUncompletedList())
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
@@ -102,9 +104,5 @@ class AssignmentsFragment : Fragment(), AssignmentsAdapter.AssignmentAdapterList
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onRequestAdapterRefresh() {
-        adapter.notifyDataSetChanged()
     }
 }

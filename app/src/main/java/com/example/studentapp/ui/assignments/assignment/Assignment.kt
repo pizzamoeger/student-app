@@ -120,6 +120,14 @@ class Assignment (
             return assignmentsList.filter { Semester.getCurrent().getClasses().contains(it.classId) }
         }
 
+        fun getUncompletedList() : List<Assignment> {
+            return getList().filterNot { it.isCompleted() }
+        }
+
+        fun getUncompletedDay(day : LocalDate) : List<Assignment> {
+            return getUncompletedList().filter { it.dueDate == day }
+        }
+
         fun getListDay(day : LocalDate) : List<Assignment> {
             return getList().filter { it.dueDate == day }
         }

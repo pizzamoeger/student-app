@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.ui.calendar.CalendarUtils
@@ -55,6 +56,7 @@ class DayHourAdapter (
 
     private fun setEvents(convertView : View, events : List<Event>) {
         val linearLayout = convertView.findViewById<LinearLayout>(R.id.linear_layout)
+        linearLayout.removeAllViews()
         for (event in events) {
             val classItem = ClassesItem.get(event.getClassId())
 

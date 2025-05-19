@@ -22,50 +22,76 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical">
+        android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/day_button_left"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/left_arrow"
-            android:textColor="?android:attr/textColorPrimary"
-            android:background="@color/transparent"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/date_text_view"
-            android:layout_width="0dp"
-            android:text="12.04.2040"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textColor="?android:attr/textColorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/date_text_view"
+                android:text="12.04.2040"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/day_button_right"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:id="@+id/day_button_left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/left_arrow"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:background="@color/transparent"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+
+                    <ImageButton
+                        android:id="@+id/day_button_right"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/right_arrow"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:background="@color/transparent"
+                        android:textStyle="bold"
+                        android:backgroundTint="@color/transparent"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/assignments_list_view"
+            android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/right_arrow"
-            android:textColor="?android:attr/textColorPrimary"
-            android:background="@color/transparent"
-            android:textStyle="bold"
-            android:backgroundTint="@color/transparent"
-            android:textSize="20sp"/>
+            android:layout_weight="3"
+            android:layout_margin="10dp"/>
 
     </LinearLayout>
+
+
 
     <ListView
         android:id="@+id/hour_list_view"

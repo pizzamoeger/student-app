@@ -15,13 +15,9 @@ import java.time.LocalDate
 
 class AssignmentsAdapter (
     private val onEditClick: (Assignment) -> Unit,
-    private val listener: AssignmentAdapterListener,
-    private val onItemClick: (Assignment) -> Unit
+    private val onItemClick: (Assignment) -> Unit,
+    private val assignments: List<Assignment>
     ): RecyclerView.Adapter<AssignmentsAdapter.AssignmentsViewHolder> ()  {
-
-    interface AssignmentAdapterListener {
-        fun onRequestAdapterRefresh()
-    }
 
     inner class AssignmentsViewHolder(
         private val binding: AssignmentBinding
@@ -34,10 +30,6 @@ class AssignmentsAdapter (
         private val progressUncomp : View = binding.progressUncompleted
 
         fun bind(item: Assignment) {
-            if (item.isCompleted()) {
-                listener.onRequestAdapterRefresh()
-                return
-            }
             // bind name
             text.text = item.getTitle()
             if (item.getDueDate() < LocalDate.now()) {
@@ -79,17 +71,11 @@ class AssignmentsAdapter (
     }
 
     override fun getItemCount() : Int {
-        val list = Assignment.getList()
-        var count = 0
-        for (assignment in list) {
-            if (assignment.isCompleted()) continue
-            count++
-        }
-        return count
+        return assignments.size
     }
 
     override fun onBindViewHolder(holder: AssignmentsViewHolder, position: Int) {
-        holder.bind(Assignment.getUncompletedByIndex(position)!!)
+        holder.bind(assignments[position])
 
     }
 }

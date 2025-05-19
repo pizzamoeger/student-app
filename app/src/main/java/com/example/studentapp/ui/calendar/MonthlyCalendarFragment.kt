@@ -49,12 +49,6 @@ class MonthlyCalendarFragment : Fragment() {
             nextMonthAction()
         }
 
-        // TEMP
-        // bind button for creating a new event
-        binding.addButton.setOnClickListener {
-            newAssignment()
-        }
-
         // visual divider between the day cells
         divider()
     }
@@ -118,9 +112,8 @@ class MonthlyCalendarFragment : Fragment() {
             context=requireContext(),
             onItemClick = {
                 day ->
-                val message = ("Selected Date $day")
                 selectedDate = day
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                newAssignment()
             })
         binding.calendarDayRecyclerView.adapter = calendarMonthAdapter
 
@@ -135,7 +128,7 @@ class MonthlyCalendarFragment : Fragment() {
         val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToFragmentEditAssignment("-1")
         // if we move back to classes using the bottomnav, we want to go to classes
         val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.monthly_calendar_view, true) // keeps StopwatchFragment in back stack
+            .setPopUpTo(R.id.monthly_calendar_view, false) // keeps StopwatchFragment in back stack
             .build()
         findNavController().navigate(action, navOptions)
     }

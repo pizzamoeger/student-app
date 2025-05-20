@@ -1,5 +1,7 @@
 package com.example.studentapp.ui.grades
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -16,18 +18,46 @@ class GradesForClassAdapter
         val weight = binding.weightInput
         val grade = binding.gradeInput
         val del = binding.deleteButtonGrade
-        fun bind(item: Pair<Float, Float>) {
+        fun bind(item: Grade) {
 
             // bind name
-            name.setText("tmp") // TODO
+            name.setText(item.name)
+            name.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    item.name = s.toString()
+                    ClassesItem.save()
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
 
             del.setOnClickListener{
-                // TODO
+                ClassesItem.getCurrent().deleteGrade(item.id)
+                notifyDataSetChanged()
             }
 
             // bind average
-            weight.setText(String.format("%.2f", item.second))
-            grade.setText(String.format("%.2f", item.first))
+            weight.setText(String.format("%.2f", item.weight))
+            weight.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    item.weight = s.toString().toFloat()
+                    ClassesItem.save()
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+            grade.setText(String.format("%.2f", item.grade))
+            grade.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    item.grade = s.toString().toFloat()
+                    ClassesItem.save()
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
         }
     }
 
@@ -37,10 +67,10 @@ class GradesForClassAdapter
     }
 
     override fun getItemCount(): Int {
-        return ClassesItem.getList().size
+        return ClassesItem.getCurrent().getGrades().size
     }
 
     override fun onBindViewHolder(holder: ClassesViewHolder, position: Int) {
-        holder.bind(Pair(0.1f, 0.1f)) // TODO
+        holder.bind(ClassesItem.getCurrent().getGrades()[position])
     }
 }

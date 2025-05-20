@@ -11,6 +11,7 @@ import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.grades.Grade
 import com.example.studentapp.ui.semester.Semester
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -24,9 +25,10 @@ data class ClassesItem(
     private val id: Int = nextId++,
     private var name: String = "",
     private val studyTime: MutableMap<String, Int> = mutableMapOf(),
-    private val grades: MutableList<Pair<Float, Float>> = mutableListOf(),
+    private val grades: MutableList<Grade> = mutableListOf(),
     private var color : Int = 0 // TODO this is hacky transparent
 ) {
+    private var gradeId = 0
     override fun toString(): String {
         return name
     }
@@ -37,15 +39,22 @@ data class ClassesItem(
 
     fun getAverage() : Float {
 
-        val weightedSum = grades.sumOf { (grade, weight) -> (grade * weight).toDouble() }
-        val totalWeight = grades.sumOf { it.second.toDouble() }
+        val weightedSum = grades.sumOf { (it.grade * it.weight).toDouble() }
+        val totalWeight = grades.sumOf { it.weight.toDouble() }
 
         if (totalWeight == 0.0) return -1f
 
         return (weightedSum/totalWeight).toFloat()
     }
+    fun getGrades() : List<Grade> = grades
     fun addGrade(grade : Float, weight : Float) {
-        grades.add(Pair(grade, weight))
+        grades.add(Grade(weight, grade, gradeId, "Exam $gradeId"))
+        gradeId++
+        save()
+    }
+    fun deleteGrade(id : Int) {
+        grades.removeIf { it.id == id }
+        save()
     }
 
     // get seconds spent in timeframe
@@ -141,7 +150,11 @@ data class ClassesItem(
         private var currentClass = ClassesItem()
 
         // switch currentClass to item
-        fun switch(item: ClassesItem): Boolean {
+        fun switch(item: ClassesItem, track:Boolean=true): Boolean {
+            if (!track) {
+                currentClass = item
+                return true
+            }
             // returns true if the class changed
             if (currentClass == item) {
                 item.updateTracking(!item.tracking.value!!)
@@ -205,7 +218,7 @@ data class ClassesItem(
             save()
         }
 
-         private fun save() {
+         fun save() {
             val gson = Gson()
 
             // create a serializable list from classeslist
@@ -229,6 +242,10 @@ data class ClassesItem(
                 // create list of ClassesItem from this
                 val restored = list.map {
                     ClassesItem(it.id, it.name, it.studyTime, it.grades, it.color)
+                }
+
+                for (item in restored) {
+                    item.gradeId = ((item.grades.maxOfOrNull { it.id } ?: 0) + 1)
                 }
 
                 classesList = restored.toMutableList()

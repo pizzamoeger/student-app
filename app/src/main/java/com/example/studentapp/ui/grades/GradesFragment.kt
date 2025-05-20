@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.R
 import com.example.studentapp.databinding.FragmentGradesBinding
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.EditClassFragmentDirections
 
 class GradesFragment : Fragment() {
@@ -25,12 +26,12 @@ class GradesFragment : Fragment() {
         adapter = GradesClassesAdapter({ item ->
             val navController = findNavController()
             val action = GradesFragmentDirections.actionFragmentGradesToAddGradeFragment(item.getId())
-
             navController.navigate(action)
         }, {
                 item ->
             val navController = findNavController()
             val action = GradesFragmentDirections.actionFragmentGradesToGradesForClassFragment(item.getId())
+            ClassesItem.switch(item, false)
             navController.navigate(action)
         })
         binding.recyclerViewClasses.layoutManager = LinearLayoutManager(requireContext())

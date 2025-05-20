@@ -18,8 +18,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
 
-
-// TODO java.lang.IllegalArgumentException: The fragment EventEditFragment{4f8871c} (ebe88115-7f08-407e-b12b-a6eee164fe69 id=0x7f080128) is unknown to the FragmentNavigator. Please use the navigate() function to add fragments to the FragmentNavigator managed FragmentManager.                                                                                        java.lang.IllegalArgumentException: The fragment EventEditFragment{4f8871c} (ebe88115-7f08-407e-b12b-a6eee164fe69 id=0x7f080128) is unknown to the FragmentNavigator. Please use the navigate() function to add fragments to the FragmentNavigator managed FragmentManager.
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
@@ -47,16 +45,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        // listener that fires everytime fragment is changed
-        /*navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                // if we are going to stopwatch or insights hide toolbar
-                R.id.navigation_stopwatch, R.id.navigation_insights, R.id.navigation_timetable -> {hideDefaultToolbar(destination.id) }
-                // else show toolbar
-                else -> {showDefaultToolbar()}
-            }
-        }*/
 
         // make app follow devices default theme
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

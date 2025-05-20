@@ -20,7 +20,7 @@ data class SerializableEvent(
     var repeated : Boolean
 )
 
-class Event ( // TODO make all of this private
+class Event (
     private var id : Int = nextId++,
     private var name : String = "",
     private var date : LocalDate = LocalDate.now(),

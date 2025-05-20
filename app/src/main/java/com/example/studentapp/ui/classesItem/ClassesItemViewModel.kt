@@ -19,7 +19,6 @@ class ClassesItemViewModel : ViewModel() {
     val monthlyTime: LiveData<String> = _monthlyTime
     val totalTime: LiveData<String> = _totalTime
 
-    // TODO find a better way to do this
     // sets id of class and then calls write function
     fun setId(id : Int) {
        _classId = id

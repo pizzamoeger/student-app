@@ -4,10 +4,16 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.util.TypedValue
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.example.studentapp.R
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.getThemeColor
 
 /**
  * Implementation of App Widget functionality.
@@ -62,14 +68,19 @@ class MyRemoteViewsService : RemoteViewsService() {
 
         override fun onCreate() {
             // Load your data here
+            //items = Event.getEvents()
             //items.addAll(listOf("Item 1", "Item 2", "Item 3"))
         }
 
         override fun getCount(): Int = items.size
 
         override fun getViewAt(position: Int): RemoteViews {
-            val rv = RemoteViews(context.packageName, android.R.layout.simple_list_item_1)
-            rv.setTextViewText(android.R.id.text1, items[position].getName())
+
+            val rv = RemoteViews(context.packageName, R.layout.timetable_widget_item)
+            rv.setTextViewText(R.id.name_widget_timetable_item, items[position].getName())
+            rv.setInt(R.id.name_widget_timetable_item, "setBackgroundColor", ClassesItem.get(items[position].getClassId()).getColor())
+            rv.setInt(R.id.name_widget_timetable_item, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
+
             return rv
         }
 

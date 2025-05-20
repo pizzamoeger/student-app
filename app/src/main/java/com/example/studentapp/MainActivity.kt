@@ -1,5 +1,7 @@
 package com.example.studentapp
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
@@ -17,6 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
+import com.example.studentapp.ui.timetable.TimetableWidget
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         SharedData.init(this)
+        refreshWidgets(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -87,6 +91,17 @@ class MainActivity : AppCompatActivity() {
         // create custom menu
         menuInflater.inflate(R.menu.menu_top, menu)
         return true
+    }
+
+    fun refreshWidgets(context: Context) {
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val thisWidget = ComponentName(context, TimetableWidget::class.java)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+
+        // Call your widget's onUpdate manually for all widget instances
+        if (appWidgetIds.isNotEmpty()) {
+            TimetableWidget().onUpdate(context, appWidgetManager, appWidgetIds)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--
-    Having themes.xml for night-v31 because of the priority order of the resource qualifiers.
-    -->
-    <style name="Theme.StudentApp.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault.DayNight">
-        <item name="appWidgetRadius">@android:dimen/system_app_widget_background_radius</item>
-        <item name="appWidgetInnerRadius">@android:dimen/system_app_widget_inner_radius</item>
+
+    <style name="Theme.StudentApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryVariant">@color/lightblue</item>
+        <item name="colorOnPrimary">@color/gray_1</item>
+        <item name="android:textColor">@color/gray_3</item>
+        <item name="android:textColorPrimary">@color/gray_1</item>
+        <item name="textColorPrimaryMuted">@color/gray_5</item>
+        <item name="windowBackgroundMuted">@color/gray_7</item>
+        <item name="windowBackgroundMuted1">@color/gray_8</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/limegreen</item>
+        <item name="colorSecondaryVariant">@color/green</item>
+        <item name="colorOnSecondary">@color/purple</item>
+        <item name="android:textColorSecondary">@color/gray_1</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/gray_9</item>
+        <item name="android:windowBackground">@color/gray_9</item>
+
+        <item name="colorSurface">?attr/colorPrimary</item>
+        <item name="colorOnSurface">?attr/colorPrimaryVariant</item>
+
+        <item name="actionBarTheme">@style/Theme.ActionBar</item>
+
+    </style>
+
+    <style name="Theme.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/gray_1</item>
+    </style>
+
+    <style name="CustomDatePickerTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/gray_9</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+    <style name="CustomTimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="colorOnSurface">@color/gray_2</item>
+        <item name="colorSurface">@color/gray_9</item>
     </style>
 </resources>

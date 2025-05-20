@@ -4,9 +4,27 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.StudentApp.AppWidgetContainer">
 
-    <ListView
-        android:id="@+id/events_recycler_view_widget"
-        android:layout_height="match_parent"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="@color/blue"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:text="@string/title_timetable" />
+
+        <ListView
+            android:id="@+id/events_recycler_view_widget"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
 </RelativeLayout>

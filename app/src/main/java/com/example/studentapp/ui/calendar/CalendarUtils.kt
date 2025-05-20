@@ -12,6 +12,11 @@ class CalendarUtils {
         var selectedDate : LocalDate = LocalDate.now()
         var selectedTime : LocalTime = LocalTime.now()
 
+        fun dayMonth(date: LocalDate) : String {
+            val formatter = DateTimeFormatter.ofPattern("dd MMM")
+            return date.format(formatter)
+        }
+
         // returns month and year as string
         fun monthYearFromDate(date: LocalDate) : String {
             val formatter = DateTimeFormatter.ofPattern("MMMM yyyy")

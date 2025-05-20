@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.classesItem
 
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -210,10 +211,10 @@ data class ClassesItem(
         }
 
         // delete class by id from classList
-        fun delete(id: Int) {
+        fun delete(id: Int, context: Context) {
             classesList.removeAll{it.id == id}
             Semester.getCurrent().removeClass(id)
-            Event.removeAllOfClass(id)
+            Event.removeAllOfClass(id, context)
             Assignment.removeAllOfClass(id)
             save()
         }

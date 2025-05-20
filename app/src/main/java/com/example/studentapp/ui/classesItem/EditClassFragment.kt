@@ -104,7 +104,7 @@ class EditClassFragment : Fragment() {
     }
 
     private fun deleteClass() {
-        ClassesItem.delete(_classId)
+        ClassesItem.delete(_classId, requireContext())
 
         val navController = findNavController()
         val action = EditClassFragmentDirections.actionEditClassToClasses()
@@ -117,7 +117,7 @@ class EditClassFragment : Fragment() {
 
     private fun saveClass() {
         val thisClass = ClassesItem.get(_classId)
-        ClassesItem.delete(_classId)
+        ClassesItem.delete(_classId, requireContext())
 
         // get name
         thisClass.setName(binding.eventNameEditText.text.toString())

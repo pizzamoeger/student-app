@@ -173,18 +173,18 @@ class EventEditFragment : Fragment() {
 
     private fun saveEvent() {
         // get name
-        event!!.setName(binding.eventNameEditText.text.toString())
-        if (event!!.getName() == "") event!!.setName(classItem.toString()) // if event has no name we use class name as default
+        event!!.setName(binding.eventNameEditText.text.toString(), requireContext())
+        if (event!!.getName() == "") event!!.setName(classItem.toString(), requireContext()) // if event has no name we use class name as default
 
         // get repeated
-        event!!.setRepeated(binding.checkBox.isChecked)
+        event!!.setRepeated(binding.checkBox.isChecked, requireContext())
 
-        Event.delete(event!!.getId())
+        Event.delete(event!!.getId(), requireContext())
 
-        event!!.setDate(date)
-        event!!.setTime(time)
-        event!!.setClassId(classItem.getId())
-        Event.addEvent(event!!)
+        event!!.setDate(date, requireContext())
+        event!!.setTime(time, requireContext())
+        event!!.setClassId(classItem.getId(), requireContext())
+        Event.addEvent(event!!, requireContext())
 
         // hide keyboard again before heading up
         // so that layout is calculated correctly
@@ -206,7 +206,7 @@ class EventEditFragment : Fragment() {
 
     private fun deleteEvent() {
         // create a new event and add it to eventsList
-        Event.delete(event!!.getId())
+        Event.delete(event!!.getId(), requireContext())
         val navController = findNavController()
         val action = EventEditFragmentDirections.actionEditEventToWeekly()
 

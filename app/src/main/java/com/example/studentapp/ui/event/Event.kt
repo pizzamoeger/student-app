@@ -1,8 +1,13 @@
 package com.example.studentapp.ui.event
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Context
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.ui.semester.Semester
+import com.example.studentapp.ui.timetable.TimetableWidget
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.DayOfWeek
@@ -30,34 +35,34 @@ class Event (
 ) {
 
     fun isRepeated() = repeated
-    fun setRepeated(newR : Boolean) {
+    fun setRepeated(newR : Boolean, context: Context) {
         repeated = newR
-        save()
+        save(context)
     }
 
     fun getName() = name
-    fun setName(newN : String) {
+    fun setName(newN : String, context: Context) {
         name= newN
-        save()
+        save(context)
     }
 
     fun getClassId() = classesItemId
-    fun setClassId(newI : Int) {
+    fun setClassId(newI : Int, context: Context) {
         classesItemId = newI
-        save()
+        save(context)
     }
 
     fun getId() = id
 
-    fun setDate(newD : LocalDate) {
+    fun setDate(newD : LocalDate, context: Context) {
         date = newD
-        save()
+        save(context)
     }
     fun getDate() = date
 
-    fun setTime(newT : LocalTime) {
+    fun setTime(newT : LocalTime, context: Context) {
         time = newT
-        save()
+        save(context)
     }
     fun getTime() = time
 
@@ -67,11 +72,18 @@ class Event (
         private var repeatedEventsList : MutableList<Event> = mutableListOf()
         private var nextId = 0
 
-        fun addEvent(event: Event) {
+        fun addEvent(event: Event, context: Context) {
             if (event.repeated) repeatedEventsList.add(event)
             else eventsList.add(event)
-            save()
+            save(context)
         }
+
+        private fun refreshTimetableWidget(context: Context) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, TimetableWidget::class.java))
+            appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.events_recycler_view_widget)
+        }
+
 
         fun get(id : Int) : Event? {
             for (event in getEvents()) {
@@ -80,16 +92,16 @@ class Event (
             return null
         }
 
-        fun delete(id : Int) {
+        fun delete(id : Int, context: Context) {
             eventsList = eventsList.filterNot { it.id == id }.toMutableList()
             repeatedEventsList = repeatedEventsList.filterNot { it.id == id }.toMutableList()
-            save()
+            save(context)
         }
 
-        fun removeAllOfClass(id : Int) {
+        fun removeAllOfClass(id : Int, context: Context) {
             eventsList = eventsList.filterNot { it.classesItemId == id }.toMutableList()
             repeatedEventsList = repeatedEventsList.filterNot { it.classesItemId == id }.toMutableList()
-            save()
+            save(context)
         }
 
         // get all events (repeated and non repeated)
@@ -100,7 +112,8 @@ class Event (
             return events
         }
 
-        private fun save() {
+        private fun save(context: Context) {
+            refreshTimetableWidget(context)
             val gson = Gson()
 
             val serializableEvents = eventsList.map {
@@ -111,7 +124,7 @@ class Event (
             prefs.edit().putString("events_list", json).apply()
         }
 
-        fun load() {
+        fun load(context: Context) {
             val gson = Gson()
             val json = prefs.getString("events_list", null)
 
@@ -122,7 +135,7 @@ class Event (
 
                 // create list of ClassesItem from this
                 for (e in list) {
-                    addEvent(Event(id=e.id, name=e.name, date=LocalDate.parse(e.date), time=LocalTime.parse(e.time), classesItemId = e.classesItemId, repeated = e.repeated))
+                    addEvent(Event(id=e.id, name=e.name, date=LocalDate.parse(e.date), time=LocalTime.parse(e.time), classesItemId = e.classesItemId, repeated = e.repeated), context)
                 }
 
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="textColorPrimaryMuted" format="color"/>
-    <attr name="windowBackgroundMuted" format="color"/>
-    <attr name="windowBackgroundMuted1" format="color"/>
+    <attr name="textColorPrimaryMuted" format="color" />
+    <attr name="windowBackgroundMuted" format="color" />
+    <attr name="windowBackgroundMuted1" format="color" />
+    <declare-styleable name="AppWidgetAttrs">
+        <attr name="appWidgetPadding" format="dimension" />
+        <attr name="appWidgetInnerRadius" format="dimension" />
+        <attr name="appWidgetRadius" format="dimension" />
+    </declare-styleable>
 </resources>

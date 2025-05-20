@@ -12,6 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentApp"
         tools:targetApi="31">
+        <receiver
+            android:name=".ui.timetable.TimetableWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/timetable_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".ui.timetable.MyRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

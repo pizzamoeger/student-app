@@ -33,13 +33,13 @@ class SharedData  {
         fun init(context: Context) {
             prefs = context.getSharedPreferences("shared_data_prefs", Context.MODE_PRIVATE)
             //prefs.edit().clear().apply()
-            load()
+            load(context)
         }
 
         // load from sharedPreferences
-        fun load() {
+        fun load(context: Context) {
             ClassesItem.load()
-            Event.load()
+            Event.load(context)
             Assignment.load()
             Semester.load()
         }

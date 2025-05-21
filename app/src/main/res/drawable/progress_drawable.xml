@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background track -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/gray_6"/> <!-- "?attr/windowBackgroundMuted" -->
+        </shape>
+    </item>
+
+    <!-- Progress bar color -->
+    <item android:id="@android:id/progress">
+        <clip android:clipOrientation="horizontal" android:gravity="left">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/blue"/> <!-- ?attr/colorPrimary -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>

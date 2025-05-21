@@ -4,7 +4,9 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.content.ContextCompat
@@ -69,7 +71,7 @@ class AssignmentRemoteViewService : RemoteViewsService() {
         override fun onCreate() {}
 
         private fun getAssignment() : List<Assignment> {
-            val assignments = Assignment.getList()
+            val assignments = Assignment.getUncompletedList()
             return assignments.sortedBy {it.getDueDate()}
         }
 
@@ -86,6 +88,12 @@ class AssignmentRemoteViewService : RemoteViewsService() {
             val rv = RemoteViews(context.packageName, R.layout.assignment_widget_item)
             rv.setTextViewText(R.id.name_text_assignment_widget, items[position].getTitle())
             rv.setInt(R.id.classes_class_color_assignment_widget, "setBackgroundColor", items[position].getClass().getColor())
+
+            rv.setTextViewText(R.id.date_text_assignment_widget, items[position].getDueDate().toString())
+
+            Log.d("aaaa", items[position].getProgress().toString())
+
+            rv.setProgressBar(R.id.progress_bar_widget, 100, items[position].getProgress(), false)
             /*rv.setInt(R.id.name_widget_timetable_item, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
             rv.setTextViewText(R.id.time_widget_timetable_item, items[position].getTime().toString())
 

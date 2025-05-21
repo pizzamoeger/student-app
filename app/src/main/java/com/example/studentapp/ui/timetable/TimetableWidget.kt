@@ -16,6 +16,7 @@ import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.getThemeColor
+import com.example.studentapp.ui.semester.Semester
 
 /**
  * Implementation of App Widget functionality.
@@ -77,7 +78,8 @@ class MyRemoteViewsService : RemoteViewsService() {
         }
 
         private fun getEvents() : List<Event> {
-            return Event.getEvents().sortedBy {java.time.LocalDateTime.parse("${it.getDate()} ${it.getTime()}", formatter)}
+            val events = Event.getEvents().toMutableList()
+            return events.sortedBy {java.time.LocalDateTime.parse("${it.getDate()} ${it.getTime()}", formatter)}
         }
 
         private fun isFirstOfDay(position: Int) : Boolean {

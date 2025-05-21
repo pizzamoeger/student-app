@@ -69,11 +69,17 @@ class Event (
     companion object {
         // all events
         private var eventsList : MutableList<Event> = mutableListOf()
-        private var repeatedEventsList : MutableList<Event> = mutableListOf()
         private var nextId = 0
 
         fun addEvent(event: Event, context: Context) {
-            if (event.repeated) repeatedEventsList.add(event)
+            if (event.repeated) {
+                var ev = event
+                ev.repeated = false
+                while (ev.date < Semester.getCurrent().getEnd()) {
+                    eventsList.add(ev)
+                    ev = Event(ev.id, ev.name, ev.date.plusWeeks(1), ev.time, ev.classesItemId, ev.repeated)
+                }
+            }
             else eventsList.add(event)
             save(context)
         }
@@ -94,13 +100,11 @@ class Event (
 
         fun delete(id : Int, context: Context) {
             eventsList = eventsList.filterNot { it.id == id }.toMutableList()
-            repeatedEventsList = repeatedEventsList.filterNot { it.id == id }.toMutableList()
             save(context)
         }
 
         fun removeAllOfClass(id : Int, context: Context) {
             eventsList = eventsList.filterNot { it.classesItemId == id }.toMutableList()
-            repeatedEventsList = repeatedEventsList.filterNot { it.classesItemId == id }.toMutableList()
             save(context)
         }
 
@@ -108,7 +112,6 @@ class Event (
         fun getEvents() : List<Event> {
             val events : MutableList<Event> = mutableListOf()
             for (event in eventsList.filter { Semester.getCurrent().getClasses().contains(it.classesItemId) }) events.add(event)
-            for (event in repeatedEventsList.filter { Semester.getCurrent().getClasses().contains(it.classesItemId) }) events.add(event)
             return events
         }
 
@@ -175,16 +178,9 @@ class Event (
             val events : MutableList<Event> = mutableListOf()
 
             for (event in getEvents()) {
-                if (event.isRepeated()) {
-                    // if weekday and time matches for repeated events
-                    if (event.date.dayOfWeek == selectedDate.dayOfWeek && event.time.hour == selectedTime.hour) {
-                        events.add(event)
-                    }
-                } else {
-                    // if date and time matches for events that are not repeated
-                    if (event.date == selectedDate && event.time.hour == selectedTime.hour) {
-                        events.add(event)
-                    }
+                // if date and time matches for events that are not repeated
+                if (event.date == selectedDate && event.time.hour == selectedTime.hour) {
+                    events.add(event)
                 }
 
             }

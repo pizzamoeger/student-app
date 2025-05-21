@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="7dp"
         android:visibility="invisible"
-        android:text="12.03.2005"/>
+        android:text="5 May"/>
 
     <LinearLayout
         android:layout_width="0dp"

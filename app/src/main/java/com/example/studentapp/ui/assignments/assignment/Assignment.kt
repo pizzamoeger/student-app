@@ -1,14 +1,20 @@
 package com.example.studentapp.ui.assignments.assignment
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Context
 import android.util.Log
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
+import com.example.studentapp.ui.assignments.AssignmentWidget
 import com.example.studentapp.ui.assignments.assignment.Assignment.Companion.nextId
 import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.classesItem.ClassesItem.Companion
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.semester.Semester
+import com.example.studentapp.ui.timetable.TimetableWidget
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
@@ -33,8 +39,9 @@ class Assignment (
     // TODO but for now i will only do slider where you can indicate
 
     fun getDueDate() = dueDate
-    fun setDueDate(due : LocalDate) {
+    fun setDueDate(due : LocalDate, context: Context) {
         dueDate = due
+        save(context)
     }
 
     fun getId() = id
@@ -42,26 +49,29 @@ class Assignment (
     fun getClass() : ClassesItem {
         return ClassesItem.get(classId)
     }
-    fun setClass(id : Int) {
+    fun setClass(id : Int, context: Context) {
         classId = id
+        save(context)
     }
 
     fun isCompleted() = completed
-    fun setCompleted(c : Boolean = true) {
+    fun setCompleted(c : Boolean = true, context: Context) {
         completed = c
         progress = if (c) 100 else 0
+        save(context)
     }
 
     fun getProgress() = progress
-    fun setProgress(p : Int) {
+    fun setProgress(p : Int, context: Context) {
         progress = p
-        if (p >= 100) setCompleted()
-        save()
+        if (p >= 100) setCompleted(context=context)
+        save(context)
     }
 
     fun getTitle() = title
-    fun setTitle(newTitle : String) {
+    fun setTitle(newTitle : String, context: Context) {
         title = newTitle
+        save(context)
     }
 
     override fun toString(): String {
@@ -72,20 +82,20 @@ class Assignment (
         private var assignmentsList : MutableList<Assignment> = mutableListOf()
         private var nextId = 0
 
-        fun add(assignment: Assignment) {
+        fun add(assignment: Assignment, context: Context) {
             assignmentsList.add(assignment)
             assignmentsList.sortBy { it.dueDate }
-            save()
+            save(context)
         }
 
-        fun delete(id : Int) {
+        fun delete(id : Int, context: Context) {
             assignmentsList.removeIf{it.id == id}
-            save()
+            save(context)
         }
 
-        fun removeAllOfClass(id : Int) {
+        fun removeAllOfClass(id : Int, context: Context) {
             assignmentsList = assignmentsList.filterNot { it.classId == id }.toMutableList()
-            save()
+            save(context)
         }
 
         fun get(id : Int) : Assignment {
@@ -132,8 +142,9 @@ class Assignment (
             return getList().filter { it.dueDate == day }
         }
 
-        private fun save() {
+        private fun save(context : Context) {
             val gson = Gson()
+            refreshAssignmentWidget(context)
 
             // create a serializable list from classeslist
             val serializableList = assignmentsList.map {
@@ -161,6 +172,12 @@ class Assignment (
                 assignmentsList = restored.toMutableList()
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
+        }
+
+        private fun refreshAssignmentWidget(context: Context) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, AssignmentWidget::class.java))
+            appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.assignments_recycler_view_widget)
         }
     }
 }

@@ -215,7 +215,7 @@ data class ClassesItem(
             classesList.removeAll{it.id == id}
             Semester.getCurrent().removeClass(id)
             Event.removeAllOfClass(id, context)
-            Assignment.removeAllOfClass(id)
+            Assignment.removeAllOfClass(id, context)
             save()
         }
 

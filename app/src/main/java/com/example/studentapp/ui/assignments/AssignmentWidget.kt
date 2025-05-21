@@ -1,4 +1,4 @@
-package com.example.studentapp.ui.timetable
+package com.example.studentapp.ui.assignments
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -9,14 +9,16 @@ import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.content.ContextCompat
 import com.example.studentapp.R
+import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
+import com.example.studentapp.ui.timetable.TimetableRemoteViewsService
 
 /**
  * Implementation of App Widget functionality.
  */
-class TimetableWidget : AppWidgetProvider() {
+class AssignmentWidget : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -42,17 +44,17 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val intent = Intent(context, TimetableRemoteViewsService::class.java)
+    val intent = Intent(context, AssignmentRemoteViewService::class.java)
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
 
-    val views = RemoteViews(context.packageName, R.layout.timetable_widget)
-    views.setRemoteAdapter(R.id.events_recycler_view_widget, intent)
-    views.setEmptyView(R.id.events_recycler_view_widget, android.R.id.empty)
+    val views = RemoteViews(context.packageName, R.layout.assignment_widget)
+    views.setRemoteAdapter(R.id.assignments_recycler_view_widget, intent)
+    views.setEmptyView(R.id.assignments_recycler_view_widget, android.R.id.empty)
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
 
-class TimetableRemoteViewsService : RemoteViewsService() {
+class AssignmentRemoteViewService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
         return RemoteViewsFactory(this.applicationContext, intent)
     }
@@ -62,20 +64,18 @@ class TimetableRemoteViewsService : RemoteViewsService() {
         intent: Intent
     ) : RemoteViewsService.RemoteViewsFactory {
 
-        val formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-
-        private var items = getEvents()
+        private var items = getAssignment()
 
         override fun onCreate() {}
 
-        private fun getEvents() : List<Event> {
-            val events = Event.getEvents().toMutableList()
-            return events.sortedBy {java.time.LocalDateTime.parse("${it.getDate()} ${it.getTime()}", formatter)}
+        private fun getAssignment() : List<Assignment> {
+            val assignments = Assignment.getList()
+            return assignments.sortedBy {it.getDueDate()}
         }
 
         private fun isFirstOfDay(position: Int) : Boolean {
             if (position == 0) return true
-            if (items[position-1].getDate() != items[position].getDate()) return true
+            if (items[position-1].getDueDate() != items[position].getDueDate()) return true
             return false
         }
 
@@ -83,10 +83,10 @@ class TimetableRemoteViewsService : RemoteViewsService() {
 
         override fun getViewAt(position: Int): RemoteViews {
 
-            val rv = RemoteViews(context.packageName, R.layout.timetable_widget_item)
-            rv.setTextViewText(R.id.name_widget_timetable_item, items[position].getName())
-            rv.setInt(R.id.widget_timetable_item, "setBackgroundColor", ClassesItem.get(items[position].getClassId()).getColor())
-            rv.setInt(R.id.name_widget_timetable_item, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
+            val rv = RemoteViews(context.packageName, R.layout.assignment_widget_item)
+            rv.setTextViewText(R.id.name_text_assignment_widget, items[position].getTitle())
+            rv.setInt(R.id.classes_class_color_assignment_widget, "setBackgroundColor", items[position].getClass().getColor())
+            /*rv.setInt(R.id.name_widget_timetable_item, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
             rv.setTextViewText(R.id.time_widget_timetable_item, items[position].getTime().toString())
 
             if (isFirstOfDay(position)) {
@@ -94,7 +94,7 @@ class TimetableRemoteViewsService : RemoteViewsService() {
                 rv.setTextViewText(R.id.date_widget_timetable, CalendarUtils.dayMonth(items[position].getDate()))
             } else {
                 rv.setViewVisibility(R.id.date_widget_timetable, View.INVISIBLE)
-            }
+            }*/
 
             return rv
         }
@@ -104,7 +104,7 @@ class TimetableRemoteViewsService : RemoteViewsService() {
         override fun getItemId(position: Int): Long = position.toLong()
         override fun hasStableIds(): Boolean = true
         override fun onDataSetChanged() {
-            items = getEvents()
+            items = getAssignment()
         }
         override fun onDestroy() {}
     }

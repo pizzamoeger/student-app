@@ -59,7 +59,7 @@ class AssignmentFragment : Fragment() {
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             // updated continuously as the user slides the thumb
             tvProgressLabel!!.text = "Progress: $progress"
-            Assignment.get(assignmentId).setProgress(progress)
+            Assignment.get(assignmentId).setProgress(progress, requireContext())
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {

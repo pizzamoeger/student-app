@@ -143,13 +143,13 @@ class EditAssignmentFragment : Fragment() {
 
     private fun save() {
         // get name
-        assignment!!.setTitle(binding.nameText.text.toString())
-        if (assignment!!.getTitle() == "") assignment!!.setTitle(classItem.toString()) // if event has no name we use class name as default
+        assignment!!.setTitle(binding.nameText.text.toString(), requireContext())
+        if (assignment!!.getTitle() == "") assignment!!.setTitle(classItem.toString(), requireContext()) // if event has no name we use class name as default
 
-        Assignment.delete(assignment!!.getId())
+        Assignment.delete(assignment!!.getId(), requireContext())
 
-        assignment!!.setDueDate(dueDate)
-        assignment!!.setClass(classItem.getId())
+        assignment!!.setDueDate(dueDate, requireContext())
+        assignment!!.setClass(classItem.getId(), requireContext())
 
         // hide keyboard again before heading up
         // so that layout is calculated correctly
@@ -159,7 +159,7 @@ class EditAssignmentFragment : Fragment() {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        Assignment.add(assignment!!)
+        Assignment.add(assignment!!, requireContext())
 
         // navigate back
         /*val navController = findNavController()
@@ -174,7 +174,7 @@ class EditAssignmentFragment : Fragment() {
 
     private fun delete() {
         // create a new event and add it to eventsList
-        Assignment.delete(assignment!!.getId())
+        Assignment.delete(assignment!!.getId(), requireContext())
         val navController = findNavController()
         val action = EditAssignmentFragmentDirections.actionFragmentEditAssignmentToNavigationAssignments()
 

@@ -1,9 +1,11 @@
 [versions]
 agp = "8.8.1"
+auth0 = "2.7.0"
 colorpicker = "2.3"
 colorpickerVersion = "1.1.0"
 flexbox = "3.0.0"
 gson = "2.10.1"
+jwtdecode = "2.0.1"
 kotlin = "1.9.24"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -25,6 +27,7 @@ navigationUiKtxVersion = "2.7.7"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-fragment-ktx-v277 = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtxVersion" }
 androidx-navigation-ui-ktx-v277 = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtxVersion" }
+auth0 = { module = "com.auth0.android:auth0", version.ref = "auth0" }
 colorpicker = { module = "com.github.Dhaval2404:ColorPicker", version.ref = "colorpicker" }
 flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -33,6 +36,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+jwtdecode = { module = "com.auth0.android:jwtdecode", version.ref = "jwtdecode" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }

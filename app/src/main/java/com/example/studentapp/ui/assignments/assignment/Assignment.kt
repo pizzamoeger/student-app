@@ -5,16 +5,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.util.Log
 import com.example.studentapp.R
-import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.ui.assignments.AssignmentWidget
-import com.example.studentapp.ui.assignments.assignment.Assignment.Companion.nextId
-import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.classesItem.ClassesItem
-import com.example.studentapp.ui.classesItem.ClassesItem.Companion
-import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.semester.Semester
-import com.example.studentapp.ui.timetable.TimetableWidget
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
@@ -142,22 +136,26 @@ class Assignment (
             return getList().filter { it.dueDate == day }
         }
 
-        private fun save(context : Context) {
+        fun getJson() : String {
             val gson = Gson()
-            refreshAssignmentWidget(context)
 
             // create a serializable list from classeslist
             val serializableList = assignmentsList.map {
                 SerializableAssignment(it.dueDate.toString(), it.classId, it.title, it.id, it.completed, it.progress)
             }
 
-            val json: String = gson.toJson(serializableList)
-            prefs.edit().putString("assignments_list", json).apply()
+            return gson.toJson(serializableList)
         }
 
-        fun load() {
+        private fun save(context : Context) {
+            refreshAssignmentWidget(context)
+            prefs.edit().putString("assignments_list", getJson()).apply()
+        }
+
+        fun load(jsonArg: String?) {
             val gson = Gson()
-            val json = prefs.getString("assignments_list", null)
+            var json = jsonArg
+            if (json == null) json = prefs.getString("assignments_list", null)
 
             if (json != null) {
                 // load list of serializableClass

@@ -1,15 +1,9 @@
 package com.example.studentapp.ui.semester
 
 import com.example.studentapp.SharedData.Companion.prefs
-import com.example.studentapp.ui.classesItem.ClassesItem
-import com.example.studentapp.ui.event.Event
-import com.example.studentapp.ui.event.Event.Companion.addEvent
-import com.example.studentapp.ui.event.SerializableEvent
-import com.example.studentapp.ui.semester.Semester.Companion.nextId
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
-import java.time.LocalTime
 
 data class SerializableSemester (
     var start : String,
@@ -71,20 +65,24 @@ class Semester (
             current = newC
         }
 
-        private fun save() {
+        fun getJson() : String {
             val gson = Gson()
 
             val serializableSemester = semesterList.map {
                 SerializableSemester(it.start.toString(), it.end.toString(), it.classesInSemester, it.name, it.id)
             }
 
-            val json: String = gson.toJson(serializableSemester)
-            prefs.edit().putString("semester_list", json).apply()
+            return gson.toJson(serializableSemester)
         }
 
-        fun load() {
+        private fun save() {
+            prefs.edit().putString("semester_list", getJson()).apply()
+        }
+
+        fun load(jsonArg: String?) {
             val gson = Gson()
-            val json = prefs.getString("semester_list", null)
+            var json = jsonArg
+            if (json == null) json = prefs.getString("semester_list", null)
 
             if (json != null) {
                 // load list of serializableClass

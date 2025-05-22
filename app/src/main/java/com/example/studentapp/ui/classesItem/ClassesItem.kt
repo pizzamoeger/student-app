@@ -1,13 +1,9 @@
 package com.example.studentapp.ui.classesItem
 
 import android.content.Context
-import android.graphics.Color
 import android.util.Log
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.studentapp.R
-import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.assignments.assignment.Assignment
@@ -20,7 +16,6 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
 import java.util.Locale
-import kotlin.random.Random
 
 data class ClassesItem(
     private val id: Int = nextId++,
@@ -219,7 +214,7 @@ data class ClassesItem(
             save()
         }
 
-         fun save() {
+        fun getJson() : String {
             val gson = Gson()
 
             // create a serializable list from classeslist
@@ -227,13 +222,17 @@ data class ClassesItem(
                 SerializableClassesItem(it.id, it.name, it.studyTime, it.grades, it.color)
             }
 
-            val json: String = gson.toJson(serializableList)
-            prefs.edit().putString("classes_list", json).apply()
+            return gson.toJson(serializableList)
         }
 
-        fun load() {
+         fun save() {
+            prefs.edit().putString("classes_list", getJson()).apply()
+        }
+
+        fun load(jsonArg: String?) {
             val gson = Gson()
-            val json = prefs.getString("classes_list", null)
+            var json = jsonArg
+            if (json == null) json = prefs.getString("classes_list", null)
 
             if (json != null) {
                 // load list of serializableClass

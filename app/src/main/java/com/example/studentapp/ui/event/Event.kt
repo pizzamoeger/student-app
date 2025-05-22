@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import com.example.studentapp.R
-import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.ui.semester.Semester
 import com.example.studentapp.ui.timetable.TimetableWidget
@@ -115,21 +114,26 @@ class Event (
             return events
         }
 
-        private fun save(context: Context) {
-            refreshTimetableWidget(context)
+        fun getJson() : String {
             val gson = Gson()
 
             val serializableEvents = eventsList.map {
                 SerializableEvent(it.id, it.name, it.date.toString(), it.time.toString(), it.classesItemId, it.repeated)
             }
 
-            val json: String = gson.toJson(serializableEvents)
-            prefs.edit().putString("events_list", json).apply()
+            return gson.toJson(serializableEvents)
         }
 
-        fun load(context: Context) {
+        private fun save(context: Context) {
+            refreshTimetableWidget(context)
+
+            prefs.edit().putString("events_list", getJson()).apply()
+        }
+
+        fun load(jsonArg: String?, context: Context) {
             val gson = Gson()
-            val json = prefs.getString("events_list", null)
+            var json = jsonArg
+            if (json == null) json = prefs.getString("events_list", null)
 
             if (json != null) {
                 // load list of serializableClass

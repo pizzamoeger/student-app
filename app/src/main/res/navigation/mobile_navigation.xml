@@ -197,7 +197,7 @@
     </fragment>
 
     <fragment android:id="@+id/login_fragment"
-        android:name="com.example.studentapp.ui.login.loginFragment"
+        android:name="com.example.studentapp.ui.login.LoginFragment"
         android:label="@string/grades"
         tools:layout="@layout/login"/>
 </navigation>

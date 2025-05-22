@@ -1,10 +1,10 @@
 package com.example.studentapp.ui.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.studentapp.databinding.LoginBinding
 import com.auth0.android.Auth0
@@ -15,15 +15,16 @@ import com.auth0.android.result.Credentials
 import com.example.studentapp.R
 import com.google.android.material.snackbar.Snackbar
 
-class loginFragment : Fragment() {
+class LoginFragment : Fragment() {
     private var _binding: LoginBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var account: Auth0
-    private var appJustLaunched = true
-    private var userIsAuthenticated = false
-
-    private var user = User()
+    companion object {
+        private lateinit var account: Auth0
+        private var appJustLaunched = true
+        private var userIsAuthenticated = false
+        private var user = User()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +38,7 @@ class loginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateUI()
         account = Auth0(
             getString(R.string.com_auth0_client_id),
             getString(R.string.com_auth0_domain)
@@ -72,6 +74,7 @@ class loginFragment : Fragment() {
     private fun logout() {
         WebAuthProvider
             .logout(account)
+            .withScheme(getString(R.string.com_auth0_scheme))
             .start(requireContext(), object : Callback<Void?, AuthenticationException> {
 
                 override fun onFailure(exception: AuthenticationException) {
@@ -109,7 +112,7 @@ class loginFragment : Fragment() {
         binding.logout.isEnabled = userIsAuthenticated
 
         binding.textviewUserProfile.visibility = if (userIsAuthenticated) View.VISIBLE else View.GONE
-        binding.textviewUserProfile.text = "User profile" /*getString(R.string.user_profile,
+        binding.textviewUserProfile.text = user.favoriteSubject /*getString(R.string.user_profile,
             user.name,
             user.email)*/
 

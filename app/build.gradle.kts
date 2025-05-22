@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -40,6 +41,14 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.firebase.bom)) // <-- Use the latest version number here! Check Firebase docs.
+
+    // Add the dependency for the Firebase Authentication library (Kotlin version)
+    implementation(libs.com.google.firebase.firebase.auth.ktx)
+
+    // Add the dependency for FirebaseUI Auth (needed for AuthUI and the Contract)
+    implementation(libs.firebase.ui.auth) // <-- Use the latest version number here! Check FirebaseUI docs.
+
     implementation(libs.gson)
     implementation(libs.mpandroidchart)
     implementation (libs.colorpicker)
@@ -54,6 +63,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.firebase.ui.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

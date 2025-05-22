@@ -2,9 +2,11 @@
 agp = "8.8.1"
 colorpicker = "2.3"
 colorpickerVersion = "1.1.0"
+firebaseBom = "33.14.0"
+firebaseUiAuth = "8.0.2"
 flexbox = "3.0.0"
 gson = "2.10.1"
-kotlin = "1.9.24"
+kotlin = "2.0.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -26,6 +28,9 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-navigation-fragment-ktx-v277 = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtxVersion" }
 androidx-navigation-ui-ktx-v277 = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtxVersion" }
 colorpicker = { module = "com.github.Dhaval2404:ColorPicker", version.ref = "colorpicker" }
+com-google-firebase-firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-ui-auth = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebaseUiAuth" }
 flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 jaredrummler-colorpicker = { module = "com.jaredrummler:colorpicker", version.ref = "colorpickerVersion" }

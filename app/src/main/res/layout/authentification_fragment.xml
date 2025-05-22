@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.authentification.AuthentificationFragment">
+    <!--
+        This FrameLayout serves as the root container for the AuthentificationFragment.
+        Since the fragment primarily checks auth status and launches
+        the FirebaseUI activity, this layout can be very simple.
+        You could add a Spinner (loading indicator) or some text here
+        if you wanted to show something while the auth status is being checked
+        or before the FirebaseUI flow appears.
+    -->
+
+    <!-- Example: Adding a simple loading indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"  /> <!-- Set visibility to gone initially, and show if needed -->
+
+    <!-- Example: Adding some placeholder text -->
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:text="Checking authentication status..."
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:visibility="gone" /> <!-- Set visibility to gone initially, and show if needed -->
+
+
+</FrameLayout>

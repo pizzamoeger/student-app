@@ -163,6 +163,11 @@
             app:destination="@id/fragment_calendar_day" />
     </fragment>
 
+    <fragment android:id="@+id/fragment_authentification"
+        android:name="com.example.studentapp.ui.authentification.AuthentificationFragment"
+        android:label="@string/assignments"
+        tools:layout="@layout/authentification_fragment"/>
+
     <fragment android:id="@+id/fragment_grades"
         android:name="com.example.studentapp.ui.grades.GradesFragment"
         android:label="@string/grades"

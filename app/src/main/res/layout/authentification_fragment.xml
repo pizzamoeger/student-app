@@ -1,40 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- res/layout/fragment_authentication.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.authentification.AuthentificationFragment">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!--
-        This FrameLayout serves as the root container for the AuthentificationFragment.
-        Since the fragment primarily checks auth status and launches
-        the FirebaseUI activity, this layout can be very simple.
-        You could add a Spinner (loading indicator) or some text here
-        if you wanted to show something while the auth status is being checked
-        or before the FirebaseUI flow appears.
-    -->
+    <EditText
+        android:id="@+id/email_edit_text"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-    <!-- Example: Adding a simple loading indicator -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"  /> <!-- Set visibility to gone initially, and show if needed -->
+    <EditText
+        android:id="@+id/password_edit_text"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-    <!-- Example: Adding some placeholder text -->
-    <TextView
-        android:id="@+id/statusTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp"
-        android:text="Checking authentication status..."
-        android:textAppearance="?attr/textAppearanceSubtitle1"
-        android:visibility="gone" /> <!-- Set visibility to gone initially, and show if needed -->
+    <Button
+        android:id="@+id/login_button"
+        android:text="Log In"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/logout_button"
+        android:text="Log Out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/signup_button"
+        android:text="Sign Up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

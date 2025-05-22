@@ -34,16 +34,16 @@ class AuthentificationFragment : Fragment() {
     // Register the ActivityResultLauncher in the class body, before onCreate
     // We use requireActivity() as the LifecycleOwner because the launcher needs to be
     // tied to the activity's lifecycle when used within a Fragment.
-    private val signInLauncher: ActivityResultLauncher<Intent> =
-        registerForActivityResult(FirebaseAuthUIActivityResultContract(), requireActivity().activityResultRegistry) { result ->
-            // Handle the sign-in result here by calling the dedicated function
-            onSignInResult(result.idpResponse)
-        }
+    private lateinit var signInLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Initialize Firebase Auth here, recommended over onCreateView for non-view setup
         auth = Firebase.auth
+
+        // Correctly register the launcher inside onCreate
+        signInLauncher = registerForActivityResult(FirebaseAuthUIActivityResultContract()) { result ->
+            onSignInResult(result.idpResponse)
+        }
     }
 
 
@@ -103,9 +103,8 @@ class AuthentificationFragment : Fragment() {
     private fun launchSignInFlow() { // Made private as it's called internally
         // Choose authentication providers you have enabled in the Firebase Console
         val providers = listOf(
-            AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
-            // Add other providers enabled in Firebase Console:
+            AuthUI.IdpConfig.EmailBuilder().build()
+        // Add other providers enabled in Firebase Console:
             // AuthUI.IdpConfig.PhoneBuilder().build(),
             // AuthUI.IdpConfig.FacebookBuilder().build(), // Requires additional setup
             // AuthUI.IdpConfig.TwitterBuilder().build() // Requires additional setup

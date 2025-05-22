@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
             popupMenu.visibility = View.GONE
         }
         fragment3Button.setOnClickListener {
-            navigateToFragment(R.id.login_fragment)
+            navigateToFragment(R.id.navigation_stopwatch)
             popupMenu.visibility = View.GONE
         }
     }

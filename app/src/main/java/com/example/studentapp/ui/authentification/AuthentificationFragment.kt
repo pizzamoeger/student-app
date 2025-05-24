@@ -100,7 +100,6 @@ class AuthentificationFragment : Fragment() {
                     startActivity(signInIntent)
                     Toast.makeText(requireContext(), "Logged in!", Toast.LENGTH_SHORT).show()
                     requireActivity().finish()
-                    //goToMainActivity()
                 } else {
                     Toast.makeText(requireContext(), "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
@@ -129,13 +128,6 @@ class AuthentificationFragment : Fragment() {
                     Toast.makeText(requireContext(), "Sign out failed.", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
-
-    private fun goToMainActivity() {
-        val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        requireActivity().finish()
     }
 
     override fun onDestroyView() {

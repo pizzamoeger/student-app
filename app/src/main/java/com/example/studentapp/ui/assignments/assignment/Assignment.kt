@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.util.Log
 import com.example.studentapp.R
+import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.ui.assignments.AssignmentWidget
 import com.example.studentapp.ui.classesItem.ClassesItem
@@ -150,6 +151,7 @@ class Assignment (
         private fun save(context : Context) {
             refreshAssignmentWidget(context)
             prefs.edit().putString("assignments_list", getJson()).apply()
+            SharedData.save()
         }
 
         fun load(jsonArg: String?, context: Context) {

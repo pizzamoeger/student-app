@@ -21,8 +21,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
+import com.example.studentapp.ui.assignments.AssignmentWidget
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.semester.Semester
+import com.example.studentapp.ui.stopwatch.StopwatchWidget
 import com.example.studentapp.ui.timetable.TimetableWidget
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -135,6 +137,8 @@ class MainActivity : AppCompatActivity() {
         // Call your widget's onUpdate manually for all widget instances
         if (appWidgetIds.isNotEmpty()) {
             TimetableWidget().onUpdate(context, appWidgetManager, appWidgetIds)
+            AssignmentWidget().onUpdate(context, appWidgetManager, appWidgetIds)
+            StopwatchWidget().onUpdate(context, appWidgetManager, appWidgetIds)
         }
     }
 

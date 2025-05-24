@@ -90,9 +90,6 @@ class SharedData  {
                 Assignment.load(null, context)
                 Semester.load(null)
             }
-            if (Semester.getList().isEmpty()) {
-                Semester.add(Semester())
-            }
         }
     }
 }

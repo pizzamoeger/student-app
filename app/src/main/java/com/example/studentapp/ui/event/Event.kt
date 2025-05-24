@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import com.example.studentapp.R
+import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.ui.semester.Semester
 import com.example.studentapp.ui.timetable.TimetableWidget
@@ -128,6 +129,7 @@ class Event (
             refreshTimetableWidget(context)
 
             prefs.edit().putString("events_list", getJson()).apply()
+            SharedData.save()
         }
 
         fun load(jsonArg: String?, context: Context) {

@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.semester
 
+import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -77,6 +78,7 @@ class Semester (
 
         private fun save() {
             prefs.edit().putString("semester_list", getJson()).apply()
+            SharedData.save()
         }
 
         fun load(jsonArg: String?) {

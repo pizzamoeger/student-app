@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:padding="8dp" android:gravity="center_vertical">
+
+    <TextView
+        android:layout_marginStart="10dp"
+        android:id="@+id/name_text_classes_item_widget_stopwatch"
+        android:layout_width="100dp"
+        android:background="@color/orange"
+        android:layout_height="wrap_content" />
+
+    <!--<TextView
+        android:layout_marginStart="10dp"
+        android:id="@+id/name_text_classes_item_widget_stopwatch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/daily_time_classes_item_widget_stopwatch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/timer_start_button_classes_item_widget_stopwatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/start"
+        android:background="@drawable/circle_background" />-->
+
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.assignments.assignment.Assignment
@@ -228,6 +229,7 @@ data class ClassesItem(
 
          fun save() {
             prefs.edit().putString("classes_list", getJson()).apply()
+             SharedData.save()
         }
 
         fun load(jsonArg: String?) {
@@ -254,8 +256,8 @@ data class ClassesItem(
                 classesList = restored.toMutableList()
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
-            save()
             loaded = true
+            save()
         }
     }
 }

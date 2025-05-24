@@ -53,4 +53,10 @@
     <string name="grade">Note:</string>
     <string name="weight">Gewichtung:</string>
     <string name="add_grade">Neue Note</string>
+    <string name="account">Account</string>
+    <string name="email">Email</string>
+    <string name="password">Passwort</string>
+    <string name="log_in">Anmelden</string>
+    <string name="log_out">Abmelden</string>
+    <string name="sign_up">Registrieren</string>
 </resources>

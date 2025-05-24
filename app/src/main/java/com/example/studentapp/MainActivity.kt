@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Now load SharedData
+        // TODO hacky fix
         lifecycleScope.launch {
             SharedData.init(applicationContext)
             var cont = true

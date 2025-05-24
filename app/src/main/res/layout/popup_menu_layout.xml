@@ -29,7 +29,7 @@
         android:id="@+id/fragment3_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fragment3"
+        android:text="@string/account"
         android:textColor="?android:attr/textColor"
         android:background="@color/transparent"/>
 </LinearLayout>

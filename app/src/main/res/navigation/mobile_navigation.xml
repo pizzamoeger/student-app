@@ -165,7 +165,7 @@
 
     <fragment android:id="@+id/fragment_authentification"
         android:name="com.example.studentapp.ui.authentification.AuthentificationFragment"
-        android:label="@string/title_classes"
+        android:label="@string/account"
         tools:layout="@layout/authentification_fragment"/>
 
     <fragment android:id="@+id/fragment_grades"

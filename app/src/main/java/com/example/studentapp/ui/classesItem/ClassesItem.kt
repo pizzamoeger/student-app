@@ -141,6 +141,7 @@ data class ClassesItem(
     // static
     companion object {
         private var nextId = 1;
+        var loaded = false;
         private var classesList : MutableList<ClassesItem> = mutableListOf() // list of all classes
 
         private var currentClass = ClassesItem()
@@ -230,9 +231,11 @@ data class ClassesItem(
         }
 
         fun load(jsonArg: String?) {
+            loaded = false
             val gson = Gson()
             var json = jsonArg
             if (json == null) json = prefs.getString("classes_list", null)
+            classesList.clear()
 
             if (json != null) {
                 // load list of serializableClass
@@ -251,6 +254,8 @@ data class ClassesItem(
                 classesList = restored.toMutableList()
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
+            save()
+            loaded = true
         }
     }
 }

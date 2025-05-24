@@ -72,9 +72,11 @@ class AuthentificationFragment : Fragment() {
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener { signUpTask ->
                                 if (signUpTask.isSuccessful) {
-                                    Toast.makeText(requireContext(), "Account created", Toast.LENGTH_SHORT).show()
-                                    goToMainActivity()
-                                    SharedData.load(requireContext())
+                                    SharedData.save()
+                                    //SharedData.load(requireContext())
+                                    val signInIntent = Intent(requireContext(), MainActivity::class.java)
+                                    startActivity(signInIntent)
+                                    Toast.makeText(requireContext(), "Account created!", Toast.LENGTH_SHORT).show()
                                 } else {
                                     Toast.makeText(requireContext(), "Sign up failed: ${signUpTask.exception?.message}", Toast.LENGTH_LONG).show()
                                 }
@@ -93,9 +95,12 @@ class AuthentificationFragment : Fragment() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(requireContext(), "Logged in!", Toast.LENGTH_SHORT).show()
                     SharedData.load(requireContext())
-                    goToMainActivity()
+                    val signInIntent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(signInIntent)
+                    Toast.makeText(requireContext(), "Logged in!", Toast.LENGTH_SHORT).show()
+                    requireActivity().finish()
+                    //goToMainActivity()
                 } else {
                     Toast.makeText(requireContext(), "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }

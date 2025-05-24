@@ -2,6 +2,7 @@
 agp = "8.8.1"
 colorpicker = "2.3"
 colorpickerVersion = "1.1.0"
+coreSplashscreen = "1.0.1"
 firebaseBom = "33.14.0"
 firebaseUiAuth = "8.0.2"
 flexbox = "3.0.0"
@@ -26,6 +27,7 @@ firebaseFirestoreKtx = "25.1.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-navigation-fragment-ktx-v277 = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtxVersion" }
 androidx-navigation-ui-ktx-v277 = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtxVersion" }
 colorpicker = { module = "com.github.Dhaval2404:ColorPicker", version.ref = "colorpicker" }

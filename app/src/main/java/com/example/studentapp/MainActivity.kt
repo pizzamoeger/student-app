@@ -14,26 +14,57 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
+import com.example.studentapp.ui.classesItem.ClassesItem
+import com.example.studentapp.ui.semester.Semester
 import com.example.studentapp.ui.timetable.TimetableWidget
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+    private var keepSplashScreenOn = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
+
+        // Keep splash visible while loading
+        splashScreen.setKeepOnScreenCondition { keepSplashScreenOn }
+        ClassesItem.loaded = false
+
         super.onCreate(savedInstanceState)
 
+        // Now load SharedData
+        lifecycleScope.launch {
+            SharedData.init(applicationContext)
+            var cont = true
+            while(cont) {
+                cont = !ClassesItem.loaded
+                delay(100)
+            }
+            refreshWidgets(applicationContext)
 
-        SharedData.init(this)
-        refreshWidgets(this)
+            // Done loading, allow splash to disappear
+            keepSplashScreenOn = false
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+            // Now set content view
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+
+            setupUI()
+        }
+    }
+
+    fun setupUI() {
 
         // bottom navigation
         val navView: BottomNavigationView = binding.navView

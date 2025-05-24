@@ -83,6 +83,7 @@ class Semester (
             val gson = Gson()
             var json = jsonArg
             if (json == null) json = prefs.getString("semester_list", null)
+            semesterList.clear()
 
             if (json != null) {
                 // load list of serializableClass
@@ -104,6 +105,7 @@ class Semester (
                 semesterList.add(Semester())
                 current = semesterList[0]
             }
+            save()
         }
     }
 

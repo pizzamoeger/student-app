@@ -48,7 +48,7 @@ dependencies {
 
     // Add the dependency for FirebaseUI Auth (needed for AuthUI and the Contract)
     implementation(libs.firebase.ui.auth) // <-- Use the latest version number here! Check FirebaseUI docs.
-
+    implementation (libs.androidx.core.splashscreen)
     implementation(libs.gson)
     implementation(libs.mpandroidchart)
     implementation (libs.colorpicker)

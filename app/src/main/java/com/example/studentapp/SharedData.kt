@@ -80,14 +80,14 @@ class SharedData  {
                             val username = documentSnapshot.getString("username")
                             ClassesItem.load(classes)
                             Event.load(events, context)
-                            Assignment.load(assignments)
+                            Assignment.load(assignments, context)
                             Semester.load(semester)
                         }
                     }
             } else {
                 ClassesItem.load(null)
                 Event.load(null, context)
-                Assignment.load(null)
+                Assignment.load(null, context)
                 Semester.load(null)
             }
             if (Semester.getList().isEmpty()) {

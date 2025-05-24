@@ -134,6 +134,7 @@ class Event (
             val gson = Gson()
             var json = jsonArg
             if (json == null) json = prefs.getString("events_list", null)
+            eventsList.clear()
 
             if (json != null) {
                 // load list of serializableClass
@@ -147,6 +148,7 @@ class Event (
 
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
+            save(context)
         }
 
         // get all events at date and time

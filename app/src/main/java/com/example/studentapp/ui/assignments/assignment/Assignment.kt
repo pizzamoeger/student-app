@@ -152,10 +152,11 @@ class Assignment (
             prefs.edit().putString("assignments_list", getJson()).apply()
         }
 
-        fun load(jsonArg: String?) {
+        fun load(jsonArg: String?, context: Context) {
             val gson = Gson()
             var json = jsonArg
             if (json == null) json = prefs.getString("assignments_list", null)
+            assignmentsList.clear()
 
             if (json != null) {
                 // load list of serializableClass
@@ -170,6 +171,7 @@ class Assignment (
                 assignmentsList = restored.toMutableList()
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
+            save(context)
         }
 
         private fun refreshAssignmentWidget(context: Context) {

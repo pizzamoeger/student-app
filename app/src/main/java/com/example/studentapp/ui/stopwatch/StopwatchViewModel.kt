@@ -32,7 +32,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
             override fun run() {
                 // if the stopwatch is running we increase seconds and save them
                 if (_running.value!!) {
-                    ClassesItem.getCurrent().addSecond()
+                    ClassesItem.getCurrent().addSecond(getApplication())
 
                     load()
 

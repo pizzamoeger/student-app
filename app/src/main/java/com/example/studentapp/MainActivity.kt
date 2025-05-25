@@ -131,13 +131,25 @@ class MainActivity : AppCompatActivity() {
 
     fun refreshWidgets(context: Context) {
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        val thisWidget = ComponentName(context, TimetableWidget::class.java)
-        val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+        var thisWidget = ComponentName(context, TimetableWidget::class.java)
+        var appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
         // Call your widget's onUpdate manually for all widget instances
         if (appWidgetIds.isNotEmpty()) {
             TimetableWidget().onUpdate(context, appWidgetManager, appWidgetIds)
+        }
+
+        thisWidget = ComponentName(context, AssignmentWidget::class.java)
+        appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+
+        if (appWidgetIds.isNotEmpty()) {
             AssignmentWidget().onUpdate(context, appWidgetManager, appWidgetIds)
+        }
+
+        thisWidget = ComponentName(context, StopwatchWidget::class.java)
+        appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+
+        if (appWidgetIds.isNotEmpty()) {
             StopwatchWidget().onUpdate(context, appWidgetManager, appWidgetIds)
         }
     }
@@ -174,7 +186,6 @@ class MainActivity : AppCompatActivity() {
         popupMenu.visibility = View.VISIBLE
         popupMenu.bringToFront()
 
-        // TODO item clicks
         val fragment1Button = binding.popupMenu.fragment1Button
         val fragment2Button = binding.popupMenu.fragment2Button
         val fragment3Button = binding.popupMenu.fragment3Button

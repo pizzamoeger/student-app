@@ -43,7 +43,7 @@ class AddGradeFragment : Fragment() {
     fun save() {
         val weight = binding.weightInput.text.toString().toFloatOrNull()!!
         val grade = binding.gradeInput.text.toString().toFloatOrNull()!!
-        classItem.addGrade(grade,weight)
+        classItem.addGrade(grade,weight, requireContext())
         findNavController().navigateUp()
     }
 }

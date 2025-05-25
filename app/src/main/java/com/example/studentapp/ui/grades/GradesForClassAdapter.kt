@@ -1,16 +1,18 @@
 package com.example.studentapp.ui.grades
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.databinding.ClassItemGradesBinding
 import com.example.studentapp.databinding.GradeItemBinding
 import com.example.studentapp.databinding.GradesBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
 
-class GradesForClassAdapter
+class GradesForClassAdapter (private val context : Context)
     : RecyclerView.Adapter<GradesForClassAdapter.ClassesViewHolder> () {
 
     inner class ClassesViewHolder(binding : GradeItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -25,7 +27,7 @@ class GradesForClassAdapter
             name.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     item.name = s.toString()
-                    ClassesItem.save()
+                    ClassesItem.save(context)
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -33,7 +35,7 @@ class GradesForClassAdapter
             })
 
             del.setOnClickListener{
-                ClassesItem.getCurrent().deleteGrade(item.id)
+                ClassesItem.getCurrent().deleteGrade(item.id, context)
                 notifyDataSetChanged()
             }
 
@@ -42,7 +44,7 @@ class GradesForClassAdapter
             weight.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     item.weight = s.toString().toFloat()
-                    ClassesItem.save()
+                    ClassesItem.save(context)
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -52,7 +54,7 @@ class GradesForClassAdapter
             grade.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     item.grade = s.toString().toFloat()
-                    ClassesItem.save()
+                    ClassesItem.save(context)
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

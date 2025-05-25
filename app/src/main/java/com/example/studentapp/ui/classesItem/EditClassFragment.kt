@@ -120,10 +120,10 @@ class EditClassFragment : Fragment() {
         ClassesItem.delete(_classId, requireContext())
 
         // get name
-        thisClass.setName(binding.eventNameEditText.text.toString())
-        thisClass.setColor(color)
+        thisClass.setName(binding.eventNameEditText.text.toString(), requireContext())
+        thisClass.setColor(color, requireContext())
 
-        ClassesItem.add(thisClass.toString(), thisClass.getColor())
+        ClassesItem.add(thisClass.toString(), thisClass.getColor(), requireContext())
 
         // go back
         val navController = findNavController()

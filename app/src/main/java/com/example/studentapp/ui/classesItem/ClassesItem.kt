@@ -1,9 +1,12 @@
 package com.example.studentapp.ui.classesItem
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.SharedData.Companion.prefs
 import com.example.studentapp.TimeInterval
@@ -11,6 +14,7 @@ import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.grades.Grade
 import com.example.studentapp.ui.semester.Semester
+import com.example.studentapp.ui.stopwatch.StopwatchWidget
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.DayOfWeek
@@ -29,9 +33,9 @@ data class ClassesItem(
     override fun toString(): String {
         return name
     }
-    fun setName(newName : String) {
+    fun setName(newName : String, context : Context) {
         name = newName
-        save()
+        save(context)
     }
 
     fun getAverage() : Float {
@@ -44,14 +48,14 @@ data class ClassesItem(
         return (weightedSum/totalWeight).toFloat()
     }
     fun getGrades() : List<Grade> = grades
-    fun addGrade(grade : Float, weight : Float) {
+    fun addGrade(grade : Float, weight : Float, context: Context) {
         grades.add(Grade(weight, grade, gradeId, "Exam $gradeId"))
         gradeId++
-        save()
+        save(context)
     }
-    fun deleteGrade(id : Int) {
+    fun deleteGrade(id : Int, context: Context) {
         grades.removeIf { it.id == id }
-        save()
+        save(context)
     }
 
     // get seconds spent in timeframe
@@ -67,9 +71,9 @@ data class ClassesItem(
 
     fun getId() = id
     fun getColor() = color
-    fun setColor(newColor : Int) {
+    fun setColor(newColor : Int, context: Context) {
         color = newColor
-        save()
+        save(context)
     }
 
     // returns seconds in timespan depending on type
@@ -85,10 +89,10 @@ data class ClassesItem(
         return secondsInInterval(from, to)
     }
 
-    fun addSecond() {
+    fun addSecond(context: Context) {
         val today = LocalDate.now().toString()
         studyTime[today] = studyTime.getOrDefault(today, 0)+1
-        save()
+        save(context)
     }
 
     // get seconds spent studying today
@@ -182,11 +186,11 @@ data class ClassesItem(
         }
 
         // add class to classList
-        fun add(name: String, color : Int) : ClassesItem {
+        fun add(name: String, color : Int, context: Context) : ClassesItem {
             val newClass = ClassesItem(name=name, studyTime = mutableMapOf(), color = color)
             classesList.add(newClass)
             Semester.getCurrent().addClass(newClass.id)
-            save()
+            save(context)
             return newClass
         }
 
@@ -213,7 +217,7 @@ data class ClassesItem(
             Semester.getCurrent().removeClass(id)
             Event.removeAllOfClass(id, context)
             Assignment.removeAllOfClass(id, context)
-            save()
+            save(context)
         }
 
         fun getJson() : String {
@@ -227,12 +231,13 @@ data class ClassesItem(
             return gson.toJson(serializableList)
         }
 
-         fun save() {
+         fun save(context: Context) {
+            refreshStopwatchWidget(context)
             prefs.edit().putString("classes_list", getJson()).apply()
-             SharedData.save()
+            SharedData.save()
         }
 
-        fun load(jsonArg: String?) {
+        fun load(jsonArg: String?, context: Context) {
             loaded = false
             val gson = Gson()
             var json = jsonArg
@@ -257,7 +262,13 @@ data class ClassesItem(
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
             loaded = true
-            save()
+            save(context)
+        }
+
+        private fun refreshStopwatchWidget(context: Context) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, StopwatchWidget::class.java))
+            appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.stopwatch_recycler_view_widget)
         }
     }
 }

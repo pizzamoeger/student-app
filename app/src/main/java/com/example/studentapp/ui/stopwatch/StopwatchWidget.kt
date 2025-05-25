@@ -4,12 +4,15 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.content.ContextCompat
 import com.example.studentapp.R
 import com.example.studentapp.TimeInterval
+import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
@@ -44,7 +47,7 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val intent = Intent(context, StopwatchRemoteViewsService::class.java)
+    val intent = Intent(context, StopwatchRemoteViewService::class.java)
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
 
     val views = RemoteViews(context.packageName, R.layout.stopwatch_widget)
@@ -54,7 +57,7 @@ internal fun updateAppWidget(
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
 
-class StopwatchRemoteViewsService : RemoteViewsService() {
+class StopwatchRemoteViewService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
         return RemoteViewsFactory(this.applicationContext, intent)
     }
@@ -64,13 +67,19 @@ class StopwatchRemoteViewsService : RemoteViewsService() {
         intent: Intent
     ) : RemoteViewsService.RemoteViewsFactory {
 
-        private var items = getClasses()
+        private var items = getAssignment()
 
         override fun onCreate() {}
 
-        private fun getClasses() : List<ClassesItem> {
+        private fun getAssignment() : List<ClassesItem> {
             val classes = ClassesItem.getList()
-            return classes
+            return classes//.sortedBy {it.getDueDate()}
+        }
+
+        private fun isFirstOfDay(position: Int) : Boolean {
+            if (position == 0) return true
+            //if (items[position-1].getDueDate() != items[position].getDueDate()) return true
+            return false
         }
 
         override fun getCount(): Int = items.size
@@ -78,11 +87,12 @@ class StopwatchRemoteViewsService : RemoteViewsService() {
         override fun getViewAt(position: Int): RemoteViews {
 
             val rv = RemoteViews(context.packageName, R.layout.widget_stopwatch_item)
-            /*rv.setTextViewText(R.id.name_text_classes_item_widget_stopwatch, items[position].toString())
+            rv.setTextViewText(R.id.name_text_classes_item_widget_stopwatch, items[position].toString())
             //rv.setInt(R.id.timer_start_button_classes_item_widget_stopwatch, "setBackgroundTint", items[position].getColor())
             rv.setInt(R.id.daily_time_classes_item_widget_stopwatch, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
-            rv.setTextViewText(R.id.daily_time_classes_item_widget_stopwatch, items[position].getSeconds(TimeInterval.TOTAL).toString())
-*/
+            rv.setTextViewText(R.id.daily_time_classes_item_widget_stopwatch, items[position].getSeconds(
+                TimeInterval.TOTAL).toString())
+
             return rv
         }
 
@@ -91,7 +101,7 @@ class StopwatchRemoteViewsService : RemoteViewsService() {
         override fun getItemId(position: Int): Long = position.toLong()
         override fun hasStableIds(): Boolean = true
         override fun onDataSetChanged() {
-            items = getClasses()
+            items = getAssignment()
         }
         override fun onDestroy() {}
     }

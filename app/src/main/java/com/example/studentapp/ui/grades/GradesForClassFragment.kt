@@ -22,7 +22,7 @@ class GradesForClassFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = GradesBinding.inflate(inflater, container, false)
-        adapter = GradesForClassAdapter()
+        adapter = GradesForClassAdapter(requireContext())
         binding.recyclerViewGrades.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewGrades.adapter = adapter
         val root = binding.root

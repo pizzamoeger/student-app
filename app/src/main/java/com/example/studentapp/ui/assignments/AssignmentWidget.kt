@@ -91,8 +91,6 @@ class AssignmentRemoteViewService : RemoteViewsService() {
 
             rv.setTextViewText(R.id.date_text_assignment_widget, items[position].getDueDate().toString())
 
-            Log.d("aaaa", items[position].getProgress().toString())
-
             rv.setProgressBar(R.id.progress_bar_widget, 100, items[position].getProgress(), false)
             /*rv.setInt(R.id.name_widget_timetable_item, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
             rv.setTextViewText(R.id.time_widget_timetable_item, items[position].getTime().toString())

@@ -29,7 +29,7 @@ class Event (
     private var id : Int = nextId++,
     private var name : String = "",
     private var date : LocalDate = LocalDate.now(),
-    private var time : LocalTime = LocalTime.now(),
+    private var time : LocalTime = LocalTime.now().withNano(0),
     private var classesItemId : Int = -1,
     private var repeated : Boolean = false // todo make this yearly/weekly/biweekly/...
 ) {

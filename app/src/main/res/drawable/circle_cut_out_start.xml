@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+
+    <!-- White filled circle with triangle cutout -->
+    <path
+        android:fillColor="@color/white"
+        android:fillType="evenOdd"
+        android:pathData="
+            M 20,0
+            A 20,20 0 1 1 19.999,0
+            Z
+
+            M 14,10
+            L 30,20
+            L 14,30
+            Z
+        " />
+</vector>

@@ -73,13 +73,7 @@ class StopwatchRemoteViewService : RemoteViewsService() {
 
         private fun getAssignment() : List<ClassesItem> {
             val classes = ClassesItem.getList()
-            return classes//.sortedBy {it.getDueDate()}
-        }
-
-        private fun isFirstOfDay(position: Int) : Boolean {
-            if (position == 0) return true
-            //if (items[position-1].getDueDate() != items[position].getDueDate()) return true
-            return false
+            return classes
         }
 
         override fun getCount(): Int = items.size
@@ -88,10 +82,15 @@ class StopwatchRemoteViewService : RemoteViewsService() {
 
             val rv = RemoteViews(context.packageName, R.layout.widget_stopwatch_item)
             rv.setTextViewText(R.id.name_text_classes_item_widget_stopwatch, items[position].toString())
-            //rv.setInt(R.id.timer_start_button_classes_item_widget_stopwatch, "setBackgroundTint", items[position].getColor())
+            // Set background color (make the whole button colored)
+            rv.setInt(
+                R.id.timer_start_button_classes_item_widget_stopwatch,
+                "setColorFilter",
+                items[position].getColor()
+            )
+            rv.setInt(R.id.name_text_classes_item_widget_stopwatch, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
             rv.setInt(R.id.daily_time_classes_item_widget_stopwatch, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
-            rv.setTextViewText(R.id.daily_time_classes_item_widget_stopwatch, items[position].getSeconds(
-                TimeInterval.TOTAL).toString())
+            rv.setTextViewText(R.id.daily_time_classes_item_widget_stopwatch, ClassesItem.getTimeStringFromSeconds(items[position].getSeconds(TimeInterval.DAY)))
 
             return rv
         }

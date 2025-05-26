@@ -19,7 +19,7 @@
         android:id="@+id/timer_start_button_classes_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/start"
-        android:background="@drawable/circle_background" />
+        android:src="@drawable/play_icon"
+        android:background="@drawable/circle_background_icon" />
 
 </LinearLayout>

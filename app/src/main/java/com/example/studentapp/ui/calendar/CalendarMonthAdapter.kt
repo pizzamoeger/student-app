@@ -82,7 +82,7 @@ class CalendarMonthAdapter (
         for (assignment in Assignment.getUncompletedDay(day)) {
             val classItem = assignment.getClass()
 
-            val drawable = ContextCompat.getDrawable(holder.binding.root.context, R.drawable.circle_background)
+            val drawable = ContextCompat.getDrawable(holder.binding.root.context, R.drawable.circle_background_icon)
             val colorFilter = PorterDuffColorFilter(classItem.getColor(), PorterDuff.Mode.SRC_IN)
             if (drawable != null) {
                 drawable.colorFilter = colorFilter

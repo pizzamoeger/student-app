@@ -2,18 +2,14 @@ package com.example.studentapp.ui.classes
 
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
-import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.ItemClassStopwatchBinding
 import com.example.studentapp.ui.classesItem.ClassesItem
 
@@ -45,7 +41,7 @@ class StopwatchAdapter (
             }
 
             // get background for buttons
-            val drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.circle_background)
+            val drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.circle_background_icon)
             val colorFilter = PorterDuffColorFilter(item.getColor(), PorterDuff.Mode.SRC_IN)
             if (drawable != null) {
                 drawable.colorFilter = colorFilter
@@ -55,9 +51,9 @@ class StopwatchAdapter (
             // set the icons for buttons
             item.tracking.observe(lifecycleOwner) {
                 if (it) { // tracking is true
-                    startButton.setImageResource(R.drawable.pause)
+                    startButton.setImageResource(R.drawable.pause_icon)
                 } else { // tracking is false
-                    startButton.setImageResource(R.drawable.start)
+                    startButton.setImageResource(R.drawable.play_icon)
                 }
             }
 

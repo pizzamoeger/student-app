@@ -19,7 +19,7 @@
         android:id="@+id/edit_button_classes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/pen"
+        android:src="@drawable/pen_icon"
         android:background="@color/transparent"
         android:text="@string/delete" />
 

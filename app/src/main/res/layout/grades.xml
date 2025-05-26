@@ -15,7 +15,7 @@
         android:padding="12dp"
         android:textColor="?android:attr/textColorPrimary"
         app:iconTint="?android:attr/textColorPrimary"
-        app:icon="@drawable/plus"
+        app:icon="@drawable/plus_icon"
         android:background="@color/transparent"
         android:text="@string/add_grade" />
 

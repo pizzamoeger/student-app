@@ -5,7 +5,6 @@
     android:initialLayout="@layout/assignment_widget"
     android:minWidth="250dp"
     android:minHeight="110dp"
-    android:previewImage="@drawable/example_appwidget_preview"
     android:previewLayout="@layout/assignment_widget"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="4"

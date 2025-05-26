@@ -60,6 +60,6 @@
         android:layout_gravity="center_vertical|end"
         android:layout_marginStart="10dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/pen" />
+        android:src="@drawable/pen_icon" />
 
 </LinearLayout>

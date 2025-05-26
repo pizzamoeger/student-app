@@ -53,6 +53,6 @@
         android:layout_gravity="center_vertical|end"
         android:layout_marginStart="10dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/trash" />
+        android:src="@drawable/trash_icon" />
 
 </LinearLayout>

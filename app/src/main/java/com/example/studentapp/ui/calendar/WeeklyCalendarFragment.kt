@@ -75,7 +75,7 @@ class WeeklyCalendarFragment : Fragment() {
             onCellEventClicked = {date ->
                 selectedDate = date
                 val navController = findNavController()
-                val action = WeeklyCalendarFragmentDirections.actionWeekToCalendarDay()
+                val action = WeeklyCalendarFragmentDirections.actionWeekToCalendarDay(selectedDate.toString())
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_timetable, true) // keeps StopwatchFragment in back stack

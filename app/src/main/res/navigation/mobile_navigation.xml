@@ -56,6 +56,12 @@
         <action
             android:id="@+id/action_fragment_calendar_day_to_fragment_edit_assignment"
             app:destination="@id/fragment_edit_assignment" />
+        <argument
+            android:name="date"
+            app:argType="string"
+            android:defaultValue=""/>
+        <deepLink
+            app:uri="studentapp://dayview/{date}" />
     </fragment>
 
     <fragment

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentapp.R
@@ -18,6 +19,7 @@ import com.example.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.example.studentapp.ui.event.Event
 import com.example.studentapp.ui.timetable.DayHourAdapter
 import com.example.studentapp.ui.timetable.HourEvent
+import java.time.LocalDate
 import java.time.LocalTime
 
 
@@ -34,6 +36,8 @@ class DailyCalendarFragment : Fragment() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentCalendarDailyBinding.inflate(inflater, container, false)
+        val args: DailyCalendarFragmentArgs by navArgs()
+        selectedDate = LocalDate.parse(args.date)
         val root: View = binding.root
         return root
     }

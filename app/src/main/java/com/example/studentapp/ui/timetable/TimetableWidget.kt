@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
@@ -48,12 +49,21 @@ internal fun updateAppWidget(
     appWidgetId: Int
 ) {
     val configIntent = Intent(context, MainActivity::class.java).apply {
-        putExtra("f", "TimetableFragment")
+        putExtra("fragmentOpen", "TimetableFragment")
     }
-    Log.d("aaaaaaa", configIntent.getStringExtra("f").toString())
     //configIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
     val configPendingIntent = PendingIntent.getActivity(context, 0, configIntent,
         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+    val clickIntentTemplate = Intent(context, MainActivity::class.java).apply {
+        putExtra("fragmentOpen", "DayViewFragment")
+    }
+    val clickPendingIntentTemplate = NavDeepLinkBuilder(context)
+        .setGraph(R.navigation.mobile_navigation)
+        .setDestination(R.id.fragment_calendar_day)
+        .setComponentName(MainActivity::class.java)
+        .createPendingIntent()
+
 
     val intent = Intent(context, TimetableRemoteViewsService::class.java)
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -61,7 +71,7 @@ internal fun updateAppWidget(
     val views = RemoteViews(context.packageName, R.layout.timetable_widget)
     views.setRemoteAdapter(R.id.events_recycler_view_widget, intent)
     views.setEmptyView(R.id.events_recycler_view_widget, android.R.id.empty)
-    views.setPendingIntentTemplate(R.id.events_recycler_view_widget, configPendingIntent)
+    views.setPendingIntentTemplate(R.id.events_recycler_view_widget, clickPendingIntentTemplate)
     views.setOnClickPendingIntent(R.id.root_timetable_widget, configPendingIntent)
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
@@ -111,11 +121,10 @@ class TimetableRemoteViewsService : RemoteViewsService() {
                 rv.setViewVisibility(R.id.date_widget_timetable, View.INVISIBLE)
             }
 
-            /*val fillInIntent = Intent().apply {
-                putExtra("openFragment", "TimetableFragment")
-                //putExtra("eventId", items[position].getId()) // Optional: Pass data
-            }*/
-            //rv.setOnClickFillInIntent(R.id.widget_timetable_item, fillInIntent)
+            val fillInIntent = Intent().apply {
+                data = Uri.parse("studentapp://dayview/${items[position].getDate()}")
+            }
+            rv.setOnClickFillInIntent(R.id.widget_timetable_item, fillInIntent)
 
             return rv
         }

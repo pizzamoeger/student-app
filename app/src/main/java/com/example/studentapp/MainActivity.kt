@@ -24,6 +24,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.studentapp.databinding.ActivityMainBinding
 import com.example.studentapp.ui.assignments.AssignmentWidget
+import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.semester.Semester
 import com.example.studentapp.ui.stopwatch.StopwatchFragment
@@ -33,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
 
@@ -117,12 +119,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
-        val fragmentToOpen = intent.getStringExtra("f")
-        Log.d("aaaa", fragmentToOpen.toString())
+        val fragmentToOpen = intent.getStringExtra("fragmentOpen")
+        Log.d("IntentExtras", intent?.extras?.toString() ?: "No extras")
 
-        if (fragmentToOpen == "TimetableFragment") {
-            // Use eventId if needed here
-            navigateToFragment(R.id.navigation_timetable)
+        when (fragmentToOpen) {
+            "TimetableFragment" -> {
+                navigateToFragment(R.id.navigation_timetable)
+            }
+            "DayViewFragment" -> {
+                CalendarUtils.selectedDate = LocalDate.parse(intent.getStringExtra("date"))
+                navigateToFragment(R.id.fragment_calendar_day)
+            }
         }
     }
 

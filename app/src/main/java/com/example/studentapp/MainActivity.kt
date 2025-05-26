@@ -94,22 +94,21 @@ class MainActivity : AppCompatActivity() {
         // make app follow devices default theme
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
-        // if we are locked, backpress should be disabled
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (SharedData.locked) {
-                    // disables backpress
-                    Toast.makeText(this@MainActivity, "Back button is disabled in this mode", Toast.LENGTH_SHORT).show()
-                } else {
-                    // enables backpress
-                    onBackPressed()
-                }
-            }
-        }
 
         // when back is pressed execute our callback
-        onBackPressedDispatcher.addCallback(this, callback)
+        // onBackPressedDispatcher.addCallback(this, callback)
         handleIntent(intent)
+    }
+
+    // if we are locked, backpress should be disabled
+    override fun onBackPressed() {
+        if (SharedData.locked) {
+            // disables backpress
+            Toast.makeText(this@MainActivity, "Back button is disabled in this mode", Toast.LENGTH_SHORT).show()
+        } else {
+            // enables backpress
+            super.onBackPressed();
+        }
     }
 
     override fun onNewIntent(intent: Intent) {

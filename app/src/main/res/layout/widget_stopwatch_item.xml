@@ -11,6 +11,7 @@
     
     <TextView
         android:layout_marginStart="10dp"
+        android:textSize="17sp"
         android:id="@+id/name_text_classes_item_widget_stopwatch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
     <TextView
         android:id="@+id/daily_time_classes_item_widget_stopwatch"
         android:layout_width="0dp"
+        android:textSize="17sp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 

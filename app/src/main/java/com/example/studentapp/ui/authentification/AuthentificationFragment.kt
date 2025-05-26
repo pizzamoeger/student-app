@@ -7,11 +7,17 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.example.studentapp.MainActivity
+import com.example.studentapp.R
 import com.example.studentapp.SharedData
 import com.example.studentapp.databinding.AuthentificationFragmentBinding
+import com.example.studentapp.ui.classesItem.ClassesItem
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class AuthentificationFragment : Fragment() {
 
@@ -95,15 +101,26 @@ class AuthentificationFragment : Fragment() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    SharedData.load(requireContext())
-                    val signInIntent = Intent(requireContext(), MainActivity::class.java)
-                    startActivity(signInIntent)
-                    Toast.makeText(requireContext(), "Logged in!", Toast.LENGTH_SHORT).show()
-                    requireActivity().finish()
+                    lifecycleScope.launch {
+                        ClassesItem.loaded = false
+                        SharedData.load(requireContext())
+                        while (!ClassesItem.loaded) {
+                            delay(50)
+                        }
+                        val signInIntent = Intent(requireContext(), MainActivity::class.java)
+                        startActivity(signInIntent)
+                        Toast.makeText(requireContext(), "Logged in!", Toast.LENGTH_SHORT).show()
+                        moveToMain()
+                    }
                 } else {
                     Toast.makeText(requireContext(), "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
+    }
+
+    private fun moveToMain() {
+        val navController = requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
+        navController.navigateUp()
     }
 
     // Function to handle user sign out

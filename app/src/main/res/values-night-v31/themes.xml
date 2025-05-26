@@ -13,7 +13,7 @@
         <item name="windowBackgroundMuted1">@color/gray_8</item>
 
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/limegreen</item>
+        <item name="colorSecondary">@color/blue</item>
         <item name="colorSecondaryVariant">@color/green</item>
         <item name="colorOnSecondary">@color/purple</item>
         <item name="android:textColorSecondary">@color/gray_1</item>

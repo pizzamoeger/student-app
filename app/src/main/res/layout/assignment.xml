@@ -25,44 +25,33 @@
         android:background="?android:attr/listDivider" />
 
     <!-- Text with background bar -->
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_margin="8dp">
-
-        <!-- Background color strip with weights -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            android:alpha="0.3">
-
-            <View
-                android:id="@+id/progress_completed"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:background="?android:attr/textColorPrimary" />
-
-            <View
-                android:id="@+id/progress_uncompleted"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:background="@color/transparent" />
-        </LinearLayout>
-
-        <!-- Text on top of background -->
         <TextView
             android:id="@+id/assignment_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
             android:text="exam"
-            android:layout_gravity="center_vertical|start"
-            android:padding="4dp" />
-    </FrameLayout>
+            android:padding="4dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+        <!-- ProgressBar below text -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:progressDrawable="@drawable/progress_drawable"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/assignment_text"
+            android:layout_marginTop="4dp"
+            android:progress="50"
+            android:max="100"/>
+    </RelativeLayout>
 
     <ImageButton
         android:id="@+id/edit_button_assignment"

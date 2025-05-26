@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
@@ -26,8 +27,7 @@ class AssignmentsAdapter (
         private val colorBlock: View = binding.assignmentClassColor
         private val dueDate: TextView = binding.dueDate
         private val edit: ImageButton = binding.editButtonAssignment
-        private val progressComp : View = binding.progressCompleted
-        private val progressUncomp : View = binding.progressUncompleted
+        private val progressBar : ProgressBar = binding.progressBar
 
         fun bind(item: Assignment) {
             // bind name
@@ -45,13 +45,9 @@ class AssignmentsAdapter (
             // bind delete button
             colorBlock.setBackgroundColor(item.getClass().getColor())
 
-            val paramsC = progressComp.layoutParams as LinearLayout.LayoutParams
-            paramsC.weight=item.getProgress().toFloat()
-            progressComp.layoutParams = paramsC
-
-            val paramsU = progressUncomp.layoutParams as LinearLayout.LayoutParams
-            paramsU.weight=100-item.getProgress().toFloat()
-            progressUncomp.layoutParams = paramsU
+            //rv.setProgressBar(R.id.progress_bar_widget, 100, item.getProgress(), false)
+            progressBar.progress = item.getProgress()
+            progressBar.max = 100
 
             // bind item click
             edit.setOnClickListener {

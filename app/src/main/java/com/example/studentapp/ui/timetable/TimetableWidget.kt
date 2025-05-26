@@ -55,14 +55,12 @@ internal fun updateAppWidget(
     val configPendingIntent = PendingIntent.getActivity(context, 0, configIntent,
         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-    val clickIntentTemplate = Intent(context, MainActivity::class.java).apply {
-        putExtra("fragmentOpen", "DayViewFragment")
-    }
-    val clickPendingIntentTemplate = NavDeepLinkBuilder(context)
+    // TODO on click open correct day
+    /*val clickPendingIntentTemplate = NavDeepLinkBuilder(context)
         .setGraph(R.navigation.mobile_navigation)
         .setDestination(R.id.fragment_calendar_day)
         .setComponentName(MainActivity::class.java)
-        .createPendingIntent()
+        .createPendingIntent()*/
 
 
     val intent = Intent(context, TimetableRemoteViewsService::class.java)
@@ -71,7 +69,7 @@ internal fun updateAppWidget(
     val views = RemoteViews(context.packageName, R.layout.timetable_widget)
     views.setRemoteAdapter(R.id.events_recycler_view_widget, intent)
     views.setEmptyView(R.id.events_recycler_view_widget, android.R.id.empty)
-    views.setPendingIntentTemplate(R.id.events_recycler_view_widget, clickPendingIntentTemplate)
+    //views.setPendingIntentTemplate(R.id.events_recycler_view_widget, clickPendingIntentTemplate)
     views.setOnClickPendingIntent(R.id.root_timetable_widget, configPendingIntent)
 
     appWidgetManager.updateAppWidget(appWidgetId, views)

@@ -61,6 +61,7 @@
             app:argType="string"
             android:defaultValue=""/>
         <deepLink
+            android:id="@+id/day_view_deep_link"
             app:uri="studentapp://dayview/{date}" />
     </fragment>
 

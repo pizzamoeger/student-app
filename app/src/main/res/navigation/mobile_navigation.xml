@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_classes"
-        android:name="com.example.studentapp.ui.classes.ClassesFragment"
+        android:name="com.hannah.studentapp.ui.classes.ClassesFragment"
         android:label="@string/title_classes"
         tools:layout="@layout/fragment_classes">
 
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/navigation_stopwatch"
-        android:name="com.example.studentapp.ui.stopwatch.StopwatchFragment"
+        android:name="com.hannah.studentapp.ui.stopwatch.StopwatchFragment"
         android:label="@string/title_stopwatch"
         tools:layout="@layout/fragment_stopwatch">
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_timetable"
-        android:name="com.example.studentapp.ui.calendar.WeeklyCalendarFragment"
+        android:name="com.hannah.studentapp.ui.calendar.WeeklyCalendarFragment"
         android:label="@string/title_timetable"
         tools:layout="@layout/fragment_calendar_weekly">
         <action
@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/fragment_calendar_day"
-        android:name="com.example.studentapp.ui.calendar.DailyCalendarFragment"
+        android:name="com.hannah.studentapp.ui.calendar.DailyCalendarFragment"
         android:label="@string/day"
         tools:layout="@layout/fragment_calendar_daily">
         <action
@@ -67,7 +67,7 @@
 
     <fragment
         android:id="@+id/navigation_assignments"
-        android:name="com.example.studentapp.ui.assignments.AssignmentsFragment"
+        android:name="com.hannah.studentapp.ui.assignments.AssignmentsFragment"
         android:label="@string/assignments"
         tools:layout="@layout/fragment_assignments">
 
@@ -84,7 +84,7 @@
 
     <fragment
         android:id="@+id/navigation_assignment"
-        android:name="com.example.studentapp.ui.assignments.assignment.AssignmentFragment"
+        android:name="com.hannah.studentapp.ui.assignments.assignment.AssignmentFragment"
         android:label="@string/assignments"
         tools:layout="@layout/fragment_assignment">
         <argument
@@ -93,7 +93,7 @@
     </fragment>
 
     <fragment android:id="@+id/fragment_event_edit"
-        android:name="com.example.studentapp.ui.event.EventEditFragment"
+        android:name="com.hannah.studentapp.ui.event.EventEditFragment"
         android:label="@string/event_edit"
         tools:layout="@layout/fragment_event_edit">
         <action
@@ -106,7 +106,7 @@
     </fragment>
 
     <fragment android:id="@+id/fragment_edit_class"
-        android:name="com.example.studentapp.ui.classesItem.EditClassFragment"
+        android:name="com.hannah.studentapp.ui.classesItem.EditClassFragment"
         android:label="@string/class_edit"
         tools:layout="@layout/fragment_edit_class">
         <action
@@ -118,7 +118,7 @@
     </fragment>
 
     <fragment android:id="@+id/fragment_edit_assignment"
-        android:name="com.example.studentapp.ui.assignments.assignment.EditAssignmentFragment"
+        android:name="com.hannah.studentapp.ui.assignments.assignment.EditAssignmentFragment"
         android:label="@string/assignment_edit"
         tools:layout="@layout/fragment_assignment_edit">
         <argument
@@ -131,7 +131,7 @@
 
     <fragment
         android:id="@+id/navigation_insights"
-        android:name="com.example.studentapp.ui.stopwatch.insights.InsightsFragment"
+        android:name="com.hannah.studentapp.ui.stopwatch.insights.InsightsFragment"
         android:label="@string/title_insights"
         tools:layout="@layout/fragment_insights">
         <action
@@ -141,7 +141,7 @@
 
     <fragment
         android:id="@+id/navigation_classes_item"
-        android:name="com.example.studentapp.ui.classesItem.ClassesItemFragment"
+        android:name="com.hannah.studentapp.ui.classesItem.ClassesItemFragment"
         tools:layout="@layout/fragment_classes_item">
         <argument
             android:name="classId"
@@ -149,13 +149,13 @@
     </fragment>
 
     <fragment android:id="@+id/fragment_semester"
-        android:name="com.example.studentapp.ui.semester.SemesterFragment"
+        android:name="com.hannah.studentapp.ui.semester.SemesterFragment"
         android:label="@string/manage_semester"
         tools:layout="@layout/fragment_semester">
     </fragment>
 
     <fragment android:id="@+id/fragment_month_view"
-        android:name="com.example.studentapp.ui.calendar.MonthlyCalendarFragment"
+        android:name="com.hannah.studentapp.ui.calendar.MonthlyCalendarFragment"
         android:label="@string/assignments"
         tools:layout="@layout/fragment_calendar_monthly">
 
@@ -171,12 +171,12 @@
     </fragment>
 
     <fragment android:id="@+id/fragment_authentification"
-        android:name="com.example.studentapp.ui.authentification.AuthentificationFragment"
+        android:name="com.hannah.studentapp.ui.authentification.AuthentificationFragment"
         android:label="@string/account"
         tools:layout="@layout/authentification_fragment"/>
 
     <fragment android:id="@+id/fragment_grades"
-        android:name="com.example.studentapp.ui.grades.GradesFragment"
+        android:name="com.hannah.studentapp.ui.grades.GradesFragment"
         android:label="@string/grades"
         tools:layout="@layout/fragment_grades">
         <action
@@ -188,7 +188,7 @@
     </fragment>
 
     <fragment android:id="@+id/add_grade_fragment"
-        android:name="com.example.studentapp.ui.grades.AddGradeFragment"
+        android:name="com.hannah.studentapp.ui.grades.AddGradeFragment"
         android:label="@string/grades"
         tools:layout="@layout/add_grades_fragment">
         <argument
@@ -197,7 +197,7 @@
     </fragment>
 
     <fragment android:id="@+id/grades_for_class_fragment"
-        android:name="com.example.studentapp.ui.grades.GradesForClassFragment"
+        android:name="com.hannah.studentapp.ui.grades.GradesForClassFragment"
         android:label="@string/grades"
         tools:layout="@layout/grades">
         <argument

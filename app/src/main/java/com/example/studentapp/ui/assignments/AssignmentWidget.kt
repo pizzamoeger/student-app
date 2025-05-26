@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.assignments
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -10,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.content.ContextCompat
+import com.example.studentapp.MainActivity
 import com.example.studentapp.R
 import com.example.studentapp.ui.assignments.assignment.Assignment
 import com.example.studentapp.ui.calendar.CalendarUtils
@@ -52,6 +54,15 @@ internal fun updateAppWidget(
     val views = RemoteViews(context.packageName, R.layout.assignment_widget)
     views.setRemoteAdapter(R.id.assignments_recycler_view_widget, intent)
     views.setEmptyView(R.id.assignments_recycler_view_widget, android.R.id.empty)
+
+    val configIntent = Intent(context, MainActivity::class.java).apply {
+        putExtra("fragmentOpen", "AssignmentFragment")
+    }
+    //configIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    val configPendingIntent = PendingIntent.getActivity(context, appWidgetId, configIntent,
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+    views.setOnClickPendingIntent(R.id.root_assignment_widget, configPendingIntent)
+    views.setPendingIntentTemplate(R.id.assignments_recycler_view_widget, configPendingIntent)
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
@@ -101,6 +112,8 @@ class AssignmentRemoteViewService : RemoteViewsService() {
             } else {
                 rv.setViewVisibility(R.id.date_widget_timetable, View.INVISIBLE)
             }*/
+            rv.setOnClickFillInIntent(R.id.assignment_widget_item, Intent())
+
 
             return rv
         }

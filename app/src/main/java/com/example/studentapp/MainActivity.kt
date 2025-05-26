@@ -130,6 +130,12 @@ class MainActivity : AppCompatActivity() {
                 CalendarUtils.selectedDate = LocalDate.parse(intent.getStringExtra("date"))
                 navigateToFragment(R.id.fragment_calendar_day)
             }
+            "AssignmentFragment" -> {
+                navigateToFragment(R.id.navigation_assignments)
+            }
+            "StopwatchFragment" -> {
+                navigateToFragment(R.id.navigation_stopwatch)
+            }
         }
     }
 

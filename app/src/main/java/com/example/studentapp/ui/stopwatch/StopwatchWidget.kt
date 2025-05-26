@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.stopwatch
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -10,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.content.ContextCompat
+import com.example.studentapp.MainActivity
 import com.example.studentapp.R
 import com.example.studentapp.TimeInterval
 import com.example.studentapp.ui.assignments.assignment.Assignment
@@ -54,6 +56,15 @@ internal fun updateAppWidget(
     views.setRemoteAdapter(R.id.stopwatch_recycler_view_widget, intent)
     views.setEmptyView(R.id.stopwatch_recycler_view_widget, android.R.id.empty)
 
+    val configIntent = Intent(context, MainActivity::class.java).apply {
+        putExtra("fragmentOpen", "StopwatchFragment")
+    }
+    //configIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    val configPendingIntent = PendingIntent.getActivity(context, appWidgetId, configIntent,
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+    views.setOnClickPendingIntent(R.id.root_stopwatch_widget, configPendingIntent)
+    views.setPendingIntentTemplate(R.id.stopwatch_recycler_view_widget, configPendingIntent)
+
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
 
@@ -92,6 +103,7 @@ class StopwatchRemoteViewService : RemoteViewsService() {
             rv.setInt(R.id.name_text_classes_item_widget_stopwatch, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
             rv.setInt(R.id.daily_time_classes_item_widget_stopwatch, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
             rv.setTextViewText(R.id.daily_time_classes_item_widget_stopwatch, ClassesItem.getTimeStringFromSeconds(items[position].getSeconds(TimeInterval.DAY)))
+            rv.setOnClickFillInIntent(R.id.widget_stopwatch_item, Intent())
 
             return rv
         }

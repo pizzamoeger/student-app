@@ -2,6 +2,7 @@
     style="@style/Widget.StudentApp.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root_assignment_widget"
     android:theme="@style/Theme.StudentApp.AppWidgetContainer">
 
     <LinearLayout
@@ -21,9 +22,8 @@
         <ListView
             android:id="@+id/assignments_recycler_view_widget"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
 
     </LinearLayout>
 

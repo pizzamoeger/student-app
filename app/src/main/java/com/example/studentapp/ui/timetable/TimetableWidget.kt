@@ -52,7 +52,7 @@ internal fun updateAppWidget(
         putExtra("fragmentOpen", "TimetableFragment")
     }
     //configIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-    val configPendingIntent = PendingIntent.getActivity(context, 0, configIntent,
+    val configPendingIntent = PendingIntent.getActivity(context, appWidgetId, configIntent,
         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
     // TODO on click open correct day
@@ -71,6 +71,7 @@ internal fun updateAppWidget(
     views.setEmptyView(R.id.events_recycler_view_widget, android.R.id.empty)
     //views.setPendingIntentTemplate(R.id.events_recycler_view_widget, clickPendingIntentTemplate)
     views.setOnClickPendingIntent(R.id.root_timetable_widget, configPendingIntent)
+    views.setPendingIntentTemplate(R.id.events_recycler_view_widget, configPendingIntent)
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
@@ -119,10 +120,12 @@ class TimetableRemoteViewsService : RemoteViewsService() {
                 rv.setViewVisibility(R.id.date_widget_timetable, View.INVISIBLE)
             }
 
-            val fillInIntent = Intent().apply {
+            rv.setOnClickFillInIntent(R.id.widget_timetable_item_all, Intent())
+
+            /*val fillInIntent = Intent().apply {
                 data = Uri.parse("studentapp://dayview/${items[position].getDate()}")
             }
-            rv.setOnClickFillInIntent(R.id.widget_timetable_item, fillInIntent)
+            rv.setOnClickFillInIntent(R.id.widget_timetable_item, fillInIntent)*/
 
             return rv
         }

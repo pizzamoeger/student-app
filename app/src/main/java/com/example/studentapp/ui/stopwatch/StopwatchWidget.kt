@@ -83,11 +83,12 @@ class StopwatchRemoteViewService : RemoteViewsService() {
             val rv = RemoteViews(context.packageName, R.layout.widget_stopwatch_item)
             rv.setTextViewText(R.id.name_text_classes_item_widget_stopwatch, items[position].toString())
             // Set background color (make the whole button colored)
-            rv.setInt(
+            /*rv.setInt(
                 R.id.timer_start_button_classes_item_widget_stopwatch,
                 "setColorFilter",
                 items[position].getColor()
-            )
+            )*/
+            rv.setInt(R.id.classes_class_color_stopwatch_widget, "setBackgroundColor", items[position].getColor())
             rv.setInt(R.id.name_text_classes_item_widget_stopwatch, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
             rv.setInt(R.id.daily_time_classes_item_widget_stopwatch, "setTextColor", ContextCompat.getColor(context, R.color.gray_1))
             rv.setTextViewText(R.id.daily_time_classes_item_widget_stopwatch, ClassesItem.getTimeStringFromSeconds(items[position].getSeconds(TimeInterval.DAY)))

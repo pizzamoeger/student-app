@@ -3,6 +3,12 @@
     android:orientation="horizontal" android:padding="8dp" android:gravity="center_vertical">
 
     <TextView
+        android:id="@+id/classes_class_color_stopwatch_widget"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="#FF0000" />
+    
+    <TextView
         android:layout_marginStart="10dp"
         android:id="@+id/name_text_classes_item_widget_stopwatch"
         android:layout_width="0dp"
@@ -15,11 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/timer_start_button_classes_item_widget_stopwatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/circle_cut_out_start"
-        android:background="@drawable/start" />
+        android:background="@drawable/start" />-->
+    <!--TODO start stopwatch by pressing on this-->
 
 </LinearLayout>

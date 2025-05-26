@@ -1,5 +1,6 @@
 package com.example.studentapp.ui.timetable
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -9,10 +10,13 @@ import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavDeepLinkBuilder
+import com.example.studentapp.MainActivity
 import com.example.studentapp.R
 import com.example.studentapp.ui.calendar.CalendarUtils
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.event.Event
+
 
 /**
  * Implementation of App Widget functionality.
@@ -43,12 +47,22 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
+    val configIntent = Intent(context, MainActivity::class.java).apply {
+        putExtra("f", "TimetableFragment")
+    }
+    Log.d("aaaaaaa", configIntent.getStringExtra("f").toString())
+    //configIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    val configPendingIntent = PendingIntent.getActivity(context, 0, configIntent,
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
     val intent = Intent(context, TimetableRemoteViewsService::class.java)
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
 
     val views = RemoteViews(context.packageName, R.layout.timetable_widget)
     views.setRemoteAdapter(R.id.events_recycler_view_widget, intent)
     views.setEmptyView(R.id.events_recycler_view_widget, android.R.id.empty)
+    views.setPendingIntentTemplate(R.id.events_recycler_view_widget, configPendingIntent)
+    views.setOnClickPendingIntent(R.id.root_timetable_widget, configPendingIntent)
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
@@ -65,7 +79,7 @@ class TimetableRemoteViewsService : RemoteViewsService() {
 
         val formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
-        private var items = getEvents()
+        private var items: List<Event> = emptyList()
 
         override fun onCreate() {}
 
@@ -96,6 +110,12 @@ class TimetableRemoteViewsService : RemoteViewsService() {
             } else {
                 rv.setViewVisibility(R.id.date_widget_timetable, View.INVISIBLE)
             }
+
+            /*val fillInIntent = Intent().apply {
+                putExtra("openFragment", "TimetableFragment")
+                //putExtra("eventId", items[position].getId()) // Optional: Pass data
+            }*/
+            //rv.setOnClickFillInIntent(R.id.widget_timetable_item, fillInIntent)
 
             return rv
         }

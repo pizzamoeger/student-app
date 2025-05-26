@@ -3,7 +3,9 @@ package com.example.studentapp
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +26,7 @@ import com.example.studentapp.databinding.ActivityMainBinding
 import com.example.studentapp.ui.assignments.AssignmentWidget
 import com.example.studentapp.ui.classesItem.ClassesItem
 import com.example.studentapp.ui.semester.Semester
+import com.example.studentapp.ui.stopwatch.StopwatchFragment
 import com.example.studentapp.ui.stopwatch.StopwatchWidget
 import com.example.studentapp.ui.timetable.TimetableWidget
 import kotlinx.coroutines.Dispatchers
@@ -104,6 +107,23 @@ class MainActivity : AppCompatActivity() {
 
         // when back is pressed execute our callback
         onBackPressedDispatcher.addCallback(this, callback)
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent) // Update the intent so getIntent() returns this new one
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        val fragmentToOpen = intent.getStringExtra("f")
+        Log.d("aaaa", fragmentToOpen.toString())
+
+        if (fragmentToOpen == "TimetableFragment") {
+            // Use eventId if needed here
+            navigateToFragment(R.id.navigation_timetable)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

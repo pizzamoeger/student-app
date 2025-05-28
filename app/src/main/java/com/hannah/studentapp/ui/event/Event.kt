@@ -27,7 +27,7 @@ data class SerializableEvent(
 
 class Event (
     private var id : Int = nextId++,
-    private var name : String = "",
+    private var name : String = "New Event",
     private var date : LocalDate = LocalDate.now(),
     private var time : LocalTime = LocalTime.now().withNano(0),
     private var classesItemId : Int = -1,

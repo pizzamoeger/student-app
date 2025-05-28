@@ -95,7 +95,7 @@ class EventEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (event == null) {
-            event = Event(name="", date = date, time=time, classesItemId = 0, repeated = false)
+            event = Event(date = date, time=time, classesItemId = 0, repeated = false)
         }
 
         // set repeated

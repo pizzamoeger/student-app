@@ -151,3 +151,21 @@ You can decide to give them titles (by just editing the title at the left of eac
 You can add a grade for this class by clicking the `+ ADD GRADE`-Button, which will open the `Add Grade`-View.
 
 ## Account
+
+You can access the `Account`-View by opening the popup-menu and clicking on the `ACCOUNT`-TextView.
+
+There you can see one of two possible things:
+* a text input for email, password, a `LOG IN`-Button and a `SIGN UP`-Button.
+  * this means you are currently **logged out**
+  * if you already have an account, you can enter your email and password here. Then, you can click on the `LOG IN`-Button.
+  * if you don't have an account yet, you can enter your email and a password. Then, you can click on the `SIGN UP`-Button.
+* a `LOG OUT`-Button
+  * this means you are currently **logged in**
+
+If you log into an account, all the data that currently is on the app will be wiped and replaced with the data for that account.
+
+If you sign up, all the data that currently is on the app will be saved to the newly created account.
+
+If you log out, all data that currently is on the app will be saved to the server and then wiped from your device. You will no longer see the data, but it still exists.
+
+This means the only way you can lose data is, if you add data while being logged out and then logging in to an account.

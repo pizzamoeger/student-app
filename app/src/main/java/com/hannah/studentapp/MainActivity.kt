@@ -189,6 +189,10 @@ class MainActivity : AppCompatActivity() {
                 showFragmentSelectionMenu(toolbar)
                 return true
             }
+            android.R.id.home -> { // todo }"|?>>???? bruchts dasf
+                onBackPressedDispatcher.onBackPressed()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }

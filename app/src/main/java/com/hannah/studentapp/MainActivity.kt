@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showFragmentSelectionMenu(view: View) {
         // get popup
-        val popupMenu = binding.popupMenu.popupMenu
+        val popupMenu : androidx. constraintlayout. widget. ConstraintLayout = binding.popupMenu.popupMenu
 
         // if it is already visible, make it invisible and return
         if (popupMenu.visibility == View.VISIBLE) {

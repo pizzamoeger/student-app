@@ -55,6 +55,7 @@ For now, the insights available are:
 * How much time you spent studying for which class this **day**
 * How much time you spent studying for which class this **week**
 * How much time you spent studying for which class this **month**
+You can get back to the `Stopwatch`-View by clicking on the `Stopwatch`-TextView.
 
 ## Managing your timetable
 
@@ -90,3 +91,28 @@ Next to the date and arrows, assignments for this date will be displayed.
 Below the date and assignments, you can see all events for each hour of the day. If you click on an event there, it will open the `Event Edit`-View for that event.
 Above the date and assignments, there is a `NEW EVENT`-Button, which will open the `Event Edit`-View for a new event.
 
+## Managing your assignments
+
+You can navigate to the `Assignments`-View by clicking on the assignment icon in the bottom navigation.
+
+It will initially just display a `+ ADD ASSIGNMENT`-Button, and two TextViews (`Overview` and `Calendar View`) which are clickable.
+
+If you click on the `+ ADD ASSIGNMENT`-Button, a new View will be opened (`Assingment Edit`-View).
+If works like the other `Edit`-Views. You can:
+* choose a title
+  * by default it has no title
+  * if you choose a class it will take the class name as title by default
+* choose a due date
+* choose a class
+  * if you choose a class, the assignment will have a color (the class color) associated with it
+
+After you added one or more assignments, they will be displayed (sorted by due date) in the `Assignments`-View.
+If your assignment is overdue, the date and title will be red.
+Other than the due date, title, (color), and the pen (by clicking on it you can edit the assignment) each assignment will also have a progress bar below it.
+If you click on an assignment, a new View will open, where there is a slider with which you can indicate your progress.
+If you completed the assignment (= slider is all the way to the right), the assignment will no longer be shown anywhere.
+
+If you click on the `Calendar View`-TextView, a new View will open (`Calendar`-View). It will display the current month.
+The date and arrows work like in the `Timetable`-View.
+If you added one or more assignments **associated to a class** (= they have a color), the due date will have a little dot with the corresponding color.
+You can click on any day, which will open the `Day`-View for the clicked day.

@@ -55,3 +55,32 @@ For now, the insights available are:
 * How much time you spent studying for which class this **day**
 * How much time you spent studying for which class this **week**
 * How much time you spent studying for which class this **month**
+
+## Managing your timetable
+
+You can navigate to the `Timetable`-View by clicking on the timetable icon in the bottom navigation.
+
+You will see a calendar week view (from Monday to Friday, 07:00 to 18:00). It will initially be set to the calendar week you are currently in.
+You can navigate to other weeks by clicking on the left and right arrow buttons at the top left/right.
+
+You can click on any cell in the timetable. 
+* If the cell is empty, it will open the `Event Edit`-View.
+* If the cell is not empty (meaning an event takes place at this hour), it will open the `Day`-View.
+
+The `Event Edit`-View works similar to the `Class Edit`-View.
+You can:
+* choose a name
+  * if you don't change it, the name will be "New Event"
+  * if you delete the name (= name is empty), the event will take the name of the class as default value. note that if you do not assign a class to your event, this will lead to the event having **no name**
+* choose a date
+  * by default the date of the cell clicked on
+* choose a time
+  * by default the time of the cell clicked on
+* choose a class the event belongs to
+  * by default no class
+  * if you choose a class, the event will have a background color (the one of the class)
+    ***if you choose no class and set the name empty, the event will not be visible in the timetable. However, it still is in the corresponding cell, just not visible***
+* choose if the event should be repeated weekly
+  * if you tick this, "infinite" events will be created, one each week
+The `DELETE` and `SAVE` Buttons work analog to the ones of the `Event Edit`-View.
+

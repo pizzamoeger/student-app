@@ -138,3 +138,16 @@ For now, a class can only be part of one semester.
 If you create an event that is repeated weekly, an event will be created for each week in the current semester. (This is what I meant by "infinite").
 The classes, events and assignments you can see in the app are only the classes, events and assignments for the currently selected semester.
 
+## Managing your grades
+
+You can access the `Grades`-View by opening the popup-menu and clicking on the `GRADES`-TextView.
+
+There you can see a list of all classes with their average grade. You can add a grade for a class by clicking on the `+`-icon.
+
+It will open the `Add Grade`-View. You can set a weight and a grade.
+
+By clicking on a class in the list, you can open the `Grades for class`-View. There you can see all grades for this class.
+You can decide to give them titles (by just editing the title at the left of each grade). You can also edit weight and grade just by editing them directly. Changes will be saved automatically. You can also delete grades by clicking the trash-icon.
+You can add a grade for this class by clicking the `+ ADD GRADE`-Button, which will open the `Add Grade`-View.
+
+## Account

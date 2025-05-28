@@ -84,3 +84,9 @@ You can:
   * if you tick this, "infinite" events will be created, one each week
 The `DELETE` and `SAVE` Buttons work analog to the ones of the `Event Edit`-View.
 
+The `Day`-View will open a calendar day view. The date of the day being displayed is at the top left.
+You can navigate to other days using the arrows below the date.
+Next to the date and arrows, assignments for this date will be displayed.
+Below the date and assignments, you can see all events for each hour of the day. If you click on an event there, it will open the `Event Edit`-View for that event.
+Above the date and assignments, there is a `NEW EVENT`-Button, which will open the `Event Edit`-View for a new event.
+

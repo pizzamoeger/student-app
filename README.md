@@ -14,6 +14,8 @@ The app has multiple key features:
 
 Each feature will be explained in detail below.
 
+At the top of each View, you can see a blue Toolbar. At the left of this the title of the current View will be displayed. At the right you can find three horizontal lines. By clicking on them you can open and close the popup-menu.
+
 ## Managing your classes
 
 If you open the app, the `Classes Fragment` is launched.
@@ -116,3 +118,23 @@ If you click on the `Calendar View`-TextView, a new View will open (`Calendar`-V
 The date and arrows work like in the `Timetable`-View.
 If you added one or more assignments **associated to a class** (= they have a color), the due date will have a little dot with the corresponding color.
 You can click on any day, which will open the `Day`-View for the clicked day.
+
+## Managing your semesters
+
+You can get to the `Semester`-View by opening the popup-menu and clicking on the `MANAGE SEMESTER`-TextView.
+
+It will display:
+* The current Semester
+  * You can switch semesters by clicking on the text next to `Current Semester`
+  * you can edit the name of the current semester
+  * you can also edit the start and end date of the current semester
+  * if you want your changes to be saved, you can click on save, which will exit the `Semester`-View.
+  * you can also delete a semester.
+* a `+ ADD NEW SEMESTER`-Button, which adds a new semester and sets it as the current semester.
+
+**All your data is associated to a semester**. If you enter the app for the first time, a semester is automatically created, starting at the current date and ending in current date plus 6 months.
+If you delete a semester, all associated data will no longer be accessible.
+For now, a class can only be part of one semester.
+If you create an event that is repeated weekly, an event will be created for each week in the current semester. (This is what I meant by "infinite").
+The classes, events and assignments you can see in the app are only the classes, events and assignments for the currently selected semester.
+

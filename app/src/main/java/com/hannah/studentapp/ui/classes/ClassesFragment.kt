@@ -39,7 +39,7 @@ class ClassesFragment : Fragment() {
                 val action = ClassesFragmentDirections.actionClassesToEditClass(item.getId().toString())
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(R.id.navigation_classes, false) // keeps StopwatchFragment in back stack
+                    .setPopUpTo(R.id.navigation_classes, true) // keeps StopwatchFragment in back stack
                     .build()
                 navController.navigate(action, navOptions)})
 

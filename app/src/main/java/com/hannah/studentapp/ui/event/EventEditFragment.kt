@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,7 @@ import com.hannah.studentapp.ui.classesItem.ClassesItem
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.hannah.studentapp.ui.classesItem.EditClassFragmentDirections
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
@@ -44,7 +46,7 @@ class EventEditFragment : Fragment() {
         _binding = FragmentEventEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
         event = Event.get(args.eventId.toInt())
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         return root
     }
 
@@ -89,6 +91,24 @@ class EventEditFragment : Fragment() {
         }
 
         picker.show(parentFragmentManager, picker.toString())
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        //enable menu
+        setHasOptionsMenu(true)
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(this){
+                //true means that the callback is enabled
+                this.isEnabled = true
+                val navController = findNavController()
+                val action = EventEditFragmentDirections.actionEditEventToWeekly()
+                navController.navigate(action)
+                //exitDialog() //dialog to conform exit
+            }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

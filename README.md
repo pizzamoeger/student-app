@@ -169,3 +169,14 @@ If you sign up, all the data that currently is on the app will be saved to the n
 If you log out, all data that currently is on the app will be saved to the server and then wiped from your device. You will no longer see the data, but it still exists.
 
 This means the only way you can lose data is, if you add data while being logged out and then logging in to an account.
+
+## Widgets
+
+The app also provides some home screen widgets. Specifically:
+
+* A timetable widget, displaying your events
+  * if you click on it, it opens the `Timetable`-View
+* A stopwatch widget, displaying your study time for all classes
+  * if you click on it, it open the `Stopwatch`-View
+* An assignment widget, displaying all your assignments (sorted by due date)
+  * if you click on it, it opens the `Assignment`-View

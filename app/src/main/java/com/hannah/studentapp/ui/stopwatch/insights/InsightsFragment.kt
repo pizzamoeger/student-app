@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +33,7 @@ class InsightsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInsightsBinding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         val root: View = binding.root
         return root;
     }

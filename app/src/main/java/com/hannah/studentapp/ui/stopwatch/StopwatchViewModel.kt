@@ -1,6 +1,9 @@
 package com.hannah.studentapp.ui.stopwatch
 
 import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
@@ -21,34 +24,34 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private var secondsTotalAll = 0
 
     init {
-        runTimer()
         load()
     }
 
     private fun runTimer() {
-        handler.post(object : Runnable {
-            override fun run() {
-                // if the stopwatch is running we increase seconds and save them
-                if (_running.value!!) {
-                    ClassesItem.getCurrent().addSecond(getApplication())
+        // start timer
+        val context = getApplication<Application>()
+        val intent = Intent(context, StopwatchService::class.java)
+        context.startForegroundService(intent)
+    }
 
-                    load()
+    fun updateTimeFromService(seconds : Int) {
+        ClassesItem.getCurrent().addSecond(getApplication())
 
-                    // update what time(s) should display
-                    _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
-                    for (classItem in ClassesItem.getList()) classItem.updateText()
-                }
+        load()
 
-                // execute this every second
-                handler.postDelayed(this, 1000)
-            }
-        })
+        // update what time(s) should display
+        _time.value = ClassesItem.getTimeStringFromSeconds(secondsTodayAll)
+        for (classItem in ClassesItem.getList()) classItem.updateText()
     }
 
     // stop tracking
     fun stop() {
         _running.value = false
         if (ClassesItem.getCurrent() != ClassesItem()) ClassesItem.getCurrent().updateTracking(false)
+        // stop
+        val context = getApplication<Application>()
+        val intent = Intent(context, StopwatchService::class.java)
+        context.stopService(intent)
     }
 
     // button functionality
@@ -58,6 +61,7 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
         else {
             _running.value= !(_running.value!!)
         }
+        if (_running.value == true) runTimer()
     }
 
     // loads secondsTotalAll and secondsTodayAll

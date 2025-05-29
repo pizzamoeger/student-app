@@ -1,10 +1,17 @@
 package com.hannah.studentapp.ui.stopwatch
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.registerReceiver
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -35,6 +42,18 @@ class StopwatchFragment : Fragment() {
         val root: View = binding.root
 
         return root;
+    }
+
+    // handles the broadcast
+    private val stopwatchReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "com.hannah.studentapp.STOPWATCH_UPDATE") {
+                val seconds = intent.getIntExtra("seconds", 0)
+                // Update ViewModel or UI
+                Log.d("rst", "received")
+                stopwatchViewModel.updateTimeFromService(seconds)
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,6 +136,20 @@ class StopwatchFragment : Fragment() {
 
         // load seconds
         stopwatchViewModel.load()
+
+        // broadcast thingy
+        val filter = IntentFilter("com.hannah.studentapp.STOPWATCH_UPDATE")
+        registerReceiver(
+            requireContext(),
+            stopwatchReceiver,
+            filter,
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireContext().unregisterReceiver(stopwatchReceiver)
     }
 
     override fun onDestroyView() {

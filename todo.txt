@@ -5,9 +5,7 @@ class edit should lead back to classes (navigate up)
 - same for assignmetn edit
 
 insights shuold stay if i switch back
-
 calendar view should also stay
-    assignment progress edit should also vanish when moving away via bottom nav
 
 - id ards to int
 - login, signup app crash?

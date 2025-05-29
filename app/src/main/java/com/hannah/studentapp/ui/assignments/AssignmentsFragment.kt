@@ -37,7 +37,7 @@ class AssignmentsFragment : Fragment() {
         // gets adapter
         adapter = AssignmentsAdapter ({
                 item ->
-            val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentEditAssignment(item.getId().toString())
+            val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentEditAssignment(item.getId())
             // if we move back to classes using the bottomnav, we want to go to classes
             val navOptions = androidx.navigation.NavOptions.Builder()
                 .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
@@ -45,7 +45,7 @@ class AssignmentsFragment : Fragment() {
             findNavController().navigate(action, navOptions)
         },
             { item ->
-                val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToNavigationAssignment(item.getId().toString(), true)
+                val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToNavigationAssignment(item.getId(), true)
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
                     .build()
@@ -71,7 +71,7 @@ class AssignmentsFragment : Fragment() {
 
     private fun newAssignment() {
         // navigate to event edit fragment
-        val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentEditAssignment("-1")
+        val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentEditAssignment(-1)
         // if we move back to classes using the bottomnav, we want to go to classes
         val navOptions = androidx.navigation.NavOptions.Builder()
             .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack

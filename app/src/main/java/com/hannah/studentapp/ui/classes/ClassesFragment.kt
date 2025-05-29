@@ -36,7 +36,7 @@ class ClassesFragment : Fragment() {
         adapter = ClassesAdapter (
             onClassesItemClick = {item ->
                 val navController = findNavController()
-                val action = ClassesFragmentDirections.actionClassesToEditClass(item.getId().toString())
+                val action = ClassesFragmentDirections.actionClassesToEditClass(item.getId())
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_classes, true) // keeps StopwatchFragment in back stack
@@ -62,7 +62,7 @@ class ClassesFragment : Fragment() {
 
     private fun newClass() {
         // navigate to event edit fragment
-        val action = ClassesFragmentDirections.actionClassesToEditClass("-1")
+        val action = ClassesFragmentDirections.actionClassesToEditClass(-1)
         // if we move back to classes using the bottomnav, we want to go to classes
         val navOptions = androidx.navigation.NavOptions.Builder()
             .setPopUpTo(R.id.navigation_classes, true) // keeps StopwatchFragment in back stack

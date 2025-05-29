@@ -64,7 +64,7 @@ class DailyCalendarFragment : Fragment() {
     private fun newEvent() {
         // navigate to event edit fragment
         val navController = findNavController()
-        val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id.toString(), false)
+        val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id, false)
 
         val navOptions = androidx.navigation.NavOptions.Builder()
             .setPopUpTo(R.id.navigation_timetable, true) // keeps StopwatchFragment in back stack
@@ -92,7 +92,7 @@ class DailyCalendarFragment : Fragment() {
         val hourAdapter = DayHourAdapter(requireContext(), hourEventList(),
             onCellEventClicked = {id ->
                 val navController = findNavController()
-                val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id.toString(), false)
+                val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id, false)
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_timetable, true) // keeps StopwatchFragment in back stack
@@ -105,7 +105,7 @@ class DailyCalendarFragment : Fragment() {
     private fun setAssignmentsAdapter() {
         assignmentAdapter = AssignmentsAdapter ({
                 item ->
-            val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToFragmentEditAssignment(item.getId().toString())
+            val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToFragmentEditAssignment(item.getId())
             // if we move back to classes using the bottomnav, we want to go to classes
             // TODO denke isch navigatoie assoge,'ite d' ichiting
             val navOptions = androidx.navigation.NavOptions.Builder()
@@ -115,7 +115,7 @@ class DailyCalendarFragment : Fragment() {
         },
             { item ->
                 // todo do au denke ew
-                val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId().toString(), false)
+                val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId(), false)
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
                     .build()

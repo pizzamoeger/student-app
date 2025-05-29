@@ -89,7 +89,7 @@
         tools:layout="@layout/fragment_assignment">
         <argument
             android:name="assigntmentId"
-            app:argType="string" />
+            app:argType="integer" />
         <argument
             android:name="fromAssignmentNav"
             app:argType="boolean" />
@@ -113,7 +113,7 @@
             app:destination="@id/fragment_calendar_day" />
         <argument
             android:name="eventId"
-            app:argType="string" />
+            app:argType="integer" />
         <argument
             android:name="fromTimeTable"
             app:argType="boolean" />
@@ -128,7 +128,7 @@
             app:destination="@id/navigation_classes" />
         <argument
             android:name="classId"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
 
     <fragment android:id="@+id/fragment_edit_assignment"
@@ -137,7 +137,7 @@
         tools:layout="@layout/fragment_assignment_edit">
         <argument
             android:name="assignmentId"
-            app:argType="string" />
+            app:argType="integer" />
         <action
             android:id="@+id/action_fragment_edit_assignment_to_navigation_assignments"
             app:destination="@id/navigation_assignments" />
@@ -159,7 +159,7 @@
         tools:layout="@layout/fragment_classes_item">
         <argument
             android:name="classId"
-            app:argType="string" />
+            app:argType="integer" />
         <action
             android:id="@+id/action_navigation_classes_item_to_navigation_stopwatch"
             app:destination="@id/navigation_stopwatch" />

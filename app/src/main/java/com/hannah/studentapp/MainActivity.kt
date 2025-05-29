@@ -7,9 +7,11 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowInsetsController
@@ -44,6 +46,37 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private var keepSplashScreenOn = true
+
+    fun getStatusBarHeight(): Int {
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+    }
+
+    fun getToolbarHeight(): Int {
+        val typedValue = TypedValue()
+        return if (theme.resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
+            TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
+        } else 0
+    }
+
+    fun adjustFragmentMargin() {
+        val statusBarHeight = getStatusBarHeight()
+        val toolbarHeight = getToolbarHeight()
+        val totalTopMargin = statusBarHeight //+ toolbarHeight
+
+        val fragmentContainer = binding.navHostFragmentActivityMain
+        val layoutParams = fragmentContainer.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.topMargin = totalTopMargin
+        fragmentContainer.layoutParams = layoutParams
+
+        val popupMenuRoot = binding.popupMenu.root
+        popupMenuRoot.setPadding(
+            popupMenuRoot.paddingLeft,
+            totalTopMargin,
+            popupMenuRoot.paddingRight,
+            popupMenuRoot.paddingBottom
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -112,6 +145,10 @@ class MainActivity : AppCompatActivity() {
         // when back is pressed execute our callback
         // onBackPressedDispatcher.addCallback(this, callback)
         handleIntent(intent)
+
+        binding.toolbar.post {
+            adjustFragmentMargin()
+        }
     }
 
     // if we are locked, backpress should be disabled
@@ -133,7 +170,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleIntent(intent: Intent) {
         val fragmentToOpen = intent.getStringExtra("fragmentOpen")
-        Log.d("IntentExtras", intent?.extras?.toString() ?: "No extras")
+        Log.d("IntentExtras", intent.extras?.toString() ?: "No extras")
 
         when (fragmentToOpen) {
             "TimetableFragment" -> {
@@ -204,8 +241,8 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_navigation -> {
                 // when we click opions thingy in menu display custom menu (or hide it again)
-                /*val toolbar = findViewById<Toolbar>(R.id.toolbar)
-                showFragmentSelectionMenu(toolbar)*/
+                val toolbar = findViewById<Toolbar>(R.id.toolbar)
+                showFragmentSelectionMenu(toolbar)
                 return true
             }
             android.R.id.home -> { // todo }"|?>>???? bruchts dasf
@@ -229,7 +266,7 @@ class MainActivity : AppCompatActivity() {
         // set width and height
         val params = popupMenu.layoutParams
         params.width = resources.displayMetrics.widthPixels/2
-        params.height = resources.displayMetrics.heightPixels//-binding.toolbar.height
+        params.height = resources.displayMetrics.heightPixels-binding.toolbar.height
         popupMenu.layoutParams = params
 
         // make it visible and move it to front

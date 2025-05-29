@@ -1,9 +1,11 @@
 package com.hannah.studentapp
 
 import android.appwidget.AppWidgetManager
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +30,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -104,6 +107,9 @@ class MainActivity : AppCompatActivity() {
             // Now set content view
             setupUI()
         }
+
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(broadCastReceiver, IntentFilter("com.hannah.studentapp.STOPWATCH_UPDATE"))
     }
 
     fun setupUI() {
@@ -282,5 +288,25 @@ class MainActivity : AppCompatActivity() {
         //navController.popBackStack()
         navController.navigate(destinationId)
         binding.popupMenu.popupMenu.visibility = View.GONE
+    }
+
+    val broadCastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(contxt: Context?, intent: Intent?) {
+            Log.d("rst", "received"+intent?.action)
+            when (intent?.action) {
+                "com.hannah.studentapp.STOPWATCH_UPDATE" -> {
+                    val seconds = intent.getIntExtra("seconds", 0)
+                    Log.d("rst", "received "+seconds)
+                    //stopwatchViewModel.updateTimeFromService(seconds)
+                }
+                // Update ViewModel or UI
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(broadCastReceiver)
     }
 }

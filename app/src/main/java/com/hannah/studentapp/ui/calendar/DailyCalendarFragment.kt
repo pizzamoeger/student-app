@@ -107,14 +107,19 @@ class DailyCalendarFragment : Fragment() {
                 item ->
             val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToFragmentEditAssignment(item.getId().toString())
             // if we move back to classes using the bottomnav, we want to go to classes
+            // TODO denke isch navigatoie assoge,'ite d' ichiting
             val navOptions = androidx.navigation.NavOptions.Builder()
                 .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
                 .build()
             findNavController().navigate(action, navOptions)
         },
             { item ->
-                val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId().toString())
-                findNavController().navigate(action)},
+                // todo do au denke ew
+                val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId().toString(), false)
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
+                    .build()
+                findNavController().navigate(action,  navOptions)},
             Assignment.getUncompletedDay(selectedDate))
 
         binding.assignmentsListView.layoutManager = LinearLayoutManager(requireContext())

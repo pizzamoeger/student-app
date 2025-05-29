@@ -1,11 +1,8 @@
 - navigation:
 class edit should lead back to classes (navigate up)
-    customize navigate up arrow
     when navigating to smt from popup menu first navigate back to fragment thingy ("close")
-    as i want to exit class edit when nav in bottom view and when going back to classes it should go to classes not to calss edit
 - same for event edit
 - same for assignmetn edit
-timetable to day view: navigate back does not do what it should
 
 insights shuold stay if i switch back
 

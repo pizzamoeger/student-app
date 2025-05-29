@@ -1,5 +1,6 @@
 package com.hannah.studentapp.ui.assignments.assignment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hannah.studentapp.databinding.FragmentAssignmentBinding
 
@@ -18,6 +21,7 @@ class AssignmentFragment : Fragment() {
 
     var tvProgressLabel: TextView? = null
     var assignmentId : Int = -1 // temp
+    var fromAssignmentNav = true
 
     private var _binding: FragmentAssignmentBinding? = null
     private val binding get() = _binding!!
@@ -30,6 +34,7 @@ class AssignmentFragment : Fragment() {
         _binding = FragmentAssignmentBinding.inflate(inflater, container, false)
         val root: View = binding.root
         assignmentId = args.assigntmentId.toInt()
+        fromAssignmentNav = args.fromAssignmentNav
         return root
     }
 
@@ -48,6 +53,31 @@ class AssignmentFragment : Fragment() {
         val progress = seekBar.progress
         tvProgressLabel = binding.textView
         tvProgressLabel!!.setText("Progress: $progress")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        //enable menu
+        setHasOptionsMenu(true)
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(this){
+                //true means that the callback is enabled
+                this.isEnabled = true
+                if (fromAssignmentNav) {
+                    val navController = findNavController()
+                    val action = AssignmentFragmentDirections.actionNavigationAssignmentToNavigationAssignments()
+                    navController.navigate(action)
+                } else {
+                    val navController = findNavController()
+                    val action = AssignmentFragmentDirections.actionNavigationAssignmentToFragmentCalendarDay()
+                    navController.navigate(action)
+                }
+
+                //exitDialog() //dialog to conform exit
+            }
     }
 
     var seekBarChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {

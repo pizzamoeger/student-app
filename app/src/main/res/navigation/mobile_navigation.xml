@@ -90,6 +90,15 @@
         <argument
             android:name="assigntmentId"
             app:argType="string" />
+        <argument
+            android:name="fromAssignmentNav"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_navigation_assignment_to_fragment_calendar_day"
+            app:destination="@id/fragment_calendar_day" />
+        <action
+            android:id="@+id/action_navigation_assignment_to_navigation_assignments"
+            app:destination="@id/navigation_assignments" />
     </fragment>
 
     <fragment android:id="@+id/fragment_event_edit"

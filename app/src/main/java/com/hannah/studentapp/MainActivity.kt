@@ -110,20 +110,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window: Window = window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = android.graphics.Color.parseColor("#ff0000")
-        }
-
-        // Apply padding to toolbar to avoid status bar overlap
-        /*ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
-            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            view.setPadding(0, 0, 0, 0)
-            WindowInsetsCompat.Builder(insets).build()
-            //insets
-        }*/
-
         // bottom navigation
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)

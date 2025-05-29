@@ -141,6 +141,8 @@ class EventEditFragment : Fragment() {
         binding.pickDate.text = CalendarUtils.formattedDate(date)
         binding.pickTime.text = CalendarUtils.formattedShortTime(time)
 
+        binding.editTextRoom.setText(event!!.getRoom())
+
         // bind pickDate and pickTime
         binding.pickDate.setOnClickListener{
             pickDate()
@@ -208,6 +210,7 @@ class EventEditFragment : Fragment() {
         event!!.setDate(date, requireContext())
         event!!.setTime(time, requireContext())
         event!!.setClassId(classItem.getId(), requireContext())
+        event!!.setRoom(binding.editTextRoom.text.toString())
         Event.addEvent(event!!, requireContext())
 
         // hide keyboard again before heading up

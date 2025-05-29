@@ -53,9 +53,10 @@ class DayHourAdapter (
         linearLayout.removeAllViews()
         for (event in events) {
             val classItem = ClassesItem.get(event.getClassId())
-
+            var added = ""
+            if (event.getRoom() != "") added = " in "+event.getRoom()
             val textView = TextView(context).apply {
-                text = event.getName()
+                text = event.getName()+added
                 gravity = Gravity.CENTER
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
                 setLines(2)

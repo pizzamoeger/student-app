@@ -22,7 +22,8 @@ data class SerializableEvent(
     var date : String,
     var time : String,
     var classesItemId : Int,
-    var repeated : Boolean
+    var repeated : Boolean,
+    var room : String? = ""
 )
 
 class Event (
@@ -31,7 +32,8 @@ class Event (
     private var date : LocalDate = LocalDate.now(),
     private var time : LocalTime = LocalTime.now().withNano(0),
     private var classesItemId : Int = -1,
-    private var repeated : Boolean = false // todo make this yearly/weekly/biweekly/...
+    private var repeated : Boolean = false, // todo make this yearly/weekly/biweekly/...
+    private var room: String = ""
 ) {
 
     fun isRepeated() = repeated
@@ -53,6 +55,11 @@ class Event (
     }
 
     fun getId() = id
+
+    fun getRoom() = room
+    fun setRoom(newRoom : String) {
+        room = newRoom
+    }
 
     fun setDate(newD : LocalDate, context: Context) {
         date = newD
@@ -119,7 +126,7 @@ class Event (
             val gson = Gson()
 
             val serializableEvents = eventsList.map {
-                SerializableEvent(it.id, it.name, it.date.toString(), it.time.toString(), it.classesItemId, it.repeated)
+                SerializableEvent(it.id, it.name, it.date.toString(), it.time.toString(), it.classesItemId, it.repeated, it.room)
             }
 
             return gson.toJson(serializableEvents)
@@ -145,7 +152,7 @@ class Event (
 
                 // create list of ClassesItem from this
                 for (e in list) {
-                    addEvent(Event(id=e.id, name=e.name, date=LocalDate.parse(e.date), time=LocalTime.parse(e.time), classesItemId = e.classesItemId, repeated = e.repeated), context)
+                    addEvent(Event(id=e.id, name=e.name, date=LocalDate.parse(e.date), time=LocalTime.parse(e.time), classesItemId = e.classesItemId, repeated = e.repeated, room = e.room ?: ""), context)
                 }
 
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)

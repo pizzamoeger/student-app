@@ -83,6 +83,9 @@ You can:
   * by default no class
   * if you choose a class, the event will have a background color (the one of the class)
     ***if you choose no class and set the name empty, the event will not be visible in the timetable. However, it still is in the corresponding cell, just not visible***
+* add a room to your event
+  * if you leave it empty, nothing will be displayed
+  * if you write something, it will be visible in the day view
 * choose if the event should be repeated weekly
   * if you tick this, "infinite" events will be created, one each week
 The `DELETE` and `SAVE` Buttons work analog to the ones of the `Event Edit`-View.

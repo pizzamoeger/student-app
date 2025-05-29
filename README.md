@@ -33,6 +33,8 @@ You can edit any of those classes by clicking on the corresponding pen-icon loca
 
 ## Tracking your study time
 
+**Note that in the code this does not work at all, due to a WIP bug fix. However, in the release it does work! (But with bug)**
+
 You can navigate to the `Stopwatch`-View by clicking the clock icon in the bottom navigation.
 At the top of this View, you can see two TextViews: `Stopwatch` and `Insights`. They are clickable.
 You will also see a big time tracker, displaying the total time you studied today.

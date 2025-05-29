@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_week_to_calendar_day"
             app:destination="@id/fragment_calendar_day" />
+        <action
+            android:id="@+id/action_navigation_timetable_to_fragment_calendar_day"
+            app:destination="@id/fragment_calendar_day" />
     </fragment>
 
     <fragment
@@ -58,11 +61,19 @@
             app:destination="@id/fragment_edit_assignment" />
         <argument
             android:name="date"
-            app:argType="string"
-            android:defaultValue=""/>
-        <deepLink
+            app:argType="string" />
+        <argument
+            android:name="fromTimetable"
+            app:argType="boolean"/>
+        <!--<deepLink
             android:id="@+id/day_view_deep_link"
-            app:uri="studentapp://dayview/{date}" />
+            app:uri="studentapp://dayview/{date}" />-->
+        <action
+            android:id="@+id/action_fragment_calendar_day_to_fragment_month_view"
+            app:destination="@id/fragment_month_view" />
+        <action
+            android:id="@+id/action_fragment_calendar_day_to_navigation_timetable"
+            app:destination="@id/navigation_timetable" />
     </fragment>
 
     <fragment

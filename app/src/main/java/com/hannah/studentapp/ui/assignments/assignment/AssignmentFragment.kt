@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hannah.studentapp.databinding.FragmentAssignmentBinding
+import com.hannah.studentapp.ui.calendar.CalendarUtils
 
 
 class AssignmentFragment : Fragment() {
@@ -72,7 +73,7 @@ class AssignmentFragment : Fragment() {
                     navController.navigate(action)
                 } else {
                     val navController = findNavController()
-                    val action = AssignmentFragmentDirections.actionNavigationAssignmentToFragmentCalendarDay()
+                    val action = AssignmentFragmentDirections.actionNavigationAssignmentToFragmentCalendarDay(CalendarUtils.selectedDate.toString(), false)
                     navController.navigate(action)
                 }
 

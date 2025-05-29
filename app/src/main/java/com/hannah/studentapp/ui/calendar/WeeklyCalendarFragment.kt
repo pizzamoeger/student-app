@@ -78,7 +78,7 @@ class WeeklyCalendarFragment : Fragment() {
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_timetable, true) // keeps StopwatchFragment in back stack
                     .build()
-                val action = WeeklyCalendarFragmentDirections.actionWeekToCalendarDay(selectedDate.toString())
+                val action = WeeklyCalendarFragmentDirections.actionWeekToCalendarDay(fromTimetable = true, date=selectedDate.toString())
                 navController.navigate(action, navOptions)}
             )
         binding.hourListView.adapter = hourAdapter

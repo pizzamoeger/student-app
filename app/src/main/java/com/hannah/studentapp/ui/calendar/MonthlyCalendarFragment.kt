@@ -123,7 +123,7 @@ class MonthlyCalendarFragment : Fragment() {
     // is called on button press of create event
     private fun goToDay() {
         // navigate to day view
-        val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToFragmentCalendarDay(CalendarUtils.selectedDate.toString())
+        val action = MonthlyCalendarFragmentDirections.actionFragmentMonthViewToFragmentCalendarDay(fromTimetable = false,date=CalendarUtils.selectedDate.toString())
         // if we move back to classes using the bottomnav, we want to go to classes
         val navOptions = androidx.navigation.NavOptions.Builder()
             .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack

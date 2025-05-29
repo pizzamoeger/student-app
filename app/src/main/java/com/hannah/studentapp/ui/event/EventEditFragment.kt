@@ -102,7 +102,7 @@ class EventEditFragment : Fragment() {
             navController.navigate(action)
         } else {
             val navController = findNavController()
-            val action = EventEditFragmentDirections.actionEditEventToDaily(CalendarUtils.selectedDate.toString())
+            val action = EventEditFragmentDirections.actionEditEventToDaily(fromTimetable = false, date=CalendarUtils.selectedDate.toString())
             navController.navigate(action)
         }
 

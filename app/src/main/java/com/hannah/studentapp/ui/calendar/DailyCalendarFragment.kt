@@ -1,9 +1,11 @@
 package com.hannah.studentapp.ui.calendar
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,6 +15,7 @@ import com.hannah.studentapp.R
 import com.hannah.studentapp.databinding.FragmentCalendarDailyBinding
 import com.hannah.studentapp.ui.assignments.AssignmentsAdapter
 import com.hannah.studentapp.ui.assignments.assignment.Assignment
+import com.hannah.studentapp.ui.assignments.assignment.EditAssignmentFragmentDirections
 import com.hannah.studentapp.ui.calendar.CalendarUtils.Companion.selectedDate
 import com.hannah.studentapp.ui.event.Event
 import com.hannah.studentapp.ui.timetable.DayHourAdapter
@@ -26,6 +29,8 @@ class DailyCalendarFragment : Fragment() {
     private var _binding: FragmentCalendarDailyBinding? = null
     private val binding get() = _binding!!
     private lateinit var assignmentAdapter: AssignmentsAdapter
+    private val args: DailyCalendarFragmentArgs by navArgs()
+    var fromTimeTable = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +41,7 @@ class DailyCalendarFragment : Fragment() {
         _binding = FragmentCalendarDailyBinding.inflate(inflater, container, false)
         val args: DailyCalendarFragmentArgs by navArgs()
         selectedDate = LocalDate.parse(args.date)
+        fromTimeTable = args.fromTimetable
         val root: View = binding.root
         return root
     }
@@ -102,22 +108,49 @@ class DailyCalendarFragment : Fragment() {
         binding.hourListView.adapter = hourAdapter
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        //enable menu
+        setHasOptionsMenu(true)
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(this){
+                //true means that the callback is enabled
+                this.isEnabled = true
+                if (fromTimeTable) {
+                    val navController = findNavController()
+                    val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationTimetable()
+                    navController.navigate(action)
+                } else {
+                    val navController = findNavController()
+                    val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToFragmentMonthView()
+                    navController.navigate(action)
+                }
+                //exitDialog() //dialog to conform exit
+            }
+    }
+
     private fun setAssignmentsAdapter() {
         assignmentAdapter = AssignmentsAdapter ({
                 item ->
             val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToFragmentEditAssignment(item.getId())
             // if we move back to classes using the bottomnav, we want to go to classes
-            // TODO denke isch navigatoie assoge,'ite d' ichiting
+            var id = R.id.navigation_assignments
+            if (fromTimeTable) id = R.id.navigation_timetable
             val navOptions = androidx.navigation.NavOptions.Builder()
-                .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
+                .setPopUpTo(id, true) // keeps StopwatchFragment in back stack
                 .build()
             findNavController().navigate(action, navOptions)
         },
             { item ->
                 // todo do au denke ew
                 val action = DailyCalendarFragmentDirections.actionFragmentCalendarDayToNavigationAssignment(item.getId(), false)
+                var id = R.id.navigation_assignments
+                if (fromTimeTable) id = R.id.navigation_timetable
                 val navOptions = androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
+                    .setPopUpTo(id, true) // keeps StopwatchFragment in back stack
                     .build()
                 findNavController().navigate(action,  navOptions)},
             Assignment.getUncompletedDay(selectedDate))

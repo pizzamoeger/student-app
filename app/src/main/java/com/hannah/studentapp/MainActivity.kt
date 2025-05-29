@@ -4,18 +4,27 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -60,21 +69,32 @@ class MainActivity : AppCompatActivity() {
             keepSplashScreenOn = false
 
             // Now set content view
-            binding = ActivityMainBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-
             setupUI()
         }
     }
 
     fun setupUI() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = android.graphics.Color.parseColor("#ff0000")
+        }
+
+        // Apply padding to toolbar to avoid status bar overlap
+        /*ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
+            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            view.setPadding(0, 0, 0, 0)
+            WindowInsetsCompat.Builder(insets).build()
+            //insets
+        }*/
 
         // bottom navigation
         val navView: BottomNavigationView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_classes,
@@ -88,7 +108,6 @@ class MainActivity : AppCompatActivity() {
 
         // make app follow devices default theme
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-
 
         // when back is pressed execute our callback
         // onBackPressedDispatcher.addCallback(this, callback)
@@ -185,8 +204,8 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_navigation -> {
                 // when we click opions thingy in menu display custom menu (or hide it again)
-                val toolbar = findViewById<Toolbar>(R.id.toolbar)
-                showFragmentSelectionMenu(toolbar)
+                /*val toolbar = findViewById<Toolbar>(R.id.toolbar)
+                showFragmentSelectionMenu(toolbar)*/
                 return true
             }
             android.R.id.home -> { // todo }"|?>>???? bruchts dasf
@@ -210,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         // set width and height
         val params = popupMenu.layoutParams
         params.width = resources.displayMetrics.widthPixels/2
-        params.height = resources.displayMetrics.heightPixels-binding.toolbar.height
+        params.height = resources.displayMetrics.heightPixels//-binding.toolbar.height
         popupMenu.layoutParams = params
 
         // make it visible and move it to front

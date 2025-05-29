@@ -1,16 +1,20 @@
 package com.hannah.studentapp.ui.classesItem
 
+import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.hannah.studentapp.R
 import com.hannah.studentapp.databinding.FragmentClassesItemBinding
 import com.hannah.studentapp.ui.getThemeColor
 
@@ -34,6 +38,28 @@ class ClassesItemFragment : Fragment() {
         _binding = FragmentClassesItemBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        //enable menu
+        setHasOptionsMenu(true)
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(this){
+                //true means that the callback is enabled
+                this.isEnabled = true
+                val navController = findNavController()
+                val action = ClassesItemFragmentDirections.actionNavigationClassesItemToNavigationStopwatch()
+
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setPopUpTo(R.id.navigation_classes_item, false)
+                    .build()
+                navController.navigate(action, navOptions)
+                //exitDialog() //dialog to conform exit
+            }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

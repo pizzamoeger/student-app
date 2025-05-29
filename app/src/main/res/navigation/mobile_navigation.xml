@@ -151,6 +151,9 @@
         <argument
             android:name="classId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_classes_item_to_navigation_stopwatch"
+            app:destination="@id/navigation_stopwatch" />
     </fragment>
 
     <fragment android:id="@+id/fragment_semester"

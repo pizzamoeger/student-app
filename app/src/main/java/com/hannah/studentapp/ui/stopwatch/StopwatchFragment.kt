@@ -72,7 +72,6 @@ class StopwatchFragment : Fragment() {
                 // navigate s.t. we can still access stopwatch using bottom nav
                 val navController = findNavController()
                 val action = StopwatchFragmentDirections.actionStopwatchToClassesItem(item.getId().toString())
-
                 val navOptions = androidx.navigation.NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_stopwatch, true) // keeps StopwatchFragment in back stack
                     .build()

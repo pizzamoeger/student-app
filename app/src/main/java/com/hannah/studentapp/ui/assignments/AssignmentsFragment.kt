@@ -71,7 +71,7 @@ class AssignmentsFragment : Fragment() {
         val action = AssignmentsFragmentDirections.actionNavigationAssignmentsToFragmentEditAssignment("-1")
         // if we move back to classes using the bottomnav, we want to go to classes
         val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.navigation_assignments, false) // keeps StopwatchFragment in back stack
+            .setPopUpTo(R.id.navigation_assignments, true) // keeps StopwatchFragment in back stack
             .build()
         findNavController().navigate(action, navOptions)
     }

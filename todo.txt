@@ -15,6 +15,7 @@ calendar view should also stay
 - id ards to int
 - login, signup app crash?
 - better trash art and timetable art and assignments art
+- layout small is squished and also in german
 - features:
     - ects
     - yearly/biweekly/... for events

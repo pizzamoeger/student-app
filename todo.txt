@@ -12,6 +12,7 @@ insights shuold stay if i switch back
 calendar view should also stay
     assignment progress edit should also vanish when moving away via bottom nav
 
+- id ards to int
 - login, signup app crash?
 - better trash art and timetable art and assignments art
 - features:

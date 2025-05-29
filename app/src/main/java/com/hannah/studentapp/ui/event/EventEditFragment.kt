@@ -37,6 +37,7 @@ class EventEditFragment : Fragment() {
     var date: LocalDate = CalendarUtils.selectedDate
     var classItem: ClassesItem = ClassesItem()
     var event: Event? = null
+    var fromTimeTable = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +47,7 @@ class EventEditFragment : Fragment() {
         _binding = FragmentEventEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
         event = Event.get(args.eventId.toInt())
+        fromTimeTable = args.fromTimeTable
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         return root
     }
@@ -93,6 +95,19 @@ class EventEditFragment : Fragment() {
         picker.show(parentFragmentManager, picker.toString())
     }
 
+    fun navBack() {
+        if (fromTimeTable) {
+            val navController = findNavController()
+            val action = EventEditFragmentDirections.actionEditEventToWeekly()
+            navController.navigate(action)
+        } else {
+            val navController = findNavController()
+            val action = EventEditFragmentDirections.actionEditEventToDaily(CalendarUtils.selectedDate.toString())
+            navController.navigate(action)
+        }
+
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -104,9 +119,7 @@ class EventEditFragment : Fragment() {
             .addCallback(this){
                 //true means that the callback is enabled
                 this.isEnabled = true
-                val navController = findNavController()
-                val action = EventEditFragmentDirections.actionEditEventToWeekly()
-                navController.navigate(action)
+                navBack()
                 //exitDialog() //dialog to conform exit
             }
     }
@@ -206,24 +219,12 @@ class EventEditFragment : Fragment() {
         }
 
         // navigate back
-        val navController = findNavController()
-        val action = EventEditFragmentDirections.actionEditEventToWeekly()
-
-        val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.navigation_classes, true)
-            .build()
-        navController.navigate(action, navOptions)
+        navBack()
     }
 
     private fun deleteEvent() {
         // create a new event and add it to eventsList
         Event.delete(event!!.getId(), requireContext())
-        val navController = findNavController()
-        val action = EventEditFragmentDirections.actionEditEventToWeekly()
-
-        val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.navigation_classes, true)
-            .build()
-        navController.navigate(action, navOptions)
+        navBack()
     }
 }

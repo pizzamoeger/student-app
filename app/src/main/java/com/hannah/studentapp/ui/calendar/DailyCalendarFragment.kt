@@ -40,6 +40,8 @@ class DailyCalendarFragment : Fragment() {
         return root
     }
 
+    // ToDO back
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -62,10 +64,10 @@ class DailyCalendarFragment : Fragment() {
     private fun newEvent() {
         // navigate to event edit fragment
         val navController = findNavController()
-        val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id.toString())
+        val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id.toString(), false)
 
         val navOptions = androidx.navigation.NavOptions.Builder()
-            .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+            .setPopUpTo(R.id.navigation_timetable, true) // keeps StopwatchFragment in back stack
             .build()
         navController.navigate(action, navOptions)
     }
@@ -90,10 +92,10 @@ class DailyCalendarFragment : Fragment() {
         val hourAdapter = DayHourAdapter(requireContext(), hourEventList(),
             onCellEventClicked = {id ->
                 val navController = findNavController()
-                val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id.toString())
+                val action = DailyCalendarFragmentDirections.actionDayToEventEdit(id.toString(), false)
 
                 val navOptions = androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(R.id.fragment_event_edit, true) // keeps StopwatchFragment in back stack
+                    .setPopUpTo(R.id.navigation_timetable, true) // keeps StopwatchFragment in back stack
                     .build()
                 navController.navigate(action, navOptions)}
         )

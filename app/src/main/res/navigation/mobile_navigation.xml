@@ -99,10 +99,15 @@
         <action
             android:id="@+id/action_edit_event_to_weekly"
             app:destination="@id/navigation_timetable" />
-
+        <action
+            android:id="@+id/action_edit_event_to_daily"
+            app:destination="@id/fragment_calendar_day" />
         <argument
             android:name="eventId"
             app:argType="string" />
+        <argument
+            android:name="fromTimeTable"
+            app:argType="boolean" />
     </fragment>
 
     <fragment android:id="@+id/fragment_edit_class"

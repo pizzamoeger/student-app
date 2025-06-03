@@ -27,6 +27,7 @@ data class ClassesItem(
     private var name: String = "",
     private val studyTime: MutableMap<String, Int> = mutableMapOf(),
     private val grades: MutableList<Grade> = mutableListOf(),
+    private var ects: Int = 0,
     private var color : Int = 0 // TODO this is hacky transparent
 ) {
     private var gradeId = 0
@@ -56,6 +57,11 @@ data class ClassesItem(
     fun deleteGrade(id : Int, context: Context) {
         grades.removeIf { it.id == id }
         save(context)
+    }
+
+    fun getECTS() = ects;
+    fun setECTS(newECTS : Int) {
+        ects = newECTS
     }
 
     // get seconds spent in timeframe
@@ -186,8 +192,8 @@ data class ClassesItem(
         }
 
         // add class to classList
-        fun add(name: String, color : Int, context: Context) : ClassesItem {
-            val newClass = ClassesItem(name=name, studyTime = mutableMapOf(), color = color)
+        fun add(name: String, color : Int, ects : Int, context: Context) : ClassesItem {
+            val newClass = ClassesItem(name=name, studyTime = mutableMapOf(), ects = ects, color = color)
             classesList.add(newClass)
             Semester.getCurrent().addClass(newClass.id)
             save(context)
@@ -225,7 +231,7 @@ data class ClassesItem(
 
             // create a serializable list from classeslist
             val serializableList = classesList.map {
-                SerializableClassesItem(it.id, it.name, it.studyTime, it.grades, it.color)
+                SerializableClassesItem(it.id, it.name, it.studyTime, it.grades, it.ects, it.color)
             }
 
             return gson.toJson(serializableList)
@@ -251,7 +257,7 @@ data class ClassesItem(
 
                 // create list of ClassesItem from this
                 val restored = list.map {
-                    ClassesItem(it.id, it.name, it.studyTime, it.grades, it.color)
+                    ClassesItem(it.id, it.name, it.studyTime, it.grades, it.ects ?: 0, it.color)
                 }
 
                 for (item in restored) {

@@ -8,5 +8,6 @@ data class SerializableClassesItem(
     val name: String,
     val studyTime: MutableMap<String, Int>,
     val grades: MutableList<Grade>,
+    val ects: Int?,
     val color : Int
 )

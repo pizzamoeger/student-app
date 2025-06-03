@@ -86,6 +86,8 @@ class EditClassFragment : Fragment() {
         // set text of textinput to classname
         binding.eventNameEditText.setText(thisClass.toString())
 
+        binding.classEctsInput.setText(thisClass.getECTS().toString())
+
         // set color to color of thisClass
         color = thisClass.getColor()
         binding.classColorInput.setBackgroundColor(color)
@@ -129,10 +131,11 @@ class EditClassFragment : Fragment() {
         ClassesItem.delete(_classId, requireContext())
 
         // get name
+        thisClass.setECTS(binding.classEctsInput.text.toString().toInt())
         thisClass.setName(binding.eventNameEditText.text.toString(), requireContext())
         thisClass.setColor(color, requireContext())
 
-        ClassesItem.add(thisClass.toString(), thisClass.getColor(), requireContext())
+        ClassesItem.add(thisClass.toString(), thisClass.getColor(), thisClass.getECTS(), requireContext())
 
         // go back
         val navController = findNavController()

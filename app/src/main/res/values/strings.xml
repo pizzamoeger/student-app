@@ -63,5 +63,6 @@
     <string name="log_out">Log Out</string>
     <string name="sign_up">Sign Up</string>
     <string name="room">Room: </string>
+    <string name="ects">ECTS</string>
 
 </resources>

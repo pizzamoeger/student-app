@@ -60,4 +60,5 @@
     <string name="log_out">Abmelden</string>
     <string name="sign_up">Registrieren</string>
     <string name="room">Zimmer: </string>
+    <string name="ects">ECTS</string>
 </resources>

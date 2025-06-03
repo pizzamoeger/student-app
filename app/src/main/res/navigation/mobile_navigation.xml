@@ -239,5 +239,14 @@
     <fragment android:id="@+id/hurensohn"
         android:name="com.hannah.studentapp.ui.type.TypeFragment"
         android:label="@string/ects"
+        tools:layout="@layout/ects_fragment">
+        <action
+            android:id="@+id/action_hurensohn_to_hurensohn2"
+            app:destination="@id/hurensohn2" />
+    </fragment>
+
+    <fragment android:id="@+id/hurensohn2"
+        android:name="com.hannah.studentapp.ui.type.TypeFragment"
+        android:label="@string/ects"
         tools:layout="@layout/ects_fragment"/>
 </navigation>

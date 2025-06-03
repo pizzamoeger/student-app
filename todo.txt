@@ -8,7 +8,7 @@ insights shuold stay if i switch back
 calendar view should also stay
 day calendar view: when you go to that and then go to edit assignment and then back and then back, you might end up at the wrong view!!!!!
 
-- login, signup app crash?
+- fix navigatino in popup menu
 - better trash art and timetable art and assignments art
 - layout small is squished and also in german
 - features:

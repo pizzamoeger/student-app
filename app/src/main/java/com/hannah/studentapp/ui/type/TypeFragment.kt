@@ -28,7 +28,7 @@ class TypeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.addButton.setOnClickListener{
             val navController = findNavController()
-            val action = TypeFragmentDirections.actionHurensohnToHurensohn2() // TODO do bruchts e argument i ha gad kei lust uf das
+            val action = TypeFragmentDirections.actionHurensohnToHurensohn2(-1)
             navController.navigate(action)
         }
     }

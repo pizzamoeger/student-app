@@ -5,10 +5,17 @@ import com.hannah.studentapp.ui.semester.Semester
 
 class Type(
     private var neededEcts : Int,
-    private var classesOfType : MutableList<Int>,
+    private var classesOfType : MutableList<Int> = mutableListOf(),
     private var name : String,
     private var id: Int = nextId++
 ) {
+    fun getName() = name
+    fun setName(newName : String) {
+        name = newName
+    }
+
+    fun getID() = id
+
     fun setECTSNeeded(newECTSNeeded : Int) {
         neededEcts = newECTSNeeded
     }
@@ -45,6 +52,13 @@ class Type(
 
         fun addType(type: Type) {
             typeList.add(type)
+        }
+        fun removeType(ID : Int) {
+            typeList.filterNot { it.id == ID }.toMutableList()
+        }
+
+        fun get(ID: Int) : Type {
+            return typeList.first { it.id == ID }
         }
     }
 }

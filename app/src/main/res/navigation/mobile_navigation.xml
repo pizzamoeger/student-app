@@ -246,7 +246,14 @@
     </fragment>
 
     <fragment android:id="@+id/hurensohn2"
-        android:name="com.hannah.studentapp.ui.type.TypeFragment"
+        android:name="com.hannah.studentapp.ui.type.EditTypeFragment"
         android:label="@string/ects"
-        tools:layout="@layout/ects_fragment"/>
+        tools:layout="@layout/edit_type_fragment">
+        <argument
+            android:name="typeId"
+            app:argType="integer"/>
+        <action
+            android:id="@+id/action_hurensohn2_to_hurensohn"
+            app:destination="@id/hurensohn" />
+    </fragment>
 </navigation>

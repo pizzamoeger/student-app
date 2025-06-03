@@ -42,7 +42,7 @@ class EditTypeFragment : Fragment() {
 
     fun redirectBack() {
         val navController = findNavController()
-        val action = EditTypeFragmentDirections.actionHurensohn2ToHurensohn() // TODO do bruchts e argument i ha gad kei lust uf das
+        val action = EditTypeFragmentDirections.actionHurensohn2ToHurensohn()
         navController.navigate(action)
     }
 

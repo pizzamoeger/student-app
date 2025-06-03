@@ -198,12 +198,11 @@ data class ClassesItem(
         }
 
         // add class to classList
-        fun add(name: String, color : Int, ects : Int, context: Context) : ClassesItem {
-            val newClass = ClassesItem(name=name, studyTime = mutableMapOf(), ects = ects, color = color)
-            classesList.add(newClass)
-            Semester.getCurrent().addClass(newClass.id)
+        fun add(clazz:ClassesItem, context: Context) : ClassesItem {
+            classesList.add(clazz)
+            Semester.getCurrent().addClass(clazz.id)
             save(context)
-            return newClass
+            return clazz
         }
 
         // get the class with this id or default

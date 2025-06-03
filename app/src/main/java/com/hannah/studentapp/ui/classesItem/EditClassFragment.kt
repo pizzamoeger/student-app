@@ -3,9 +3,12 @@ package com.hannah.studentapp.ui.classesItem
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import com.hannah.studentapp.R
 import com.hannah.studentapp.databinding.FragmentEditClassBinding
 import com.github.dhaval2404.colorpicker.ColorPickerDialog
+import com.hannah.studentapp.ui.type.Type
 import kotlin.random.Random
 
 class EditClassFragment : Fragment() {
@@ -23,6 +27,8 @@ class EditClassFragment : Fragment() {
     private var _classId : Int = 0
 
     private var color : Int = 0
+    private var curType : Int = 0
+    private var oldType : Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,7 +100,6 @@ class EditClassFragment : Fragment() {
         color = thisClass.getColor()
         binding.classColorInput.setBackgroundColor(color)
 
-
         // make text clickable and bind
         binding.classColorInput.apply {
             isFocusable = false
@@ -109,6 +114,37 @@ class EditClassFragment : Fragment() {
             saveClass()
         }
 
+        // get the type it belongs to
+        val options = listOf(Type(id=0, name="None"))+Type.getList()
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, options)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // it uses this as layout
+        binding.typeSpinner.adapter = adapter
+
+        var index = 0
+        for (option in options) {
+            if (option.containsClass(thisClass.getId())) break
+            index++
+        }
+        if (index == options.size) {
+            Log.e("Class edit", "class does not belong to any type. adding it to 0")
+            options[0].addClass(thisClass.getId())
+            index = 0
+        }
+        binding.typeSpinner.setSelection(index)
+        curType = options[index].getID()
+        oldType = options[index].getID()
+
+                // when item is selected
+        binding.typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                // we set the class for this event to the selected
+                curType = options[position].getID()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                //classItem = SharedData.get(event!!.classesItemId)
+            }
+        }
 
         // bind delete button
         binding.deleteButton.setOnClickListener {
@@ -138,7 +174,14 @@ class EditClassFragment : Fragment() {
         thisClass.setColor(color, requireContext())
         thisClass.setPassed(binding.checkboxPassed.isChecked)
 
-        ClassesItem.add(thisClass.toString(), thisClass.getColor(), thisClass.getECTS(), requireContext())
+        if (oldType != 0) {
+            Type.get(oldType).removeClass(thisClass.getId())
+        }
+        if (curType != 0) {
+            Type.get(curType).addClass(thisClass.getId())
+        }
+
+        ClassesItem.add(thisClass, requireContext())
 
         // go back
         val navController = findNavController()

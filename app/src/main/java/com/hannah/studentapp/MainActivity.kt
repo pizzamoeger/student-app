@@ -262,6 +262,7 @@ class MainActivity : AppCompatActivity() {
         val fragment1Button = binding.popupMenu.fragment1Button
         val fragment2Button = binding.popupMenu.fragment2Button
         val fragment3Button = binding.popupMenu.fragment3Button
+        val fragment4Button = binding.popupMenu.fragment4Button
 
         fragment1Button.setOnClickListener {
             navigateToFragment(R.id.fragment_semester)
@@ -273,6 +274,10 @@ class MainActivity : AppCompatActivity() {
         }
         fragment3Button.setOnClickListener {
             navigateToFragment(R.id.fragment_authentification)
+            popupMenu.visibility = View.GONE
+        }
+        fragment4Button.setOnClickListener {
+            navigateToFragment(R.id.hurensohn)
             popupMenu.visibility = View.GONE
         }
     }

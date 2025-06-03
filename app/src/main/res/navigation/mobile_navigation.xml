@@ -235,4 +235,9 @@
             android:id="@+id/action_grades_for_class_fragment_to_add_grade_fragment"
             app:destination="@id/add_grade_fragment" />
     </fragment>
+
+    <fragment android:id="@+id/hurensohn"
+        android:name="com.hannah.studentapp.ui.type.TypeFragment"
+        android:label="@string/ects"
+        tools:layout="@layout/ects_fragment"/>
 </navigation>

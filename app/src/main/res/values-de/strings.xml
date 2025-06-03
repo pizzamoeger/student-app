@@ -61,4 +61,6 @@
     <string name="sign_up">Registrieren</string>
     <string name="room">Zimmer: </string>
     <string name="ects">ECTS</string>
+    <string name="passed">bestanden</string>
+    <string name="type">Typ</string>
 </resources>

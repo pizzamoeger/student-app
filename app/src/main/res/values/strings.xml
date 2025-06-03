@@ -64,5 +64,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="room">Room: </string>
     <string name="ects">ECTS</string>
+    <string name="passed">passed</string>
+    <string name="type">Type</string>
 
 </resources>

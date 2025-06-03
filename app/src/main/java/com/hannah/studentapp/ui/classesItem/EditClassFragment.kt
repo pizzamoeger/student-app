@@ -88,6 +88,8 @@ class EditClassFragment : Fragment() {
 
         binding.classEctsInput.setText(thisClass.getECTS().toString())
 
+        binding.checkboxPassed.isChecked = thisClass.isPassed()
+
         // set color to color of thisClass
         color = thisClass.getColor()
         binding.classColorInput.setBackgroundColor(color)
@@ -134,6 +136,7 @@ class EditClassFragment : Fragment() {
         thisClass.setECTS(binding.classEctsInput.text.toString().toInt())
         thisClass.setName(binding.eventNameEditText.text.toString(), requireContext())
         thisClass.setColor(color, requireContext())
+        thisClass.setPassed(binding.checkboxPassed.isChecked)
 
         ClassesItem.add(thisClass.toString(), thisClass.getColor(), thisClass.getECTS(), requireContext())
 

@@ -28,6 +28,7 @@ data class ClassesItem(
     private val studyTime: MutableMap<String, Int> = mutableMapOf(),
     private val grades: MutableList<Grade> = mutableListOf(),
     private var ects: Int = 0,
+    private var passed: Boolean = false,
     private var color : Int = 0 // TODO this is hacky transparent
 ) {
     private var gradeId = 0
@@ -57,6 +58,11 @@ data class ClassesItem(
     fun deleteGrade(id : Int, context: Context) {
         grades.removeIf { it.id == id }
         save(context)
+    }
+
+    fun isPassed() = passed
+    fun setPassed(passedNew : Boolean) {
+        passed = passedNew
     }
 
     fun getECTS() = ects;
@@ -231,7 +237,7 @@ data class ClassesItem(
 
             // create a serializable list from classeslist
             val serializableList = classesList.map {
-                SerializableClassesItem(it.id, it.name, it.studyTime, it.grades, it.ects, it.color)
+                SerializableClassesItem(it.id, it.name, it.studyTime, it.grades, it.ects, it.passed, it.color)
             }
 
             return gson.toJson(serializableList)
@@ -257,7 +263,7 @@ data class ClassesItem(
 
                 // create list of ClassesItem from this
                 val restored = list.map {
-                    ClassesItem(it.id, it.name, it.studyTime, it.grades, it.ects ?: 0, it.color)
+                    ClassesItem(it.id, it.name, it.studyTime, it.grades, it.ects ?: 0, it.passed ?: false, it.color)
                 }
 
                 for (item in restored) {

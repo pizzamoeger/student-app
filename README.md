@@ -22,7 +22,7 @@ If you open the app, the `Classes Fragment` is launched.
 Initially, you will just see one button `+ ADD CLASS`.
 
 If you click on this button, a new View will be opened (`Class Edit`).
-Here, you can name your class and assign a color to it. You can also just use the provided (random) color and name.
+Here, you can name your class, say how many ECTS it gives and assign a color to it. You can also just use the provided (random) color and name.
 You can exit this View in two ways:
 * If you decide against adding that class, you have to press the `DELETE`-Button.
 * If you want to add the class, you can press the `SAVE`-Button.

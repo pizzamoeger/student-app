@@ -88,7 +88,7 @@ class Semester (
                 val userDocRef = db.collection("user").document(userId)
 
                 // Create a new Map for user data (or use a data class/object)
-                userDocRef.update("semester", Type.getJson())
+                userDocRef.update("semester", getJson())
                     .addOnSuccessListener {
                         Log.d("Firestore", "Field 'types' successfully updated for user: $userId")
                     }
@@ -99,9 +99,9 @@ class Semester (
             }
         }
 
-        private fun save() {
+        private fun save(saveAll: Boolean = true) {
             prefs.edit().putString("semester_list", getJson()).apply()
-            //SharedData.save()
+            if (saveAll) SharedData.save()
             saveToDB()
         }
 
@@ -131,7 +131,7 @@ class Semester (
                 semesterList.add(Semester())
                 current = semesterList[0]
             }
-            save()
+            save(false)
         }
     }
 

@@ -260,7 +260,7 @@ data class ClassesItem(
                 val userDocRef = db.collection("user").document(userId)
 
                 // Create a new Map for user data (or use a data class/object)
-                userDocRef.update("classes", Type.getJson())
+                userDocRef.update("classes", getJson())
                     .addOnSuccessListener {
                         Log.d("Firestore", "Field 'types' successfully updated for user: $userId")
                     }
@@ -271,10 +271,10 @@ data class ClassesItem(
             }
         }
 
-         fun save(context: Context) {
+         fun save(context: Context, saveAll: Boolean = true) {
             refreshStopwatchWidget(context)
             prefs.edit().putString("classes_list", getJson()).apply()
-            //SharedData.save()
+            if (saveAll) SharedData.save()
             saveToDB()
         }
 
@@ -303,7 +303,7 @@ data class ClassesItem(
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
             loaded = true
-            save(context)
+            save(context, false)
         }
 
         private fun refreshStopwatchWidget(context: Context) {

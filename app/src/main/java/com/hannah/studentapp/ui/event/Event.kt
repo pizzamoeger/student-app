@@ -136,11 +136,11 @@ class Event (
             return gson.toJson(serializableEvents)
         }
 
-        private fun save(context: Context) {
+        private fun save(context: Context, saveAll: Boolean = true) {
             refreshTimetableWidget(context)
 
             prefs.edit().putString("events_list", getJson()).apply()
-            //SharedData.save()
+            if(saveAll) SharedData.save()
             saveToDB()
         }
 
@@ -152,7 +152,7 @@ class Event (
                 val userDocRef = db.collection("user").document(userId)
 
                 // Create a new Map for user data (or use a data class/object)
-                userDocRef.update("events", Type.getJson())
+                userDocRef.update("events", getJson())
                     .addOnSuccessListener {
                         Log.d("Firestore", "Field 'types' successfully updated for user: $userId")
                     }
@@ -181,7 +181,7 @@ class Event (
 
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
-            save(context)
+            save(context, false)
         }
 
         // get all events at date and time

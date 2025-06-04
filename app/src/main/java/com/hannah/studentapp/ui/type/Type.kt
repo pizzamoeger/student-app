@@ -101,9 +101,9 @@ class Type(
             return gson.toJson(serializableTypes)
         }
 
-        private fun save() {
+        private fun save(saveAll: Boolean = true) {
             prefs.edit().putString("type_list", getJson()).apply()
-            //SharedData.save()
+            if (saveAll) SharedData.save()
             saveToDB()
         }
 
@@ -144,7 +144,7 @@ class Type(
 
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
-            save()
+            save(false)
         }
     }
 }

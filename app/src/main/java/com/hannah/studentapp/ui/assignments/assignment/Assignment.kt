@@ -160,7 +160,7 @@ class Assignment (
                 val userDocRef = db.collection("user").document(userId)
 
                 // Create a new Map for user data (or use a data class/object)
-                userDocRef.update("assignments", Type.getJson())
+                userDocRef.update("assignments", getJson())
                     .addOnSuccessListener {
                         Log.d("Firestore", "Field 'types' successfully updated for user: $userId")
                     }
@@ -171,10 +171,10 @@ class Assignment (
             }
         }
 
-        private fun save(context : Context) {
+        private fun save(context : Context, saveAll: Boolean = true) {
             refreshAssignmentWidget(context)
             prefs.edit().putString("assignments_list", getJson()).apply()
-            //SharedData.save()
+            if (saveAll) SharedData.save()
             saveToDB()
         }
 
@@ -197,7 +197,7 @@ class Assignment (
                 assignmentsList = restored.toMutableList()
                 nextId = ((list.maxOfOrNull { it.id } ?: 0) + 1)
             }
-            save(context)
+            save(context, false)
         }
 
         private fun refreshAssignmentWidget(context: Context) {

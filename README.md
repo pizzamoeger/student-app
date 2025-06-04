@@ -22,7 +22,7 @@ If you open the app, the `Classes Fragment` is launched.
 Initially, you will just see one button `+ ADD CLASS`.
 
 If you click on this button, a new View will be opened (`Class Edit`).
-Here, you can name your class, say how many ECTS it gives and assign a color to it. You can also just use the provided (random) color and name.
+Here, you can name your class, say how many ECTS it gives, if you passed it and assign a color to it. You can also just use the provided (random) color and name.
 You can exit this View in two ways:
 * If you decide against adding that class, you have to press the `DELETE`-Button.
 * If you want to add the class, you can press the `SAVE`-Button.
@@ -172,6 +172,19 @@ If you sign up, all the data that currently is on the app will be saved to the n
 If you log out, all data that currently is on the app will be saved to the server and then wiped from your device. You will no longer see the data, but it still exists.
 
 This means the only way you can lose data is, if you add data while being logged out and then logging in to an account.
+
+## ECTS
+
+ECTS stands for European Credit Transfer and Accumulation System. At UNI you have to get ECTS in different areas in order to get your degree.
+
+You can access the `ECTS`-View by opening the popup-menu and clicking on the `ECTS`-TextView.
+There you will initially be presented with with just a `+ ADD NEW TYPE`-Button. If you press it, you can add a new area, give it a name and define how many ECTS you need in that area.
+
+If you have added some Types, they will be displayed in the `ECTS`-View. For each type it will show:
+* the name you gave it
+* the ECTS you are currently working on (ECTS of classes of the current Semester that are not yet passed)
+* the ECTS you still need in that type
+If you got all ECTS needed for a type, the type will have a green background :)
 
 ## Widgets
 

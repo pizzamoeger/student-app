@@ -41,6 +41,7 @@ class SharedData  {
                     "events" to Event.getJson(),
                     "assignments" to Assignment.getJson(),
                     "semester" to Semester.getJson(),
+                    "types" to Type.getJson(),
                     "username" to ""
                 )
 
@@ -79,11 +80,13 @@ class SharedData  {
                             val events = documentSnapshot.getString("events")
                             val assignments = documentSnapshot.getString("assignments")
                             val semester = documentSnapshot.getString("semester")
+                            val types = documentSnapshot.getString("types")
                             val username = documentSnapshot.getString("username")
                             ClassesItem.load(classes, context)
                             Event.load(events, context)
                             Assignment.load(assignments, context)
                             Semester.load(semester)
+                            Type.load(types)
                         }
                     }
             } else {

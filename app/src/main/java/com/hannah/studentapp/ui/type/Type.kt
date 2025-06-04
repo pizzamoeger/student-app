@@ -1,17 +1,11 @@
 package com.hannah.studentapp.ui.type
 
-import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hannah.studentapp.SharedData
 import com.hannah.studentapp.SharedData.Companion.prefs
 import com.hannah.studentapp.ui.classesItem.ClassesItem
-import com.hannah.studentapp.ui.event.Event.Companion.getJson
-import com.hannah.studentapp.ui.event.SerializableEvent
 import com.hannah.studentapp.ui.semester.Semester
-import com.hannah.studentapp.ui.semester.Semester.Companion
-import com.hannah.studentapp.ui.semester.SerializableSemester
-import java.time.LocalDate
 
 data class SerializableType(
     var neededEcts : Int,
@@ -92,7 +86,7 @@ class Type(
             return typeList.first { it.id == ID }
         }
 
-        private fun getJSON() : String {
+        fun getJson() : String {
             val gson = Gson()
 
             val serializableTypes = typeList.map {
@@ -103,7 +97,7 @@ class Type(
         }
 
         private fun save() {
-            prefs.edit().putString("type_list", getJSON()).apply()
+            prefs.edit().putString("type_list", getJson()).apply()
             SharedData.save()
         }
 

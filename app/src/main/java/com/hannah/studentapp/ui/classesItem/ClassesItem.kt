@@ -107,6 +107,12 @@ data class ClassesItem(
         save(context)
     }
 
+    fun addSeconds(context: Context, seconds: Int) {
+        val today = LocalDate.now().toString()
+        studyTime[today] = studyTime.getOrDefault(today, 0)+seconds
+        save(context)
+    }
+
     // get seconds spent studying today
     private fun secondsToday() : Int {
         val today = LocalDate.now()

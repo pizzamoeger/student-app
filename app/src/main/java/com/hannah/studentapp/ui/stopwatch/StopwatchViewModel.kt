@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hannah.studentapp.TimeInterval
 import com.hannah.studentapp.ui.classesItem.ClassesItem
+import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 
 class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     private val handler = Handler(Looper.getMainLooper())
@@ -17,6 +19,8 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
 
     private var _running = MutableLiveData(false)
     val running: LiveData<Boolean> = _running
+    private var startTime: LocalTime = LocalTime.now()
+    private var countedSeconds = 0
     private var secondsTodayAll = 0
     private var secondsTotalAll = 0
 
@@ -31,6 +35,12 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
                 // if the stopwatch is running we increase seconds and save them
                 if (_running.value!!) {
                     ClassesItem.getCurrent().addSecond(getApplication())
+                    countedSeconds++
+                    val dif = (startTime.until(LocalTime.now(), ChronoUnit.SECONDS)-countedSeconds).toInt()
+                    if (dif != 0) {
+                        ClassesItem.getCurrent().addSeconds(getApplication(), dif)
+                        countedSeconds += dif
+                    }
 
                     load()
 
@@ -54,9 +64,17 @@ class StopwatchViewModel(app : Application) : AndroidViewModel(app) {
     // button functionality
     fun button(switched: Boolean = false) {
         // if switched is true, the class has switched
-        if (switched) _running.value = true
+        if (switched) {
+            _running.value = true
+            startTime = LocalTime.now()
+            countedSeconds = 0
+        }
         else {
             _running.value= !(_running.value!!)
+            if (_running.value!!) {
+                startTime = LocalTime.now()
+                countedSeconds = 0
+            }
         }
     }
 

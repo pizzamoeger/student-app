@@ -16,9 +16,10 @@
     <color name="red">#FF0000</color>
     <color name="orange">#FF8700</color>
     <color name="yellow">#FFD300</color>
-    <color name="green">#DEFF0A</color>
+    <color name="lightgreen">#DEFF0A</color>
     <color name="limegreen">#A1FF0A</color>
     <color name="mint">#0AFF99</color>
+    <color name="green">#27ae60</color>
     <color name="cyan">#0AEFFF</color>
     <color name="lightblue">#ADD8E6</color>
     <color name="blue">#147DF5</color>

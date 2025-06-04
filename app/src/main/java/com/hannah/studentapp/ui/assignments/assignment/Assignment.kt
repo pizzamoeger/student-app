@@ -4,6 +4,8 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.hannah.studentapp.R
 import com.hannah.studentapp.SharedData
 import com.hannah.studentapp.SharedData.Companion.prefs
@@ -12,6 +14,8 @@ import com.hannah.studentapp.ui.classesItem.ClassesItem
 import com.hannah.studentapp.ui.semester.Semester
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hannah.studentapp.ui.type.Type
+import com.hannah.studentapp.ui.type.Type.Companion
 import java.time.LocalDate
 
 data class SerializableAssignment(
@@ -148,10 +152,30 @@ class Assignment (
             return gson.toJson(serializableList)
         }
 
+        private fun saveToDB() {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val db = FirebaseFirestore.getInstance()
+            if (currentUser != null) {
+                val userId = currentUser.uid
+                val userDocRef = db.collection("user").document(userId)
+
+                // Create a new Map for user data (or use a data class/object)
+                userDocRef.update("assignments", Type.getJson())
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "Field 'types' successfully updated for user: $userId")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "Error updating 'types' field", e)
+                    }
+
+            }
+        }
+
         private fun save(context : Context) {
             refreshAssignmentWidget(context)
             prefs.edit().putString("assignments_list", getJson()).apply()
-            SharedData.save()
+            //SharedData.save()
+            saveToDB()
         }
 
         fun load(jsonArg: String?, context: Context) {

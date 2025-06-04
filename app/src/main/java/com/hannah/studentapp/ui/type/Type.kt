@@ -1,10 +1,15 @@
 package com.hannah.studentapp.ui.type
 
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hannah.studentapp.SharedData
 import com.hannah.studentapp.SharedData.Companion.prefs
+import com.hannah.studentapp.ui.assignments.assignment.Assignment
 import com.hannah.studentapp.ui.classesItem.ClassesItem
+import com.hannah.studentapp.ui.event.Event
 import com.hannah.studentapp.ui.semester.Semester
 
 data class SerializableType(
@@ -98,7 +103,27 @@ class Type(
 
         private fun save() {
             prefs.edit().putString("type_list", getJson()).apply()
-            SharedData.save()
+            //SharedData.save()
+            saveToDB()
+        }
+
+        private fun saveToDB() {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val db = FirebaseFirestore.getInstance()
+            if (currentUser != null) {
+                val userId = currentUser.uid
+                val userDocRef = db.collection("user").document(userId)
+
+                // Create a new Map for user data (or use a data class/object)
+                userDocRef.update("types", getJson())
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "Field 'types' successfully updated for user: $userId")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "Error updating 'types' field", e)
+                    }
+
+            }
         }
 
         fun load(jsonArg: String?) {

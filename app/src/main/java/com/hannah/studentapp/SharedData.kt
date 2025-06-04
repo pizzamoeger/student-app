@@ -94,6 +94,7 @@ class SharedData  {
                 Event.load(null, context)
                 Assignment.load(null, context)
                 Semester.load(null)
+                Type.load(null)
             }
         }
     }

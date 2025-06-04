@@ -1,9 +1,13 @@
 package com.hannah.studentapp.ui.semester
 
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.hannah.studentapp.SharedData
 import com.hannah.studentapp.SharedData.Companion.prefs
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hannah.studentapp.ui.type.Type
 import java.time.LocalDate
 
 data class SerializableSemester (
@@ -76,9 +80,29 @@ class Semester (
             return gson.toJson(serializableSemester)
         }
 
+        private fun saveToDB() {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val db = FirebaseFirestore.getInstance()
+            if (currentUser != null) {
+                val userId = currentUser.uid
+                val userDocRef = db.collection("user").document(userId)
+
+                // Create a new Map for user data (or use a data class/object)
+                userDocRef.update("semester", Type.getJson())
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "Field 'types' successfully updated for user: $userId")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "Error updating 'types' field", e)
+                    }
+
+            }
+        }
+
         private fun save() {
             prefs.edit().putString("semester_list", getJson()).apply()
-            SharedData.save()
+            //SharedData.save()
+            saveToDB()
         }
 
         fun load(jsonArg: String?) {

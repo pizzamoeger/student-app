@@ -3,6 +3,9 @@ package com.hannah.studentapp.ui.event
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.hannah.studentapp.R
 import com.hannah.studentapp.SharedData
 import com.hannah.studentapp.SharedData.Companion.prefs
@@ -10,6 +13,7 @@ import com.hannah.studentapp.ui.semester.Semester
 import com.hannah.studentapp.ui.timetable.TimetableWidget
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hannah.studentapp.ui.type.Type
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -136,7 +140,27 @@ class Event (
             refreshTimetableWidget(context)
 
             prefs.edit().putString("events_list", getJson()).apply()
-            SharedData.save()
+            //SharedData.save()
+            saveToDB()
+        }
+
+        private fun saveToDB() {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val db = FirebaseFirestore.getInstance()
+            if (currentUser != null) {
+                val userId = currentUser.uid
+                val userDocRef = db.collection("user").document(userId)
+
+                // Create a new Map for user data (or use a data class/object)
+                userDocRef.update("events", Type.getJson())
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "Field 'types' successfully updated for user: $userId")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "Error updating 'types' field", e)
+                    }
+
+            }
         }
 
         fun load(jsonArg: String?, context: Context) {

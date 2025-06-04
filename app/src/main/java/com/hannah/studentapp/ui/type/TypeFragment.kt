@@ -33,7 +33,12 @@ class TypeFragment : Fragment() {
             navController.navigate(action)
         }
 
-        val adapter = TypeAdapter()
+        val adapter = TypeAdapter {
+            id ->
+            val navController = findNavController()
+            val action = TypeFragmentDirections.actionHurensohnToHurensohn2(id)
+            navController.navigate(action)
+        }
         binding.typeListView.layoutManager = LinearLayoutManager(requireContext())
         binding.typeListView.adapter = adapter
     }

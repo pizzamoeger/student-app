@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannah.studentapp.R
 import com.hannah.studentapp.databinding.AssignmentBinding
 import com.hannah.studentapp.databinding.EctsTypeItemBinding
+import com.hannah.studentapp.ui.classesItem.ClassesItem
 import com.hannah.studentapp.ui.getThemeColor
 
-class TypeAdapter (): RecyclerView.Adapter<TypeAdapter.TypeViewHolder> () {
+class TypeAdapter (
+    private val onItemClick : (Int) -> Unit
+): RecyclerView.Adapter<TypeAdapter.TypeViewHolder> () {
     inner class TypeViewHolder(
         private val binding: EctsTypeItemBinding
     ):RecyclerView.ViewHolder(binding.root) {
@@ -19,6 +22,9 @@ class TypeAdapter (): RecyclerView.Adapter<TypeAdapter.TypeViewHolder> () {
             binding.ectsTypeItemName.text = item.getName()
             binding.ectsTypeItemPending.text = item.getOngoingECTS().toString()
             binding.ectsTypeItemNeeded.text = (item.getECTSNeeded()-item.getCompletedECTS()).toString()
+            binding.root.setOnClickListener{
+                onItemClick(item.getID())
+            }
             if (item.getECTSNeeded()-item.getCompletedECTS() < 0) {
                 val context = binding.root.context
                 val baseColor = ContextCompat.getColor(context, R.color.green)

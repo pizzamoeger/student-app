@@ -75,14 +75,15 @@ class Type(
 
     companion object {
         private var nextId = 1
-        private val typeList : MutableList<Type> = mutableListOf()
+        private var typeList : MutableList<Type> = mutableListOf()
 
         fun addType(type: Type) {
             typeList.add(type)
             save()
         }
         fun removeType(ID : Int) {
-            typeList.filterNot { it.id == ID }.toMutableList()
+            typeList = typeList.filterNot { it.id == ID }.toMutableList()
+            save()
         }
 
         fun getList() = typeList

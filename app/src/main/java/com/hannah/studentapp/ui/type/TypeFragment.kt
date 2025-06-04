@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannah.studentapp.databinding.EctsFragmentBinding
 import com.hannah.studentapp.ui.classesItem.ClassesItem
 import com.hannah.studentapp.ui.grades.GradesForClassFragmentDirections
@@ -31,5 +32,9 @@ class TypeFragment : Fragment() {
             val action = TypeFragmentDirections.actionHurensohnToHurensohn2(-1)
             navController.navigate(action)
         }
+
+        val adapter = TypeAdapter()
+        binding.typeListView.layoutManager = LinearLayoutManager(requireContext())
+        binding.typeListView.adapter = adapter
     }
 }

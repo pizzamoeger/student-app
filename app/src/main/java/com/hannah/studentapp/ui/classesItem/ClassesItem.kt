@@ -29,7 +29,7 @@ data class ClassesItem(
     private val grades: MutableList<Grade> = mutableListOf(),
     private var ects: Int = 0,
     private var passed: Boolean = false,
-    private var color : Int = 0 // TODO this is hacky transparent
+    private var color : Int = 0
 ) {
     private var gradeId = 0
     override fun toString(): String {

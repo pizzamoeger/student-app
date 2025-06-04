@@ -12,6 +12,9 @@ class TypeAdapter (): RecyclerView.Adapter<TypeAdapter.TypeViewHolder> () {
     ):RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Type) {
             binding.ectsTypeItemName.text = item.getName()
+            binding.ectsTypeItemPending.text = item.getOngoingECTS().toString()
+            binding.ectsTypeItemNeeded.text = item.getECTSNeeded().toString()
+            binding.ectsTypeItemPassed.text = item.getCompletedECTS().toString()
         }
     }
 

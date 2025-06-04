@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:layout_height="wrap_content"
         android:id="@+id/ects_type_item_name"
         android:text="name"/>

@@ -9,6 +9,7 @@ import com.hannah.studentapp.ui.event.Event
 import com.hannah.studentapp.ui.semester.Semester
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.hannah.studentapp.ui.type.Type
 
 enum class TimeInterval {
     DAY, WEEK, MONTH, TOTAL, DEFAULT
@@ -62,6 +63,7 @@ class SharedData  {
         fun load(context: Context) {
             val currentUser = FirebaseAuth.getInstance().currentUser
             val db = FirebaseFirestore.getInstance()
+            Type.load(null)
             if (currentUser != null) {
                 val userId = currentUser.uid
 

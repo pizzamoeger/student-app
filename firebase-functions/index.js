@@ -12,7 +12,7 @@ exports.sendScheduledNotification = functions.pubsub
       const usersSnapshot = await db.collection("users").get();
       const tokens = [];
 
-      usersSnapshot.forEach((doc) => {
+      usersSnapshot.forEach((doc) => {hp
         const data = doc.data();
         if (data.fcmToken) {
           tokens.push(data.fcmToken);

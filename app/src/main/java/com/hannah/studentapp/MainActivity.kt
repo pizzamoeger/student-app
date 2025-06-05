@@ -1,7 +1,5 @@
 package com.hannah.studentapp
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
@@ -34,8 +32,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.messaging.FirebaseMessaging
 import com.hannah.studentapp.databinding.ActivityMainBinding
 import com.hannah.studentapp.ui.assignments.AssignmentWidget
 import com.hannah.studentapp.ui.calendar.CalendarUtils
@@ -50,21 +46,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private var keepSplashScreenOn = true
-
-    fun createNotificationChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "scheduled_notifications",
-                "Scheduled Notifications",
-                NotificationManager.IMPORTANCE_DEFAULT
-            ).apply {
-                description = "Channel for scheduled push notifications"
-            }
-
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
 
     fun getStatusBarHeight(): Int {
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -122,25 +103,6 @@ class MainActivity : AppCompatActivity() {
 
             // Now set content view
             setupUI()
-            createNotificationChannel(this@MainActivity)
-
-            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w("FCM", "Fetching FCM registration token failed", task.exception)
-                    return@addOnCompleteListener
-                }
-
-                val token = task.result
-                Log.d("FCM", "FCM Token: $token")
-
-                // Save this token in Firestore (example)
-                val userId = "some_user_id" // replace with real user ID
-                val db = FirebaseFirestore.getInstance()
-                val tokenData = hashMapOf("fcmToken" to token)
-                db.collection("users").document(userId).set(tokenData)
-                    .addOnSuccessListener { Log.d("FCM", "Token saved to Firestore") }
-                    .addOnFailureListener { e -> Log.w("FCM", "Error saving token", e) }
-            }
         }
     }
 

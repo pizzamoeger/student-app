@@ -59,12 +59,6 @@
             android:name=".ui.stopwatch.StopwatchRemoteViewService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-        <service android:name=".ui.notis.MessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
 
         <activity
             android:name=".MainActivity"

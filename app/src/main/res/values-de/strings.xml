@@ -63,4 +63,6 @@
     <string name="ects">ECTS</string>
     <string name="passed">bestanden</string>
     <string name="type">Typ</string>
+
+    <string name="msg_token_fmt">FCM registration token: %s</string>
 </resources>

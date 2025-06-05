@@ -32,6 +32,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.hannah.studentapp.databinding.ActivityMainBinding
 import com.hannah.studentapp.ui.assignments.AssignmentWidget
 import com.hannah.studentapp.ui.calendar.CalendarUtils
@@ -103,6 +105,20 @@ class MainActivity : AppCompatActivity() {
 
             // Now set content view
             setupUI()
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new FCM registration token
+                val token = task.result
+
+                // Log and toast
+                val msg = getString(R.string.msg_token_fmt, token)
+                Log.d("TAG", msg)
+                Toast.makeText(baseContext, token.toString(), Toast.LENGTH_SHORT).show()
+            })
         }
     }
 

@@ -67,4 +67,6 @@
     <string name="passed">passed</string>
     <string name="type">Type</string>
 
+    <string name="msg_token_fmt">FCM registration token: %s</string>
+
 </resources>

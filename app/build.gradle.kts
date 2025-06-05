@@ -48,8 +48,6 @@ dependencies {
 
     // Add the dependency for FirebaseUI Auth (needed for AuthUI and the Contract)
     implementation(libs.firebase.ui.auth) // <-- Use the latest version number here! Check FirebaseUI docs.
-
-    implementation(libs.firebase.messaging)
     implementation (libs.androidx.core.splashscreen)
     implementation(libs.gson)
     implementation(libs.mpandroidchart)
@@ -67,7 +65,6 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.ui.auth)
     implementation(libs.firebase.firestore.ktx)
-    implementation(libs.androidx.work.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

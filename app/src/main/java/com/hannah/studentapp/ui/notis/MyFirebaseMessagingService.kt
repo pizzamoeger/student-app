@@ -46,7 +46,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
 
     // attach noti crated with the custom layout
     fun getRemoteView(title: String, msg:String) : RemoteViews {
-        val remoteView = RemoteViews(packageName, R.layout.notification)
+        val remoteView = RemoteViews("com.hannah.studentapp", R.layout.notification)
         remoteView.setTextViewText(R.id.notification_title, title)
         remoteView.setTextViewText(R.id.notification_message, msg)
         //remoteView.setImageViewResource(R.id.app_logo, R.drawable.notification_icon)

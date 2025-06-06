@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -28,7 +29,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
 
         // channel id, channel name
         var builder: NotificationCompat.Builder = NotificationCompat.Builder(applicationContext, channelId)
-            .setSmallIcon(R.drawable.app_icon)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true)
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000))
             .setOnlyAlertOnce(true)
@@ -50,7 +51,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         val remoteView = RemoteViews("com.hannah.studentapp.ui.notis", R.layout.notification)
         remoteView.setTextViewText(R.id.notification_title, title)
         remoteView.setTextViewText(R.id.notification_message, msg)
-        remoteView.setImageViewResource(R.id.app_logo, R.drawable.app_icon)
+        remoteView.setImageViewResource(R.id.app_logo, R.drawable.notification_icon)
         return remoteView
     }
     // show the noti
